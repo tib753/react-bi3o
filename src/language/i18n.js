@@ -1,0 +1,33 @@
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { english } from "./en";
+import { arabic } from "./ar";
+import { french } from "./fr";
+
+// the translations
+// (tip move them in a JSON file and import them,
+// or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
+const resources = {
+  ar: {
+    translation: arabic,
+  },
+  en: {
+    translation: english,
+  },
+  fr: {
+    translation: french,
+  },
+};
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init({
+    resources,
+    lng: "ar", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
+    fallbackLng: "ar",
+    interpolation: {
+      escapeValue: false, // react already safes from xss
+    },
+  });
+
+export default i18n;
