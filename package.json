@@ -24,7 +24,7 @@
     "axios": "^1.2.1",
     "base-64": "^1.0.0",
     "caniuse-lite": "^1.0.30001503",
-    "date-fns": "^4.1.0",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.7",
     "emoji-picker-react": "^4.4.11",
     "eslint": "8.29.0",
