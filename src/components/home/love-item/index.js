@@ -1,9 +1,8 @@
+import React, { Suspense, useEffect, useState } from "react";
 import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useGetRecommendProductsForHome } from "api-manage/hooks/react-query/useGetRecommendProductsForHome";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,6 +13,11 @@ import H2 from "../../typographies/H2";
 import { HomeComponentsWrapper } from "../HomePageComponents";
 import { loveItemSettings } from "./loveItemSettings";
 import Menus from "./Menus";
+import { setYouWillLoveItems } from "redux/slices/storedData";
+
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+});
 
 const LoveItem = (props) => {
   const [menu, setMenu] = useState([]);
@@ -65,9 +69,9 @@ const LoveItem = (props) => {
   useEffect(() => {
     if (data?.total_size > 0) {
       setMenu(["Recommended", ...uniqueCategories?.map((item) => item.name)]);
-      setFilteredData(setYouWillLoveItems.products);
+      setFilteredData(youWillLoveItems?.products);
     }
-  }, [setYouWillLoveItems.products]);
+  }, [youWillLoveItems?.products]);
 
   useEffect(() => {
     if (selectedMenuIndex == 0) {
