@@ -29,7 +29,7 @@ const FoodModule = (props) => {
   const { configData } = props;
   const token = getToken();
   const [isVisited, setIsVisited] = useState(false);
-  const [storeData, setStoreData] = React.useState([]);
+  const [storeData, setStoreData] = useState([]);
   const { orderDetailsModalOpen } = useSelector((state) => state.utilsData);
   const { data, refetch, isLoading } = useGetOtherBanners();
   const {

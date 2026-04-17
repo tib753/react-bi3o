@@ -214,7 +214,7 @@ const ProductCard = (props) => {
     noRecommended,
   } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [openModal, setOpenModal] = React.useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [openLocationAlert, setOpenLocationAlert] = useState(false);
   const { configData } = useSelector((state) => state.configData);
   const imageBaseUrl = configData?.base_urls?.item_image_url;

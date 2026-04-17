@@ -30,7 +30,7 @@ const Pharmacy = ({ configData }) => {
   const token = getToken();
   const [isVisited, setIsVisited] = useState(false);
   const { orderDetailsModalOpen } = useSelector((state) => state.utilsData);
-  const [storeData, setStoreData] = React.useState([]);
+  const [storeData, setStoreData] = useState([]);
   
   // Use custom intersection observer hook
   const { ref: triggerRef, hasTriggered: loadMore } = useIntersectionObserver({

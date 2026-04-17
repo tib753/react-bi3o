@@ -41,7 +41,7 @@ const filterLabels = [
 ];
 const Filter = (props) => {
   const { selectedFilterValue, setSelectedFilterValue } = props;
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation();
   const theme = useTheme();

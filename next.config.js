@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // Disable source maps in production to reduce bundle size
-  productionBrowserSourceMaps: false,
+  // Enable source maps in production to reveal the actual file in errors
+  productionBrowserSourceMaps: true,
 
   // Optimize images
   images: {

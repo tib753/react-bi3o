@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
@@ -16,11 +17,11 @@ const SearchWithTitle = (props) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const [moduleType, setModuleType] = React.useState(getSafeModuleType);
+  const [moduleType, setModuleType] = useState(getSafeModuleType);
   const { zoneid, token, searchQuery, name, query, currentTab } = props;
   const { configData } = useSelector((state) => state.configData);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setModuleType(getSafeModuleType());
   }, []);
 

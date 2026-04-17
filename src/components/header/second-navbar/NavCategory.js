@@ -18,8 +18,8 @@ const NavCategory = ({ openModal, setModal, setRestaurantModal }) => {
 
   const { selectedModule } = useSelector((state) => state.utilsData);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorElSub, setAnchorElSub] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElSub, setAnchorElSub] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   const [enable, setEnable] = useState(false);
 

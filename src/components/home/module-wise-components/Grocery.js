@@ -30,7 +30,7 @@ const Grocery = (props) => {
   const { configData } = props;
   const token = getToken();
   const [isVisited, setIsVisited] = useState(false);
-  const [storeData, setStoreData] = React.useState([]); //setStoreData
+  const [storeData, setStoreData] = useState([]); //setStoreData
   const { orderDetailsModalOpen, orderInformation } = useSelector(
     (state) => state.utilsData
   );

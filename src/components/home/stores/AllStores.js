@@ -1,5 +1,5 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import { useInView } from "react-intersection-observer";
 import {
   CustomBoxFullWidth,
@@ -119,4 +119,4 @@ const AllStores = (props) => {
 
 AllStores.propTypes = {};
 
-export default React.memo(AllStores);
+export default memo(AllStores);
