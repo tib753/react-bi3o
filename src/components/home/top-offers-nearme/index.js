@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { alpha, Button, Skeleton, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 import { getLanguage } from "helper-functions/getLanguage";
 import {
   CustomBoxFullWidth,

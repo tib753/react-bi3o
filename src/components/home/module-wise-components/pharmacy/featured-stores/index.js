@@ -3,8 +3,9 @@ import {
 	WhiteNext,
 	WhitePrev,
 } from "components/home/visit-again/SliderSettings";
-import { useEffect } from "react";
-import Slider from "react-slick";
+import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 import {
 	CustomStackFullWidth,
 	SliderCustom,

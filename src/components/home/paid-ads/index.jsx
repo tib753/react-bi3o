@@ -11,7 +11,8 @@ import Subtitle1 from "components/typographies/Subtitle1";
 import { getModuleId } from "helper-functions/getModuleId";
 import { t } from "i18next";
 import React, { useEffect, useRef, useState } from "react";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 import {
   CustomStackFullWidth,
   SliderCustom,

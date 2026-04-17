@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
+
 import useGetNewArrivalStores from "../../../api-manage/hooks/react-query/store/useGetNewArrivalStores";
 import SpecialOfferCardShimmer from "../../Shimmer/SpecialOfferCardSimmer";
 import { HomeComponentsWrapper } from "../HomePageComponents";
