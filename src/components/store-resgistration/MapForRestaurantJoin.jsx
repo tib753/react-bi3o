@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import CustomTextFieldWithFormik from "../form-fields/CustomTextFieldWithFormik";
 import { useTranslation } from "react-i18next";
 import CustomSelectWithFormik from "../custom-select/CustomSelectWithFormik";
-import { Grid, Stack, useTheme } from "@mui/material";
+import { Grid, Stack, useTheme, Skeleton } from "@mui/material";
 import { useQuery } from "react-query";
 import { GoogleApi } from "api-manage/hooks/react-query/googleApi";
 import { CustomBoxFullWidth } from "components/chat/Chat.style";
-import GoogleMapComponent from "components/Map/GoogleMapComponent";
 import { useSelector } from "react-redux";
 import ImageSection from "components/store-resgistration/ImageSection";
 import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
@@ -17,9 +17,18 @@ import useGetAutocompletePlace from "api-manage/hooks/react-query/google-api/use
 import useGetZoneId from "api-manage/hooks/react-query/google-api/useGetZone";
 import useGetCheckZone from "api-manage/hooks/react-query/google-api/useGetCheckZone";
 import { toast } from "react-hot-toast";
-import CustomMapSearch from "components/Map/CustomMapSearch";
 import { CustomTypography } from "components/landing-page/hero-section/HeroSection.style";
 import ModalExtendShrink from "components/Map/ModalExtendShrink";
+
+// Dynamic imports for heavy map components
+const GoogleMapComponent = dynamic(() => import("components/Map/GoogleMapComponent"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={400} width="100%" />
+});
+const CustomMapSearch = dynamic(() => import("components/Map/CustomMapSearch"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={50} width="100%" />
+});
 const MapForRestaurantJoin = ({
   handleLocation,
   zoneId,

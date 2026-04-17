@@ -1,8 +1,8 @@
 import { Grid, Skeleton, useMediaQuery, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import useGetMostReviewed from "../../../api-manage/hooks/react-query/useGetMostReviewed";
@@ -22,6 +22,12 @@ import { HomeComponentsWrapper } from "../HomePageComponents";
 import { loveItemSettings } from "../love-item/loveItemSettings";
 import Menus from "./Menus";
 import { NextFood, PrevFood } from "./SliderSettings";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={300} width="100%" />
+});
 
 const BestReviewedItems = (props) => {
   const { title, info, bannerIsLoading } = props;

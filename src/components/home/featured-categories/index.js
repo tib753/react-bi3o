@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import {
@@ -7,7 +8,6 @@ import {
 } from "styled-components/CustomStyles.style";
 import { styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
 import { useGetFeaturedCategories } from "api-manage/hooks/react-query/all-category/all-categorys";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { ModuleTypes } from "helper-functions/moduleTypes";
@@ -19,6 +19,11 @@ import ShopCategoryCard from "../../cards/ShopCategoryCard";
 import { HomeComponentsWrapper } from "../HomePageComponents";
 import FeaturedItemCard from "./card";
 import { moduleWiseNext, moduleWisePrev } from "./sliderSettings";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+});
 
 export const ButtonLeft = styled(CustomButtonPrimary)(
   ({ theme, language_direction }) => ({

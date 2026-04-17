@@ -28,7 +28,18 @@ const CustomImageContainer = ({
 }) => {
   const [imageFile, setState] = useState(null);
   useEffect(() => {
-    setState(src ? src : placeholder?.src);
+    const sanitizeSrc = (value) => {
+      if (value === null || value === undefined) return null;
+      if (typeof value === "object") return value;
+      const s = String(value).trim();
+      if (!s) return null;
+      if (s === "null" || s === "undefined") return null;
+      if (s.includes("/null") || s.includes("/undefined")) return null;
+      if (s.endsWith("/null") || s.endsWith("/undefined")) return null;
+      return s;
+    };
+
+    setState(sanitizeSrc(src) || placeholder?.src);
   }, [src]);
 
   return (

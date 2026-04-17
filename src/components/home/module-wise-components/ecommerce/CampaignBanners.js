@@ -12,7 +12,7 @@ import { setBanners } from "../../../../redux/slices/storedData";
 import { CustomStackFullWidth } from "../../../../styled-components/CustomStyles.style";
 import CustomImageContainer from "../../../CustomImageContainer";
 import FoodDetailModal from "../../../food-details/foodDetail-modal/FoodDetailModal";
-import { getImageUrl } from "utils/CustomFunctions";
+import { getImageFullUrl } from "utils/CustomFunctions";
 
 const BannersWrapper = styled(Box)(({ theme }) => ({
   cursor: "pointer",
@@ -221,11 +221,13 @@ const CampaignBanners = () => {
       {openModal && foodBanner && (
         <FoodDetailModal
           product={foodBanner}
-          image={`${getImageUrl(
+          image={getImageFullUrl(
             foodBanner?.storage,
             "item_image_url",
-            configData
-          )}/${foodBanner?.image}`}
+            configData,
+            foodBanner?.image,
+            "/static/no-image-found.png"
+          )}
           open={openModal}
           handleModalClose={handleModalClose}
           setOpen={setOpenModal}

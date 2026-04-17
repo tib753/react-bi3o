@@ -2,7 +2,16 @@ import { alpha, useMediaQuery, useTheme, Card, Skeleton, Box, Grid, Typography }
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { getToken } from "helper-functions/getToken";
 import { ModuleTypes } from "helper-functions/moduleTypes";
-import Slider from "react-slick";
+import React, { useState, Suspense } from "react";
+import dynamic from "next/dynamic";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={200} width="100%" />
+});
 import {
   CustomStackFullWidth,
   SliderCustom,

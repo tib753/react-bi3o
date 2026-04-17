@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
@@ -7,15 +7,23 @@ import H2 from "../../typographies/H2";
 
 import { Skeleton, styled } from "@mui/material";
 import { Box } from "@mui/system";
-import { t } from "i18next";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={200} width="100%" />
+});
 
 import { useGetPopularStoreWithoutInfiniteScroll } from "api-manage/hooks/react-query/store/useGetPopularStore";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { ModuleTypes } from "helper-functions/moduleTypes";
 import { setNewArrivalStores } from "redux/slices/storedData";
+import { t } from "i18next";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import useGetNewArrivalStores from "../../../api-manage/hooks/react-query/store/useGetNewArrivalStores";
 import CustomImageContainer from "../../CustomImageContainer";

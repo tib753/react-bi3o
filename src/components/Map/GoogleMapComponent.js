@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import pickMarker from "./assets/pick_marker.png";
+import NextImage from "components/NextImage";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { darkStyles, grayMapStyle } from "../mapColor.js";
@@ -229,8 +230,8 @@ const GoogleMapComponent = ({
         options={options}
       >
         {!locationLoading ? (
-          <img
-            src={pickMarker.src}
+          <NextImage
+            src={pickMarker}
             style={{
               zIndex: 3,
               position: "absolute",
@@ -241,6 +242,8 @@ const GoogleMapComponent = ({
               height: "60px",
               width: "45px",
             }}
+            width={45}
+            height={60}
             alt="map"
           />
         ) : (

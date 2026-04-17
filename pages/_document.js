@@ -4,6 +4,10 @@ import createEmotionServer from "@emotion/server/create-instance";
 import createEmotionCache from "../src/utils/create-emotion-cache";
 import { haveRtlLanguages } from "../src/components/header/top-navbar/language/rtlLanguageList";
 
+let cachedAnalyticsConfig = null;
+let cachedAnalyticsConfigAt = 0;
+const ANALYTICS_CONFIG_TTL_MS = 1000 * 60 * 10;
+
 class CustomDocument extends Document {
   render() {
     const { analyticsConfig = {}, initialLang = 'ar', initialDir = 'rtl' } = this.props;
@@ -32,24 +36,19 @@ class CustomDocument extends Document {
               `,
             }}
           />
-          {/* Fonts */}
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
-            rel="stylesheet"
-          />
 
           {/* Social login scripts */}
           <script
             type="application/javascript"
             src="https://accounts.google.com/gsi/client"
             async
+            defer
           />
           <script
             type="text/javascript"
             src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
             async
+            defer
           />
           <meta name="theme-color" content="#111827" />
 
@@ -209,19 +208,26 @@ CustomDocument.getInitialProps = async (ctx) => {
   // 🛠 Fetch analytics config server-side
   let analyticsConfig = {};
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://yourdomain.com";
-    const res = await fetch(`${baseUrl}/api/v1/config/get-analytic-scripts`, {
-      headers: {
-        "X-software-id": 33571750,
-        "X-server": "server",
-        origin: process.env.NEXT_CLIENT_HOST_URL || "http://localhost:3000",
-      },
-    });
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      data.forEach((item) => {
-        if (item.type && item.script_id) analyticsConfig[item.type] = item.script_id;
+    const now = Date.now();
+    if (cachedAnalyticsConfig && now - cachedAnalyticsConfigAt < ANALYTICS_CONFIG_TTL_MS) {
+      analyticsConfig = cachedAnalyticsConfig;
+    } else {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://yourdomain.com";
+      const res = await fetch(`${baseUrl}/api/v1/config/get-analytic-scripts`, {
+        headers: {
+          "X-software-id": 33571750,
+          "X-server": "server",
+          origin: process.env.NEXT_CLIENT_HOST_URL || "http://localhost:3000",
+        },
       });
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        data.forEach((item) => {
+          if (item.type && item.script_id) analyticsConfig[item.type] = item.script_id;
+        });
+      }
+      cachedAnalyticsConfig = analyticsConfig;
+      cachedAnalyticsConfigAt = now;
     }
   } catch (err) {
     console.error("Error fetching analytics config:", err);

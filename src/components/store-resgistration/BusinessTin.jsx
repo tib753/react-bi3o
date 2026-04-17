@@ -27,6 +27,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CustomModal from "components/modal";
 import ImageUploaderWithPreview from "components/single-file-uploader-with-preview/ImageUploaderWithPreview";
 import CustomDivider from "components/CustomDivider";
+import CustomImageContainer from "components/CustomImageContainer";
 
 const acceptedFileInputFormat =
   "application/pdf,image/*,text/plain,.doc, .docx,.txt";
@@ -244,7 +245,6 @@ const BusinessTin = ({
               {/* Label and Info */}
               <Stack direction="row" spacing={1} alignItems="center">
                 <InputLabel
-
                   sx={{
                     fontWeight: 600,
                     fontSize: "14px",
@@ -281,14 +281,13 @@ const BusinessTin = ({
                 }}
               >
                 {preview ? (
-                  <img
+                  <CustomImageContainer
                     src={preview}
                     alt="Uploaded preview"
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "200px",
-                      borderRadius: "6px",
-                    }}
+                    width="100%"
+                    height="200px"
+                    borderRadius="6px"
+                    objectfit="contain"
                   />
                 ) : (
                   <Typography

@@ -14,6 +14,7 @@ import img1 from "./assets/image 47.png";
 import SupportImgSvg from "./assets/SupportImgSvg";
 import Link from "next/link";
 import LocationViewOnMap from "../Map/location-view/LocationViewOnMap";
+import NextImage from "components/NextImage";
 
 const HelpAndSupport = (props) => {
   const { configData, t } = props;
@@ -55,7 +56,7 @@ const HelpAndSupport = (props) => {
           <Box sx={{ cursor: "pointer" }} onClick={handleOpenCloseMap}>
             <VisitBox>
               <HelpImgBox>
-                <img src={img1.src} alt={t("help")} />
+                <NextImage src={img1} alt={t("help")} fill />
               </HelpImgBox>
               <Box sx={{ textAlign: "center" }}>
                 <Typography
@@ -75,7 +76,7 @@ const HelpAndSupport = (props) => {
           <Link href={`mailto:${configData?.email}`}>
             <VisitBox>
               <HelpImgBox>
-                <img src={img2.src} alt={t("help")} />
+                <NextImage src={img2} alt={t("help")} fill />
               </HelpImgBox>
               <Box sx={{ textAlign: "center" }}>
                 <Typography
@@ -95,7 +96,7 @@ const HelpAndSupport = (props) => {
           <Link href={`tel:${configData?.phone}`}>
             <VisitBox>
               <HelpImgBox>
-                <img src={img3.src} alt={t("help")} />
+                <NextImage src={img3} alt={t("help")} fill />
               </HelpImgBox>
               <Box sx={{ textAlign: "center" }}>
                 <Typography

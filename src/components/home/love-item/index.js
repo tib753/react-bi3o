@@ -3,14 +3,11 @@ import { useGetRecommendProductsForHome } from "api-manage/hooks/react-query/use
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
-import { setYouWillLoveItems } from "redux/slices/storedData";
-import "slick-carousel/slick/slick-theme.css";
+import React, { Suspense } from "react";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
-import {
-  CustomStackFullWidth,
-  SliderCustom,
-} from "styled-components/CustomStyles.style";
+import "slick-carousel/slick/slick-theme.css";
+import { CustomStackFullWidth, SliderCustom, } from "styled-components/CustomStyles.style";
 import ProductCard from "../../cards/ProductCard";
 import ProductCardSimmer from "../../Shimmer/ProductCardSimmer";
 import H2 from "../../typographies/H2";

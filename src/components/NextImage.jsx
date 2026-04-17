@@ -34,10 +34,24 @@ const NextImage = ({
    aspectRatio,
    ...props
  }) => {
-  const [currentSrc, setCurrentSrc] = useState(src || altSrc);
+  const sanitizeSrc = (value) => {
+    if (value === null || value === undefined) return null;
+    if (typeof value === "object") return value;
+
+    const s = String(value).trim();
+    if (!s) return null;
+    if (s === "null" || s === "undefined") return null;
+    if (s.includes("/null") || s.includes("/undefined")) return null;
+    if (s.endsWith("/null") || s.endsWith("/undefined")) return null;
+    return s;
+  };
+
+  const [currentSrc, setCurrentSrc] = useState(
+    sanitizeSrc(src) || sanitizeSrc(altSrc) || placeholder
+  );
 
   useEffect(() => {
-    setCurrentSrc(src || altSrc);
+    setCurrentSrc(sanitizeSrc(src) || sanitizeSrc(altSrc) || placeholder);
   }, [src, altSrc]);
 
   const handleError = () => {
@@ -45,6 +59,9 @@ const NextImage = ({
       setCurrentSrc(altSrc);
     }
   };
+
+  const shimmerWidth = typeof width === "number" && width > 0 ? width : 1;
+  const shimmerHeight = typeof height === "number" && height > 0 ? height : 1;
 
   // Conditionally create style object
   const style = {
@@ -61,7 +78,9 @@ const NextImage = ({
       height={height}
       alt={alt}
       onError={handleError}
-      placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(width, height))}`}
+      placeholder={`data:image/svg+xml;base64,${toBase64(
+        shimmer(shimmerWidth, shimmerHeight)
+      )}`}
       style={style}
 
       {...props}

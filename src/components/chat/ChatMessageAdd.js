@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Suspense, lazy } from "react";
 import {
 	Box,
 	IconButton,
@@ -7,7 +7,6 @@ import {
 	Tooltip,
 	useMediaQuery,
 } from "@mui/material";
-import Picker from "emoji-picker-react";
 import { toast } from "react-hot-toast";
 import { t } from "i18next";
 import ChatImage from "./ChatImage";
@@ -21,8 +20,12 @@ import MessageIcon from "@mui/icons-material/Message";
 import CustomMessagesBox from "components/chat/CustomMessagesBox";
 import { useGetOrderCancelReason } from "api-manage/hooks/react-query/order/useGetAutomatedMessage";
 import { makeStyles } from "@mui/styles";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import Loading from "components/custom-loading/Loading";
+
+// Lazy load emoji picker
+const Picker = lazy(() => import("emoji-picker-react"));
 const useStyles = makeStyles((theme) => ({
 	popover: {
 		pointerEvents: "none",
@@ -154,10 +157,12 @@ const ChatMessageAdd = ({
 				{/*/>*/}
 				<Stack sx={{ position: "absolute", bottom: "80%" }}>
 					{openEmoji && (
-						<Picker
-							pickerStyle={{ width: "100%" }}
-							onEmojiClick={onEmojiClick}
-						/>
+						<Suspense fallback={<CircularProgress size={20} />}>
+							<Picker
+								pickerStyle={{ width: "100%" }}
+								onEmojiClick={onEmojiClick}
+							/>
+						</Suspense>
 					)}
 				</Stack>
 				<Stack

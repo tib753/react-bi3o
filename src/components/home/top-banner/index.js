@@ -10,14 +10,16 @@ import foodBanner from "../assets/food.png";
 import pharmacy from "../assets/par.png";
 import parcelImage from "../assets/parcelBg.png";
 import { BannerCityIcon } from "components/home/module-wise-components/rental/RentalIcons";
-import LeftCar from "/public/static/rental/left_car.png";
-import RightCar from "/public/static/rental/right_car.png";
+import LeftCar from "../../../../public/static/rental/left_car.png";
+import RightCar from "../../../../public/static/rental/right_car.png";
 import { useEffect, useState } from "react";
 import Image from 'next/image'
 
 
 const TopBanner = () => {
-  const [moduleType, setModuleType] = useState(null);
+  const [moduleType, setModuleType] = useState(
+    typeof window !== "undefined" ? getCurrentModuleType() : ModuleTypes.GROCERY
+  );
   const theme = useTheme();
   // Ensure moduleType is set on the client
   useEffect(() => {
@@ -25,7 +27,7 @@ const TopBanner = () => {
   }, []);
 
   const getBGColor = () => {
-    switch (getCurrentModuleType()) {
+    switch (moduleType) {
       case ModuleTypes.GROCERY:
         return alpha(theme.palette.primary.main, 0.2);
       case ModuleTypes.PHARMACY:
@@ -43,7 +45,7 @@ const TopBanner = () => {
     }
   };
   const getBGImage = () => {
-    switch (getCurrentModuleType()) {
+    switch (moduleType) {
       case ModuleTypes.GROCERY:
         return banner?.src;
       case ModuleTypes.PHARMACY:
@@ -56,7 +58,7 @@ const TopBanner = () => {
         return parcelImage?.src;
 
       default:
-        return "inherit";
+        return banner?.src;
     }
   };
   // if (!moduleType) return null;
@@ -65,7 +67,7 @@ const TopBanner = () => {
     <CustomBoxFullWidth
       sx={{
         minHeight: {
-          xs: moduleType === "parcel" ? "250px" : "160px",
+          xs: moduleType === ModuleTypes.PARCEL ? "250px" : "160px",
           sm: "270px",
           md:"270px"
         },
@@ -74,7 +76,7 @@ const TopBanner = () => {
         overflow: "hidden",
       }}
     >
-      {getCurrentModuleType() === "rental" ? (
+      {moduleType === ModuleTypes.RENTAL ? (
         <Box
           sx={{
             svg: { position: "absolute" },

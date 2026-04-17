@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {Grid, Skeleton, styled, useMediaQuery, useTheme} from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import useGetBanners from "../../../api-manage/hooks/react-query/useGetBanners";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { getModuleId } from "helper-functions/getModuleId";
@@ -18,6 +18,11 @@ import {
 import CustomImageContainer from "../../CustomImageContainer";
 import FoodDetailModal from "../../food-details/foodDetail-modal/FoodDetailModal";
 import NextImage from "components/NextImage";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+});
 
 export const BannersWrapper = styled(Box)(({ theme }) => ({
   cursor: "pointer",

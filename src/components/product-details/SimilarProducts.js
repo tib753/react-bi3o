@@ -1,4 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import {
   CustomStackFullWidth,
   SliderCustom,
@@ -6,12 +9,6 @@ import {
 import { Grid, Typography } from "@mui/material";
 import { t } from "i18next";
 import { Stack } from "@mui/system";
-import Slider from "react-slick";
-import { ProductsReviewSettings } from "./ProductsReviewSettings";
-import ProductReviewCard from "./product-details-section/ProductReviewCard";
-import ProductCard, { CardWrapper } from "../cards/ProductCard";
-
-import useGetSimilarProduct from "../../api-manage/hooks/react-query/product-details/useGetSimilarProduct";
 import { Skeleton } from "@mui/material";
 import { settings } from "../home/popular-items-nearby/SliderSettings";
 import ProductCardShimmer from "../search/ProductCardShimmer";

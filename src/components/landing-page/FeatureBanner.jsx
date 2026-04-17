@@ -1,7 +1,7 @@
 import { Stack, alpha } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
-import Slider from "react-slick";
+import React, { Suspense } from "react";
+import dynamic from "next/dynamic";
 import {
   CustomStackFullWidth,
   SliderCustom,
@@ -9,6 +9,11 @@ import {
 import CustomImageContainer from "../CustomImageContainer";
 import CustomContainer from "../container";
 import NextImage from "components/NextImage";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+});
 
 const Banners = ({ landingPageData, isSmall }) => {
   const infiniteManage = () => {

@@ -35,6 +35,7 @@ import TopBanner from "./top-banner";
 import TaxiSearchPanel from "components/home/module-wise-components/rental/components/global/search/TaxiSearchPanel";
 import { useGetWishList } from "api-manage/hooks/react-query/rental-wishlist/useGetWishlist";
 import Rental from "components/home/module-wise-components/rental/Rental";
+import NextImage from "components/NextImage";
 
 export const HomeComponentsWrapper = styled(Box)(({ theme }) => ({
 	width: "100%",
@@ -221,7 +222,7 @@ const HomePageComponents = ({ configData, landingPageData }) => {
 						},
 					}}
 				>
-					<img
+					<NextImage
 						src={"/static/sign-up-welcome.svg"}
 						alt="welcome"
 						width={183}
@@ -246,7 +247,7 @@ const HomePageComponents = ({ configData, landingPageData }) => {
 					</Box>
 				</Box>
 			</CustomModal>
-			{token && getCurrentModuleType() !== "parcel" && <CashBackPopup />}
+			{token && moduleType !== ModuleTypes.PARCEL && <CashBackPopup />}
 		</PushNotificationLayout>
 	);
 };

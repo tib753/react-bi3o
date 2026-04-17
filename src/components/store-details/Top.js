@@ -11,11 +11,11 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState, Suspense, useReducer } from "react";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { Box, Stack } from "@mui/system";
-import React, {useReducer, useState} from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";

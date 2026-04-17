@@ -30,6 +30,7 @@ import {
 import { StyledMenu, TopBarButton } from "../../NavBar.style";
 import { languageList } from "./languageList";
 import { haveRtlLanguages } from "./rtlLanguageList";
+import NextImage from "components/NextImage";
 
 const getValues = (settings) => ({
   direction: settings.direction,
@@ -164,13 +165,11 @@ const CustomLanguage = ({
         }}
         startIcon={
           <Stack color={theme.palette.neutral[1000]}>
-            <img
+            <NextImage
               alt="start"
-              width="20"
-              src={
-                languageList?.find((item) => item?.languageCode === language)
-                  ?.countryFlag
-              }
+              width={20}
+              height={20}
+              src={languageList?.find((item) => item?.languageCode === language)?.countryFlag}
             />
           </Stack>
         }
@@ -211,7 +210,7 @@ const CustomLanguage = ({
             }}
           >
             <ListItemIcon>
-              <img width="20" src={lan?.countryFlag} alt="flag" />
+              <NextImage width={20} height={20} src={lan?.countryFlag} alt="flag" />
             </ListItemIcon>
             {lan.languageName}
           </MenuItem>

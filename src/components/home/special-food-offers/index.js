@@ -1,8 +1,16 @@
 import { alpha, Button, Skeleton } from "@mui/material";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { useTranslation } from "react-i18next";
-import Slider from "react-slick";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={200} width="100%" />
+});
 import useGetDiscountedItems from "../../../api-manage/hooks/react-query/product-details/useGetDiscountedItems";
 import { getLanguage } from "helper-functions/getLanguage";
 import { getModuleId } from "helper-functions/getModuleId";

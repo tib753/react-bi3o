@@ -6,6 +6,7 @@ import createEmotionCache from "../src/utils/create-emotion-cache";
 import { store } from "redux/store";
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "theme";
+import { rubik } from "../src/utils/fonts";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { RTL } from "components/rtl";
@@ -86,7 +87,7 @@ function MyApp(props) {
 	}, []);
 
 	return (
-		<>
+		<div className={rubik.variable}>
 			{useScrollToTop()}
 			<CacheProvider value={emotionCache}>
 				<QueryClientProvider client={queryClient}>
@@ -114,10 +115,12 @@ function MyApp(props) {
 							</SettingsProvider>
 						</PersistGate>
 					</ReduxProvider>
-					<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+					{process.env.NODE_ENV !== "production" && (
+						<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+					)}
 				</QueryClientProvider>
 			</CacheProvider>
-		</>
+		</div>
 	);
 }
 

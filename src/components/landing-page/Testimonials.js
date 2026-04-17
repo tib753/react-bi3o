@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { styled, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import { useEffect, useState } from "react";
-import Slider from "react-slick";
+import { useEffect, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
@@ -14,6 +14,11 @@ import CustomContainer from "../container";
 import DollarSignHighlighter from "../DollarSignHighlighter";
 import NextIcon from "../icons/NextIcon";
 import PrevIcon from "../icons/PrevIcon";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+});
 
 const PrevWrapper = styled(Box)(({ theme }) => ({
 	zIndex: 1,

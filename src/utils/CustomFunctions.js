@@ -1072,6 +1072,40 @@ export const getImageUrl = (storage, imageType, configData) => {
   const url = baseUrlSet?.[imageType];
   return url || null;
 };
+export const joinImageUrl = (baseUrl, path) => {
+  if (baseUrl === null || baseUrl === undefined) return null;
+  if (path === null || path === undefined) return null;
+
+  const base = String(baseUrl).trim();
+  const p = String(path).trim();
+
+  if (!base || !p) return null;
+  if (base === "null" || base === "undefined") return null;
+  if (p === "null" || p === "undefined") return null;
+  if (base.includes("/null") || base.includes("/undefined")) return null;
+  if (p.includes("/null") || p.includes("/undefined")) return null;
+
+  const normalizedBase = base.replace(/\/+$/, "");
+  const normalizedPath = p.replace(/^\/+/, "");
+  return `${normalizedBase}/${normalizedPath}`;
+};
+export const getImageFullUrl = (
+  storage,
+  imageType,
+  configData,
+  fileName,
+  fallback = null
+) => {
+  if (fileName === null || fileName === undefined) return fallback;
+  if (typeof fileName === "string") {
+    const trimmed = fileName.trim();
+    if (!trimmed || trimmed === "null" || trimmed === "undefined") return fallback;
+  }
+
+  const base = getImageUrl(storage, imageType, configData);
+  const full = joinImageUrl(base, fileName);
+  return full || fallback;
+};
 export const getHeaderImageUrl = (storage, imageType, landingData) => {
   if (!landingData) return null;
   const storageMapping = {

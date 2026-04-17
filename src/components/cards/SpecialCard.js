@@ -61,12 +61,9 @@ export const FoodHalalHaram = ({ position, width }) => {
           bottom: position === "relative" ? "" : "10px",
           left: position === "relative" ? "" : "10px",
           zIndex: "999",
-          img: {
-            objectFit: "contain",
-          },
         }}
       >
-        <img
+        <NextImage
           src={"/static/halal.svg"}
           width={width ? width : 20}
           height={width ? width : 20}

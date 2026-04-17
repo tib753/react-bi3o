@@ -3,15 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetPopularItemsNearby from "../../../api-manage/hooks/react-query/useGetPopularItemsNearby";
 
 import { Grid, Skeleton } from "@mui/material";
-import Slider from "react-slick";
+import React, { useState, Suspense } from "react";
+import dynamic from "next/dynamic";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={200} width="100%" />
+});
 
 import { useTranslation } from "react-i18next";
 
 import { useGetFlashSales } from "api-manage/hooks/react-query/useGetFlashSales";
 import { getLanguage } from "helper-functions/getLanguage";
 import { setPopularItemsNearby } from "redux/slices/storedData";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,

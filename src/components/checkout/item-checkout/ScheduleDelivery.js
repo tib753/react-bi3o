@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { CustomDatePicker } from "../CheckOut.style";
 import { styled, Switch, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { t } from "i18next";
 import moment from "moment/moment";
 import { getDayNumber } from "utils/CustomFunctions";
+
+// Dynamic imports for heavy date picker components
+const LocalizationProvider = dynamic(() => 
+  import("@mui/x-date-pickers/LocalizationProvider").then(mod => mod.LocalizationProvider), {
+  ssr: false,
+});
+
+const AdapterDayjs = dynamic(() => 
+  import("@mui/x-date-pickers/AdapterDayjs").then(mod => mod.AdapterDayjs), {
+  ssr: false,
+});
+
+const DatePicker = dynamic(() => 
+  import("@mui/x-date-pickers/DatePicker").then(mod => mod.DatePicker), {
+  ssr: false,
+});
 
 const TimeInput = styled(TextField)(({ theme }) => ({
   border: "none",

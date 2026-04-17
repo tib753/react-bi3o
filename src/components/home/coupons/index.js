@@ -1,15 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 
 import { alpha, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import dynamic from "next/dynamic";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Skeleton } from "@mui/material";
 import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
-import Slider from "react-slick";
 import useGetCoupons from "../../../api-manage/hooks/react-query/useGetCoupons";
 import { getAmountWithSign } from "helper-functions/CardHelpers";
 import couponsBG from "../assets/coupons_bg.png";
+
+// Lazy load Slider component
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={200} width="100%" />
+});
 
 const CustomBox = styled(Box)(({ theme }) => ({
   background: alpha(theme.palette.primary.main, 0.3),

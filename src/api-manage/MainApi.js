@@ -1,4 +1,6 @@
 import axios from "axios";
+import i18n from "i18next";
+
 export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const MainApi = axios.create({
   baseURL: baseUrl,
@@ -19,12 +21,16 @@ MainApi.interceptors.request.use(function (config) {
     currentLocation = JSON.parse(localStorage.getItem("currentLatLng"));
     moduleid = JSON.parse(localStorage.getItem("module"))?.id;
   }
+
+  // X-localization: prioritize i18n.language, then localStorage, then default 'ar' (Arabic)
+  const locale = i18n?.language || language || "ar";
+  config.headers["X-localization"] = locale;
+
   if (currentLocation) config.headers.latitude = currentLocation.lat;
   if (currentLocation) config.headers.longitude = currentLocation.lng;
   if (zoneid) config.headers.zoneid = zoneid;
   if (moduleid) config.headers.moduleId = moduleid;
   if (token) config.headers.authorization = `Bearer ${token}`;
-  if (language) config.headers["X-localization"] = language;
   if (hostname) config.headers["origin"] = hostname;
   config.headers["X-software-id"] = software_id;
   config.headers["Accept"] = 'application/json'

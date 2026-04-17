@@ -3,7 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import MainLayout from "../layout/MainLayout";
 import StoresWithFilter from "../home/stores-with-filter";
 import SEO from "../seo";
-import { getImageUrl } from "utils/CustomFunctions";
+import { getImageFullUrl } from "utils/CustomFunctions";
 
 const AllStore = ({ configData }) => {
   return (
@@ -11,11 +11,13 @@ const AllStore = ({ configData }) => {
       <CssBaseline />
       <SEO
         title={configData ? `Store` : "Loading..."}
-        image={`${getImageUrl(
+        image={getImageFullUrl(
           { value: configData?.logo_storage },
           "business_logo_url",
-          configData
-        )}/${configData?.fav_icon}`}
+          configData,
+          configData?.fav_icon,
+          "/static/no-image-found.png"
+        )}
         businessName={configData?.business_name}
       />
 

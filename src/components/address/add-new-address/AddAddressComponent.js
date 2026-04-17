@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import {
   Grid,
   IconButton,
@@ -6,6 +7,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Skeleton,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { BackIconButton } from "../../profile/basic-information/BasicInformationForm";
@@ -16,8 +18,16 @@ import useGetAutocompletePlace from "../../../api-manage/hooks/react-query/googl
 import useGetGeoCode from "../../../api-manage/hooks/react-query/google-api/useGetGeoCode";
 import useGetZoneId from "../../../api-manage/hooks/react-query/google-api/useGetZone";
 import useGetPlaceDetails from "../../../api-manage/hooks/react-query/google-api/useGetPlaceDetails";
-import GoogleMapComponent from "../../Map/GoogleMapComponent";
-import CustomMapSearch from "../../Map/CustomMapSearch";
+
+// Dynamic imports for heavy map components
+const GoogleMapComponent = dynamic(() => import("../../Map/GoogleMapComponent"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={400} width="100%" />
+});
+const CustomMapSearch = dynamic(() => import("../../Map/CustomMapSearch"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rectangular" height={50} width="100%" />
+});
 import { Box } from "@mui/system";
 import { handleAgreeLocation, handleCloseLocation } from "../HelperFunctions";
 import {

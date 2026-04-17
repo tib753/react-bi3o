@@ -2,7 +2,7 @@ import { Avatar, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getImageUrl } from "utils/CustomFunctions";
+import { getImageFullUrl } from "utils/CustomFunctions";
 import useGetModule from "../../../api-manage/hooks/react-query/useGetModule";
 import { getLanguage } from "helper-functions/getLanguage";
 import { setModules } from "redux/slices/configData";
@@ -31,11 +31,13 @@ const ModuleWiseNav = (props) => {
 	const [openDrawer, setOpenDrawer] = useState(false);
 	const { data, refetch } = useGetModule();
 	const { profileInfo } = useSelector((state) => state.profileInfo);
-	const profileImageUrl = `${getImageUrl(
+	const profileImageUrl = getImageFullUrl(
 		profileInfo?.storage,
 		"customer_image_url",
-		configData
-	)}/${profileInfo?.image}`;
+		configData,
+		profileInfo?.image,
+		"/static/no-image-found.png"
+	);
 	const favIcon = configData?.logo_full_url;
 	const lanDirection = getLanguage();
 	const dispatch = useDispatch();
@@ -70,7 +72,12 @@ const ModuleWiseNav = (props) => {
 			alignItems="center"
 		>
 			<Avatar
-				src={profileImageUrl}
+				src={profileImageUrl || undefined}
+				imgProps={{
+					onError: (e) => {
+						e.currentTarget.src = "/static/no-image-found.png";
+					},
+				}}
 				sx={{ width: 18, height: 18, cursor: "pointer" }}
 				onClick={handleProfileClick}
 			/>
