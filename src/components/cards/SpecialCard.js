@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import React from "react";
 import {Grid, Tooltip, Typography, useMediaQuery, useTheme} from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
 import { t } from "i18next";

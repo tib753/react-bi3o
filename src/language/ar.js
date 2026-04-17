@@ -976,7 +976,7 @@ export const arabic = {
 	"Your token has been expired.please sign in again":
 		"لقد انتهت صلاحية الرمز المميز. قم بتسجيل الدخول مرة أخرى",
 	"New On": "جديد",
-	"Deliveryman tips": "نصائح التوصيل",
+	"Deliveryman tips": "إكراميات مندوب التوصيل",
 	"something went wrong.": "هناك خطأ ما.",
 	"Please wait sometimes": "يرجى الانتظار قليلًا",
 	"No Cuisine Restaurant Found": "لم يتم العثور على مطاعم لهذا النوع",
