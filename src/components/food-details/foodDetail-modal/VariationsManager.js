@@ -15,6 +15,7 @@ const VariationsManager = (props) => {
             radioCheckHandler={radioCheckHandler}
             choiceIndex={choiceIndex}
             changeChoices={changeChoices}
+            productDetailsData={modalData[0]}
           />
         ))
       ) : (

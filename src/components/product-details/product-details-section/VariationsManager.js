@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
 import { Typography, useTheme } from "@mui/material";
 import { t } from "i18next";
+import i18n from "i18next";
 import { Stack } from "@mui/system";
 import { CustomColorBox, CustomSizeBox } from "../ProductDetails.style";
 import CheckIcon from "@mui/icons-material/Check";
@@ -16,7 +17,25 @@ const getSelectedIndex = (options, selectedOptions) => {
   });
   return index;
 };
+
+const getTranslatedName = (productData, defaultName, type = "title") => {
+  const currentLanguage = i18n.language || "ar";
+  if (productData?.translations?.length > 0) {
+    const translation = productData.translations.find(
+      (t) => t.locale === currentLanguage && t.key === type && t.value.toLowerCase().includes(defaultName.toLowerCase())
+    );
+    if (!translation && type === "title") {
+       // try finding by key match only if title
+       const translationByKey = productData.translations.find(t => t.locale === currentLanguage && t.key === defaultName);
+       if (translationByKey) return translationByKey.value;
+    }
+    return translation ? translation.value : defaultName;
+  }
+  return defaultName;
+};
+
 const VariationsManager = ({ productDetailsData, handleChoices }) => {
+  console.log("VariationsManager Data:", productDetailsData);
   const theme = useTheme();
   const borderColor = theme.palette.primary.main;
   const [choice, setChoice] = useState(null);
@@ -58,7 +77,7 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
         <CustomStackFullWidth key={choiceIndex}>
           <Stack direction="row" spacing={0.5} alignItems="center">
             <Typography fontWeight="600" paddingBottom="3px">
-              {choice?.title}
+              {getTranslatedName(productDetailsData, choice?.title)}
             </Typography>
             {/*<Typography fontWeight="600">:</Typography>*/}
             {/*<Typography fontWeight="400">{state.productColor}</Typography>*/}
@@ -72,7 +91,7 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
                 productsize={value[choiceIndex]?.value}
               >
                 <Typography fontSize={{ xs: "12px", sm: "14px" }}>
-                  {item}
+                  {getTranslatedName(productDetailsData, item, "option")}
                 </Typography>
               </CustomSizeBox>
             ))}

@@ -4,14 +4,25 @@ import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import Radio from "@mui/material/Radio";
-
+import i18n from "i18next";
 import VariationRequiredWarningAlert from "./VariationRequiredWarningAlert";
 import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
 import { CustomTypographyLabel } from "../../../styled-components/CustomTypographies.style";
 import { getAmountWithSign } from "../../../helper-functions/CardHelpers";
 
+const getTranslatedName = (productData, defaultName, type = "title") => {
+  const currentLanguage = i18n.language || "ar";
+  if (productData?.translations?.length > 0) {
+    const translation = productData.translations.find(
+      (t) => t.locale === currentLanguage && t.key === type && t.value.toLowerCase().includes(defaultName.toLowerCase())
+    );
+    return translation ? translation.value : defaultName;
+  }
+  return defaultName;
+};
+
 export const ChoiceValues = (props) => {
-  const { choice, t, radioCheckHandler, choiceIndex, changeChoices } = props;
+  const { choice, t, radioCheckHandler, choiceIndex, changeChoices, productDetailsData } = props;
   const [radioData, setRadioData] = useState({ isChecked: false });
   useEffect(() => {
     radioData?.option &&
@@ -79,7 +90,7 @@ export const ChoiceValues = (props) => {
           fontWeight: "500",
         }}
       >
-        {choice.name}{" "}
+        {getTranslatedName(productDetailsData, choice?.name)}{" "}
         {choice.required === "on" ? t("(required)") : t("(optional)")}:
       </FoodTitleTypography>
       <FormControl fullWidth>
@@ -138,7 +149,7 @@ export const ChoiceValues = (props) => {
                   )
                 }
                 label={
-                  <CustomTypographyLabel>{option.label}</CustomTypographyLabel>
+                  <CustomTypographyLabel>{getTranslatedName(productDetailsData, option.label, "option")}</CustomTypographyLabel>
                 }
               />
               <CustomTypographyLabel>
