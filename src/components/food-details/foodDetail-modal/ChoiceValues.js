@@ -12,12 +12,51 @@ import { getAmountWithSign } from "../../../helper-functions/CardHelpers";
 
 const getTranslatedName = (productData, defaultName, type = "title") => {
   const currentLanguage = i18n.language || "ar";
-  if (productData?.translations?.length > 0) {
-    const translation = productData.translations.find(
-      (t) => t.locale === currentLanguage && t.key === type && t.value.toLowerCase().includes(defaultName.toLowerCase())
+  if (!defaultName || !productData?.translations?.length) return defaultName;
+  
+  const defaultNameLower = defaultName.toString().toLowerCase().trim();
+  
+  // Search 1: Look for translation where the VALUE matches the defaultName
+  const translationByValue = productData.translations.find(
+    (t) => t.locale === currentLanguage && 
+           t.value && 
+           t.value.toString().toLowerCase().trim() === defaultNameLower
+  );
+  if (translationByValue) return translationByValue.value;
+  
+  // Search 2: Look for translation where the KEY matches the defaultName exactly
+  const translationByKey = productData.translations.find(
+    (t) => t.locale === currentLanguage && 
+           t.key && 
+           t.key.toString().toLowerCase().trim() === defaultNameLower
+  );
+  if (translationByKey) return translationByKey.value;
+  
+  // Search 3: Check if any Arabic/English translation value matches our defaultName
+  const matchingBaseTranslation = productData.translations.find(
+    (t) => (t.locale === "ar" || t.locale === "en") && 
+           t.value && 
+           t.value.toString().toLowerCase().trim() === defaultNameLower
+  );
+  
+  if (matchingBaseTranslation) {
+    // Found a base translation, now find the current language version
+    const currentLangTranslation = productData.translations.find(
+      (t) => t.locale === currentLanguage && 
+             t.key === matchingBaseTranslation.key
     );
-    return translation ? translation.value : defaultName;
+    if (currentLangTranslation) return currentLangTranslation.value;
   }
+  
+  // Search 4: Check if translation value CONTAINS the default name
+  const translationContaining = productData.translations.find(
+    (t) => t.locale === currentLanguage && 
+           t.value && 
+           t.value.toString().toLowerCase().includes(defaultNameLower)
+  );
+  if (translationContaining) return translationContaining.value;
+  
+  // If no translation found, return original
   return defaultName;
 };
 

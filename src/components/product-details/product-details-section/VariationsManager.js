@@ -20,23 +20,75 @@ const getSelectedIndex = (options, selectedOptions) => {
 
 const getTranslatedName = (productData, defaultName, type = "title") => {
   const currentLanguage = i18n.language || "ar";
-  if (productData?.translations?.length > 0) {
-    const translation = productData.translations.find(
-      (t) => t.locale === currentLanguage && t.key === type && t.value.toLowerCase().includes(defaultName.toLowerCase())
+  if (!defaultName || !productData?.translations?.length) return defaultName;
+  
+  const defaultNameLower = defaultName.toString().toLowerCase().trim();
+  
+  // Search 1: Look for translation where the VALUE matches the defaultName (e.g., key="Weight", value="وزن" or "Poids")
+  // This handles cases where the backend sends translation with the Arabic text as value
+  const translationByValue = productData.translations.find(
+    (t) => t.locale === currentLanguage && 
+           t.value && 
+           t.value.toString().toLowerCase().trim() === defaultNameLower
+  );
+  if (translationByValue) return translationByValue.value;
+  
+  // Search 2: Look for translation where the KEY matches the defaultName exactly
+  const translationByKey = productData.translations.find(
+    (t) => t.locale === currentLanguage && 
+           t.key && 
+           t.key.toString().toLowerCase().trim() === defaultNameLower
+  );
+  if (translationByKey) return translationByKey.value;
+  
+  // Search 3: Look for translation where the KEY is "name" or "title" and the value in another language matches
+  // This handles variations where title might be stored with key="title" and Arabic value
+  const allTranslationKeys = productData.translations.filter(
+    (t) => t.key === type || t.key === "name"
+  );
+  
+  // Check if any Arabic/English translation value matches our defaultName
+  const matchingBaseTranslation = productData.translations.find(
+    (t) => (t.locale === "ar" || t.locale === "en") && 
+           t.value && 
+           t.value.toString().toLowerCase().trim() === defaultNameLower
+  );
+  
+  if (matchingBaseTranslation) {
+    // Found a base translation, now find the current language version
+    const currentLangTranslation = productData.translations.find(
+      (t) => t.locale === currentLanguage && 
+             t.key === matchingBaseTranslation.key
     );
-    if (!translation && type === "title") {
-       // try finding by key match only if title
-       const translationByKey = productData.translations.find(t => t.locale === currentLanguage && t.key === defaultName);
-       if (translationByKey) return translationByKey.value;
-    }
-    return translation ? translation.value : defaultName;
+    if (currentLangTranslation) return currentLangTranslation.value;
   }
+  
+  // Search 4: Original search - check if translation value CONTAINS the default name
+  const translationContaining = productData.translations.find(
+    (t) => t.locale === currentLanguage && 
+           t.value && 
+           t.value.toString().toLowerCase().includes(defaultNameLower)
+  );
+  if (translationContaining) return translationContaining.value;
+  
+  // If no translation found, return original
   return defaultName;
 };
 
 const VariationsManager = ({ productDetailsData, handleChoices }) => {
-  console.log("VariationsManager Data:", productDetailsData);
   const theme = useTheme();
+  // Debug logging for translations
+  if (productDetailsData?.choice_options?.length > 0) {
+    console.log("=== TRANSLATION DEBUG ===");
+    console.log("Current Language:", i18n.language);
+    console.log("Choice Options:", productDetailsData.choice_options);
+    console.log("Translations Array:", productDetailsData.translations);
+    productDetailsData.choice_options.forEach((choice, idx) => {
+      const translated = getTranslatedName(productDetailsData, choice?.title);
+      console.log(`Choice ${idx}: "${choice?.title}" -> Translated: "${translated}"`);
+    });
+    console.log("========================");
+  }
   const borderColor = theme.palette.primary.main;
   const [choice, setChoice] = useState(null);
   const [value, setValue] = useState(
