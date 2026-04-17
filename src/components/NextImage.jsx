@@ -1,7 +1,7 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import placeholder from "../../public/static/no-image-found.png";
 
 const shimmer = (w, h) => `
