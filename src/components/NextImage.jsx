@@ -30,6 +30,7 @@ const NextImage = ({
    width,
    height,
    objectFit,
+   maxWidth,
    borderRadius,
    aspectRatio,
    ...props
@@ -66,10 +67,13 @@ const NextImage = ({
   // Conditionally create style object
   const style = {
     objectFit,
+    maxWidth,
     borderRadius,
     aspectRatio,
     ...props.style, // allow passing additional styles
   };
+
+  const { objectFit: _objectFit, maxWidth: _maxWidth, ...restProps } = props;
 
   return (
     <Image
@@ -83,7 +87,7 @@ const NextImage = ({
       )}`}
       style={style}
 
-      {...props}
+      {...restProps}
     />
   );
 };

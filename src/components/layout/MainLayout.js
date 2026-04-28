@@ -21,9 +21,7 @@ const MainLayout = ({ children, configData }) => {
 	const { page } = router.query;
 	const dispatch = useDispatch();
 	useEffect(() => {
-		if (router.pathname === "/home") {
-			refetch();
-		}
+		refetch();
 	}, []);
 	if (data) {
 		const selectedModuleType = JSON.parse(

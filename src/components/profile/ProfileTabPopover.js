@@ -25,7 +25,7 @@ const StyledMenuItem = styled(MenuItem)(({ theme, page, menu }) => ({
 }));
 const ProfileTabPopover = (props) => {
   const { deleteUserHandler,isLoadingDelete,accountDeleteStatus,setAccountDeleteStatus, anchorEl, onClose, open, page, ...other } = props;
-  const { configData } = useSelector((state) => state.configData);
+  const { configData, modules } = useSelector((state) => state.configData);
   const [openModal, setOpenModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const router = useRouter();
@@ -85,10 +85,13 @@ const ProfileTabPopover = (props) => {
         }}
       >
         {menuData?.map((menu, index) => {
+          const rentalModule = modules?.find((m) => m?.module_type === 'rental');
+          const isRentalModuleActive = rentalModule?.status === 1;
           if (
             (configData?.customer_wallet_status === 0 && menu?.id === 4) ||
             (configData?.loyalty_point_status === 0 && menu?.id === 5) ||
-            (configData?.ref_earning_status === 0 && menu?.id === 6)
+            (configData?.ref_earning_status === 0 && menu?.id === 6) ||
+            (menu?.id === 3 && modules?.length > 0 && !isRentalModuleActive)
           ) {
             return null;
           } else {

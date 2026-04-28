@@ -31,13 +31,9 @@ const ModuleWiseNav = (props) => {
 	const [openDrawer, setOpenDrawer] = useState(false);
 	const { data, refetch } = useGetModule();
 	const { profileInfo } = useSelector((state) => state.profileInfo);
-	const profileImageUrl = getImageFullUrl(
-		profileInfo?.storage,
-		"customer_image_url",
-		configData,
-		profileInfo?.image,
-		"/static/no-image-found.png"
-	);
+	const profileImageUrl = profileInfo?.image 
+		? getImageFullUrl(profileInfo?.storage, "customer_image_url", configData, profileInfo?.image)
+		: null;
 	const favIcon = configData?.logo_full_url;
 	const lanDirection = getLanguage();
 	const dispatch = useDispatch();
@@ -73,11 +69,6 @@ const ModuleWiseNav = (props) => {
 		>
 			<Avatar
 				src={profileImageUrl || undefined}
-				imgProps={{
-					onError: (e) => {
-						e.currentTarget.src = "/static/no-image-found.png";
-					},
-				}}
 				sx={{ width: 18, height: 18, cursor: "pointer" }}
 				onClick={handleProfileClick}
 			/>

@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { SideDrawerWrapper } from "./CustomSideDrawer.style";
 import { styled } from "@mui/material/styles";
 import { Drawer } from "@mui/material";
-const CustomDrawerForSidebar = styled(Drawer)(
+
+const CustomDrawerForSidebar = styled(Drawer, {
+	shouldForwardProp: (prop) =>
+		prop !== "height" && prop !== "width" && prop !== "maxWidth",
+})(
 	({ theme, height, width, maxWidth }) => ({
 		zIndex: theme.zIndex.appBar + 100,
 		maxWidth: maxWidth,

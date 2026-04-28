@@ -42,6 +42,15 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
+  async rewrites() {
+    return [
+      {
+        source: '/api/v1/:path*',
+        destination: 'https://dz.bi3o.com/api/v1/:path*',
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

@@ -214,10 +214,12 @@ export const CustomIconButton = styled(Box)(({ theme, marginTop, align }) => ({
 export const CustomBoxFullWidth = styled(Box)(({ theme }) => ({
 	width: "100%",
 }));
-export const CustomStackFullWidth = styled(Stack)(
-	({ theme, marginBottom, justifyContent }) => ({
+export const CustomStackFullWidth = styled(Stack, {
+	shouldForwardProp: (prop) => prop !== "justyfyContent",
+})(
+	({ theme, marginBottom, justifyContent, justyfyContent }) => ({
 		width: "100%",
-		justifyContent: justifyContent,
+		justifyContent: justifyContent ?? justyfyContent,
 	})
 );
 export const CustomBoxWithSpacing = styled(Box)(
@@ -354,7 +356,7 @@ export const CustomImageContainerStyled = styled(Box)(
 		marginBottom: margin_bottom,
 		position: "relative",
 		borderRadius: border_radius || "none",
-		borderBottomRightRadius:borderBottomRightRadius ? borderBottomRightRadius : "none",
+		borderbottomrightradius:borderBottomRightRadius ? borderBottomRightRadius : "none",
 		[theme.breakpoints.down("md")]: {
 			height: mdHeight ? mdHeight : "",
 		},
@@ -505,6 +507,14 @@ export const CustomModalWrapper = styled(Box)(({ theme }) => ({
 	backgroundColor: "background.paper",
 	p: 2,
 	outline: "none",
+	maxHeight: "90vh",
+	overflowY: "auto",
+	overflowX: "hidden",
+	WebkitOverflowScrolling: "touch",
+	[theme.breakpoints.down("sm")]: {
+		maxWidth: "95vw",
+		maxHeight: "85vh",
+	},
 }));
 
 export const StoreImageBox = styled(Box)(

@@ -9,6 +9,7 @@ const CustomImageContainer = ({
   maxWidth,
   height,
   width,
+  objectFit,
   objectfit,
   minwidth,
   src,
@@ -26,6 +27,7 @@ const CustomImageContainer = ({
                                 borderBottomRightRadius,
   ...rest
 }) => {
+  const resolvedObjectFit = objectFit ?? objectfit;
   const [imageFile, setState] = useState(null);
   useEffect(() => {
     const sanitizeSrc = (value) => {
@@ -46,7 +48,7 @@ const CustomImageContainer = ({
     <CustomImageContainerStyled
       height={height}
       width={width}
-      objectfit={objectfit}
+      objectfit={resolvedObjectFit}
       minwidth={minwidth}
       border_radius={borderRadius}
       margin_bottom={marginBottom}
@@ -60,7 +62,6 @@ const CustomImageContainer = ({
       aspect_ratio={aspectRatio}
       padding={padding}
       bg={bg}
-      borderBottomRightRadius={borderBottomRightRadius}
       {...rest}
     >
       {!imageFile ? (

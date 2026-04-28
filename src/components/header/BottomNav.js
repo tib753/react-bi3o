@@ -22,6 +22,8 @@ import Box from "@mui/material/Box";
 import { getModule } from "helper-functions/getLanguage";
 import LocalTaxiIcon from "@mui/icons-material/LocalTaxi";
 
+const BottomNavBox = ({ showLabel, ...rest }) => <Box {...rest} />;
+
 const styles = {
   maxWidth: 2000,
   width: "100%",
@@ -33,6 +35,7 @@ const BottomNav = () => {
   const { wishLists } = useSelector((state) => state.wishList);
   const { cartList } = useSelector((state) => state.cart);
   const { selectedModule } = useSelector((state) => state.utilsData);
+  const { modules } = useSelector((state) => state.configData);
   const totalWishList = wishLists?.item?.length + wishLists?.store?.length;
   const rentalTotalWishList =
     wishLists?.providers?.length + wishLists?.vehicles?.length;
@@ -98,20 +101,20 @@ const BottomNav = () => {
               icon={<HomeIcon />}
             />
 
-              {selectedModule?.module_type === "rental" ? (<CustomBottomNavigationAction
-                  label={t("My Trips")}
-                  value="my-trips"
-                  icon={
-                      <Badge color="error">
-                          <LocalTaxiIcon />
-                      </Badge>
-                  }
-              />) : (<CustomBottomNavigationAction
+              {modules?.length > 0 && modules?.find((item) => item?.module_type === 'rental')?.status !== 1 ? (<CustomBottomNavigationAction
                   label={t("My Orders")}
                   value="my-orders"
                   icon={
                       <Badge color="error">
                           <LibraryBooksIcon/>
+                      </Badge>
+                  }
+              />) : (<CustomBottomNavigationAction
+                  label={t("My Trips")}
+                  value="my-trips"
+                  icon={
+                      <Badge color="error">
+                          <LocalTaxiIcon />
                       </Badge>
                   }
               />)}
@@ -133,9 +136,9 @@ const BottomNav = () => {
                 />
               )}
             {selectedModule?.module_type === "rental" && (
-              <Box sx={{ marginTop: "2px", marginInlineStart: "4px" }}>
+              <BottomNavBox sx={{ marginTop: "2px", marginInlineStart: "4px" }}>
                 <Taxi color={(theme) => theme.palette.neutral[1000]} label={t("Carts")} />
-              </Box>
+              </BottomNavBox>
             )}
             <CustomBottomNavigationAction
               label={t("Chat")}

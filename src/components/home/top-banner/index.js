@@ -99,7 +99,11 @@ const TopBanner = () => {
             }),
           }}
         >
-          <BannerCityIcon height="100%" width="100%" objectFit="cover" />
+          <BannerCityIcon
+            height="100%"
+            width="100%"
+            style={{ objectFit: "cover" }}
+          />
           <CustomImageContainer
             className="left_img"
             src={LeftCar?.src}
