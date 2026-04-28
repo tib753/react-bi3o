@@ -77,7 +77,7 @@ export const getServerSideProps = async (context) => {
     distance,
   } = context.query;
   const { req } = context;
-  const language = req.cookies.languageSetting || "en";
+  const language = req.cookies.languageSetting || req.cookies["language-setting"] || "ar";
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);

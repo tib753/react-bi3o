@@ -57,7 +57,7 @@ const Root = (props) => {
 export default Root;
 export const getServerSideProps = async (context) => {
 	const { req, res } = context;
-	const language = req.cookies.languageSetting;
+	const language = req.cookies.languageSetting || req.cookies["language-setting"] || "ar";
 
 	console.time("Config API Call");
 	const configRes = await fetch(

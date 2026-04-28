@@ -75,7 +75,7 @@ const Index = ({ configData, productDetailsData, landingPageData }) => {
 export default Index;
 export const getServerSideProps = async (context) => {
   const { req } = context;
-  const language = req.cookies.languageSetting;
+  const language = req.cookies.languageSetting || req.cookies["language-setting"] || "ar";
   const configRes = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/config`,
     {
