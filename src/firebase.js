@@ -3,7 +3,7 @@ import { getMessaging, getToken, onMessage, isSupported } from "firebase/messagi
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBsRmaG3zvH6AozTsCdr4TXI_JZzf3QlOQ",
+  apiKey: "AIzaSyCyorWOfuTEJc6BXxdEbZEzfT0M6wjZ1Nc",
   authDomain: "bi3o-c3d58.firebaseapp.com",
   projectId: "bi3o-c3d58",
   storageBucket: "bi3o-c3d58.firebasestorage.app",
