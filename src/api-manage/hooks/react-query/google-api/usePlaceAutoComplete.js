@@ -24,7 +24,7 @@ const getGooglePlacesPredictions = async (searchKey) => {
     const request = {
       input: searchKey,
       language: language,
-      includedPrimaryTypes: ["locality", "sublocality", "neighborhood", "street_address", "route", "establishment"],
+      includedPrimaryTypes: ["locality", "sublocality", "neighborhood", "route", "establishment"],
     };
 
     // Use NEW API: AutocompleteSuggestion.fetchAutocompleteSuggestions (returns Promise)
