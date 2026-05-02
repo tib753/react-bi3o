@@ -128,9 +128,9 @@ const TaxiSearchPanel = ({
 
 	useEffect(() => {
 		if (places) {
-			const tempData = places?.suggestions?.map((item) => ({
-				place_id: item?.placePrediction?.placeId,
-				description: `${item?.placePrediction?.structuredFormat?.mainText?.text}, ${item?.placePrediction?.structuredFormat?.secondaryText?.text}`,
+			const tempData = places?.predictions?.map((item) => ({
+				place_id: item?.place_id,
+				description: item?.description,
 			}));
 
 			setPredictions(tempData);

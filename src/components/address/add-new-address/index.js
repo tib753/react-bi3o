@@ -88,9 +88,9 @@ const AddNewAddress = (props) => {
   );
   useEffect(() => {
     if (places) {
-      const tempData = places?.data?.suggestions?.map((item) => ({  
-        place_id: item?.placePrediction?.placeId,
-        description: `${item?.placePrediction?.structuredFormat?.mainText?.text}, ${item?.placePrediction?.structuredFormat?.secondaryText?.text}`,
+      const tempData = places?.predictions?.map((item) => ({  
+        place_id: item?.place_id,
+        description: item?.description,
       }));
       dispatch({ type: ACTIONS.setPredictions, payload: tempData });
     }

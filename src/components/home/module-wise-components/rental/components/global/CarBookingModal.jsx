@@ -393,16 +393,16 @@ const CarBookingModal = (props) => {
   // Update predictions when autocomplete data changes
   useEffect(() => {
     if (places1) {
-      const tempData = places1?.suggestions?.map((item) => ({
-        place_id: item?.placePrediction?.placeId,
-        description: `${item?.placePrediction?.structuredFormat?.mainText?.text}, ${item?.placePrediction?.structuredFormat?.secondaryText?.text}`,
+      const tempData = places1?.predictions?.map((item) => ({
+        place_id: item?.place_id,
+        description: item?.description,
       }));
       setPredictions1(tempData);
     }
     if (places2) {
-      const tempData = places2?.suggestions?.map((item) => ({
-        place_id: item?.placePrediction?.placeId,
-        description: `${item?.placePrediction?.structuredFormat?.mainText?.text}, ${item?.placePrediction?.structuredFormat?.secondaryText?.text}`,
+      const tempData = places2?.predictions?.map((item) => ({
+        place_id: item?.place_id,
+        description: item?.description,
       }));
       setPredictions2(tempData);
     }
