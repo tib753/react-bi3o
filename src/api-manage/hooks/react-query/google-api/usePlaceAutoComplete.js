@@ -23,7 +23,7 @@ const getGooglePlacesPredictions = async (searchKey) => {
     // NEW Places API request format
     const request = {
       input: searchKey,
-      languageCode: language,
+      language: language,
       includedPrimaryTypes: ["locality", "sublocality", "neighborhood", "street_address", "route", "establishment"],
     };
 
