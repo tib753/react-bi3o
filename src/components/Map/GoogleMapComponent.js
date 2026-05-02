@@ -20,6 +20,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { darkStyles, grayMapStyle } from "../mapColor.js";
 
+// Define libraries array outside component to prevent recreation on every render
+const LIBRARIES = ["places"];
+
 const GoogleMapComponent = ({
   setDisablePickButton,
   setLocationEnabled,
@@ -72,7 +75,7 @@ const GoogleMapComponent = ({
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-    libraries: ['places'],
+    libraries: LIBRARIES,
   });
 
   const [isMounted, setIsMounted] = useState(false);
