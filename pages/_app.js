@@ -23,6 +23,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useScrollToTop from "../src/api-manage/hooks/custom-hooks/useScrollToTop";
+import GoogleMapsLoader from "../src/components/GoogleMapsLoader";
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
@@ -107,7 +108,9 @@ function MyApp(props) {
 											<RTL direction={languageDirection}>
 												<CssBaseline />
 												<Toaster position="top-center" />
-												{getLayout(<Component {...pageProps} />)}
+												<GoogleMapsLoader>
+													{getLayout(<Component {...pageProps} />)}
+												</GoogleMapsLoader>
 											</RTL>
 										</ThemeProvider>
 									)}

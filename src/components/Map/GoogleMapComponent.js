@@ -72,6 +72,7 @@ const GoogleMapComponent = ({
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
+    libraries: ['places'],
   });
 
   const [isMounted, setIsMounted] = useState(false);
