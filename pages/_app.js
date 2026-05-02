@@ -23,7 +23,10 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useScrollToTop from "../src/api-manage/hooks/custom-hooks/useScrollToTop";
-import GoogleMapsLoader from "../src/components/GoogleMapsLoader";
+import { useJsApiLoader } from "@react-google-maps/api";
+
+// Define libraries array outside component to prevent recreation on every render
+const LIBRARIES = ["places", "maps"];
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
@@ -44,6 +47,17 @@ import { haveRtlLanguages } from "../src/components/header/top-navbar/language/r
 function MyApp(props) {
 	const { i18n } = useTranslation()
 	const [languageDirection, setLanguageDirection] = useState("rtl")
+
+	// Load Google Maps globally once for the entire app
+	const { isLoaded: isGoogleMapsLoaded } = useJsApiLoader({
+		id: "google-map-script-global",
+		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
+		libraries: LIBRARIES,
+		language: typeof window !== "undefined"
+			? JSON.parse(localStorage.getItem("language-setting"))?.languageCode || "ar"
+			: "ar",
+	});
+
 	useEffect(() => {
 		const lang = i18n.language;
 		if (haveRtlLanguages.includes(lang)) {
@@ -108,9 +122,7 @@ function MyApp(props) {
 											<RTL direction={languageDirection}>
 												<CssBaseline />
 												<Toaster position="top-center" />
-												<GoogleMapsLoader>
-													{getLayout(<Component {...pageProps} />)}
-												</GoogleMapsLoader>
+												{getLayout(<Component {...pageProps} />)}
 											</RTL>
 										</ThemeProvider>
 									)}

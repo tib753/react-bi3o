@@ -8,7 +8,6 @@ import React, {
 import {
   GoogleMap,
   Marker,
-  useJsApiLoader,
   LoadScript,
   Polyline,
   DirectionsRenderer,
@@ -93,10 +92,8 @@ const MapComponent = (props) => {
     }),
     []
   );
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-  });
+  // Check if Google Maps is loaded from _app.js
+  const isLoaded = typeof window !== "undefined" && !!window.google?.maps;
 
   const onLoad = useCallback(function callback(map) {
     dispatch({ type: ACTION.setMap, payload: map });

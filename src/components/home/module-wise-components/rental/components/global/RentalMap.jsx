@@ -7,12 +7,12 @@ import {
   GoogleMap,
   MarkerF,
   DirectionsRenderer,
-  useJsApiLoader,
   Polygon,
   InfoWindow,
 } from "@react-google-maps/api";
 import { darkStyles, grayMapStyle, styles } from "components/home/module-wise-components/rental/components/global/mapColor";
 import { t } from "i18next";
+
 const RentalMap = ({
                      location,
                      height,
@@ -33,10 +33,8 @@ const RentalMap = ({
   const [polygonInstance, setPolygonInstance] = useState(null);
   const prevCenterRef = useRef(mapCenter);
   const zoomRef = useRef(18);
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-  });
+  // Check if Google Maps is loaded from _app.js
+  const isLoaded = typeof window !== "undefined" && !!window.google?.maps;
   const containerStyle = {
     width: "100%",
     height: height || "400px",

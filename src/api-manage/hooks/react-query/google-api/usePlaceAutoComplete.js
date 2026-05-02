@@ -2,59 +2,54 @@ import { useQuery } from "react-query";
 import { placeApiAutocomplete_api } from "../../../ApiRoutes";
 import MainApi from "../../../MainApi";
 
-// Global AutocompleteService instance
-let autocompleteService = null;
-
-// Initialize Google Places AutocompleteService
-const getAutocompleteService = () => {
-  if (typeof window === "undefined") return null;
-  
-  if (!autocompleteService && window.google?.maps?.places?.AutocompleteService) {
-    autocompleteService = new window.google.maps.places.AutocompleteService();
-  }
-  
-  return autocompleteService;
-};
-
-// Client-side Google Places API using Google Maps JavaScript SDK (no CORS issues)
+// Client-side Google Places API using NEW Places API (AutocompleteSuggestion)
+// This replaces the deprecated AutocompleteService which was discontinued in March 2025
 const getGooglePlacesPredictions = async (searchKey) => {
-  return new Promise((resolve) => {
-    const service = getAutocompleteService();
-    
-    if (!service) {
-      console.log('Google Maps AutocompleteService not available yet');
-      resolve({ predictions: [] });
-      return;
+  if (typeof window === "undefined") {
+    return { predictions: [] };
+  }
+
+  try {
+    // Check if NEW Places API is available (AutocompleteSuggestion)
+    if (!window.google?.maps?.places?.AutocompleteSuggestion?.fetchAutocompleteSuggestions) {
+      console.log('NEW Google Places API (AutocompleteSuggestion) not available');
+      return { predictions: [] };
     }
 
     const language = typeof window !== "undefined" 
       ? JSON.parse(localStorage.getItem("language-setting"))?.languageCode || 'ar'
       : 'ar';
 
+    // NEW Places API request format
     const request = {
       input: searchKey,
-      language: language,
-      types: ['geocode', 'establishment'],
+      languageCode: language,
+      includedPrimaryTypes: ["locality", "sublocality", "neighborhood", "street_address", "route", "establishment"],
     };
 
-    service.getPlacePredictions(request, (predictions, status) => {
-      if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
-        resolve({
-          predictions: predictions.map(p => ({
-            place_id: p.place_id,
-            description: p.description,
-            structured_formatting: {
-              main_text: p.structured_formatting?.main_text || '',
-              secondary_text: p.structured_formatting?.secondary_text || '',
-            }
-          }))
-        });
-      } else {
-        console.log('Google Places AutocompleteService status:', status);
-        resolve({ predictions: [] });
-      }
-    });
-  });
+    // Use NEW API: AutocompleteSuggestion.fetchAutocompleteSuggestions (returns Promise)
+    const response = await window.google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+    
+    if (response?.suggestions && response.suggestions.length > 0) {
+      return {
+        predictions: response.suggestions.map(s => ({
+          place_id: s.placePrediction?.placeId,
+          description: s.placePrediction?.text?.text,
+          structured_formatting: {
+            main_text: s.placePrediction?.structuredFormat?.mainText?.text || '',
+            secondary_text: s.placePrediction?.structuredFormat?.secondaryText?.text || '',
+          }
+        }))
+      };
+    }
+
+    console.log('NEW Google Places API returned no suggestions');
+    return { predictions: [] };
+    
+  } catch (error) {
+    console.error('NEW Google Places API Error:', error);
+    return { predictions: [] };
+  }
 };
 
 const getAutocompletePlace = async (searchKey) => {
@@ -65,16 +60,16 @@ const getAutocompletePlace = async (searchKey) => {
         `${placeApiAutocomplete_api}?search_text=${searchKey}`
       );
       
-      // If backend returns empty or error, use client-side Google Places
+      // If backend returns empty or error, use client-side Google Places NEW API
       if (!data || !data.predictions || data.predictions.length === 0) {
-        console.log('Backend returned empty, trying Google Maps AutocompleteService...');
+        console.log('Backend returned empty, trying NEW Google Places API...');
         return await getGooglePlacesPredictions(searchKey);
       }
       
       return data;
     } catch (error) {
-      console.log('Backend API failed, trying Google Maps AutocompleteService...', error.message);
-      // Backend failed, use client-side Google Places
+      console.log('Backend API failed, trying NEW Google Places API...', error.message);
+      // Backend failed, use client-side Google Places NEW API
       return await getGooglePlacesPredictions(searchKey);
     }
   }

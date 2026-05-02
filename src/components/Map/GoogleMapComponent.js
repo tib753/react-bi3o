@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap } from "@react-google-maps/api";
 import {
   alpha,
   CircularProgress,
@@ -19,9 +19,6 @@ import NextImage from "components/NextImage";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { darkStyles, grayMapStyle } from "../mapColor.js";
-
-// Define libraries array outside component to prevent recreation on every render
-const LIBRARIES = ["places"];
 
 const GoogleMapComponent = ({
   setDisablePickButton,
@@ -72,11 +69,8 @@ const GoogleMapComponent = ({
     []
   );
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-    libraries: LIBRARIES,
-  });
+  // Check if Google Maps is loaded from _app.js
+  const isLoaded = typeof window !== "undefined" && !!window.google?.maps;
 
   const [isMounted, setIsMounted] = useState(false);
   const [mapSetup, setMapSetup] = useState(false);
