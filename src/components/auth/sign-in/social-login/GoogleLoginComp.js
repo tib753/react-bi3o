@@ -128,19 +128,32 @@ const GoogleLoginComp = (props) => {
     };
   };
   useEffect(() => {
-    // Initialize Google button
-    if (typeof window !== undefined) {
-      window?.google?.accounts?.id?.initialize({
+    // Dynamically load Google Identity Services script only when this component mounts
+    if (typeof window !== "undefined" && !document.querySelector('script[src*="gsi/client"]')) {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = initGoogleButton;
+      document.head.appendChild(script);
+    } else if (typeof window !== "undefined" && window?.google?.accounts?.id) {
+      initGoogleButton();
+    }
+  }, []);
+
+  function initGoogleButton() {
+    if (typeof window !== "undefined" && window?.google?.accounts?.id) {
+      window.google.accounts.id.initialize({
         client_id: clientId,
         callback: handleCallBackResponse,
       });
-      window?.google?.accounts?.id?.renderButton(buttonDiv.current, {
+      window.google.accounts.id.renderButton(buttonDiv.current, {
         theme: "outline",
-        size: "large", // Set button size to 'large' for better scaling
+        size: "large",
         logo_alignment: "left",
       });
     }
-  }, []);
+  }
 
   const handleView = () => {
     // Handle conditional rendering for social login button style

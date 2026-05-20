@@ -25,7 +25,6 @@ i18n.on("languageChanged", async (lng) => {
   }
 });
 
-// Load non-default language if stored preference exists
 if (typeof window !== "undefined") {
   const stored = localStorage.getItem("language-setting");
   if (stored) {
@@ -37,9 +36,7 @@ if (typeof window !== "undefined") {
           i18n.changeLanguage(langCode);
         });
       }
-    } catch {
-      // ignore
-    }
+    } catch {}
   }
 }
 

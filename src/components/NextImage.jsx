@@ -75,6 +75,8 @@ const NextImage = ({
 
   const { objectFit: _objectFit, maxWidth: _maxWidth, ...restProps } = props;
 
+  const showShimmer = shimmerWidth >= 40 && shimmerHeight >= 40;
+
   return (
     <Image
       src={currentSrc}
@@ -82,9 +84,9 @@ const NextImage = ({
       height={height}
       alt={alt}
       onError={handleError}
-      placeholder={`data:image/svg+xml;base64,${toBase64(
+      placeholder={showShimmer ? `data:image/svg+xml;base64,${toBase64(
         shimmer(shimmerWidth, shimmerHeight)
-      )}`}
+      )}` : undefined}
       style={style}
 
       {...restProps}

@@ -6,7 +6,6 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import dynamic from "next/dynamic";
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -61,16 +60,6 @@ const HeroSection = ({ landingPageData }) => {
 
   return (
     <CustomContainer>
-      <Head>
-        {isValidRemoteImage(landingPageData?.header_banner_full_url) && (
-          <link
-            rel="preload"
-            href={landingPageData?.header_banner_full_url}
-            as="image"
-            fetchpriority="high"
-          />
-        )}
-      </Head>
       <CustomBoxFullWidth
         sx={{
           marginTop: calculateTopMargin(),
@@ -123,6 +112,7 @@ const HeroSection = ({ landingPageData }) => {
                   alt="hero banner"
                   fill
                   priority
+                  sizes="(max-width:600px) 78px, (max-width:900px) 210px, 240px"
                   style={{ objectFit: "cover", borderRadius: "inherit" }}
                 />
                 {isValidRemoteImage(landingPageData?.header_banner_full_url) && (

@@ -58,6 +58,7 @@ const SmallerScreen = (props) => {
 							objectFit="cover"
 							height="auto"
 							width="100%"
+							loading="eager"
 						/>
 					</ImageWrapper>
 					<CustomStackFullWidth

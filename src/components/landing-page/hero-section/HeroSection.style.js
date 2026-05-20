@@ -7,7 +7,10 @@ export const CustomSearchField = styled(Paper)(({ theme }) => ({
   width: "100%",
   border: "none",
 }));
-export const SearchLocationTextField = styled(TextField)(
+export const SearchLocationTextField = styled(TextField, {
+  shouldForwardProp: (prop) =>
+    !["searchHeight", "isLanding", "isXSmall", "noleftborder", "frommap", "fromparcel", "margin_top", "language_direction"].includes(prop),
+})(
   ({
     theme,
     language_direction,
@@ -67,7 +70,10 @@ export const SearchLocationTextField = styled(TextField)(
     },
   })
 );
-export const StyledButton = styled(CustomButtonPrimary)(
+export const StyledButton = styled(CustomButtonPrimary, {
+  shouldForwardProp: (prop) =>
+    !["radiuschange", "language_direction"].includes(prop),
+})(
   ({ theme, radiuschange, language_direction }) => ({
     color: theme.palette.whiteContainer.main,
     width: "500px",

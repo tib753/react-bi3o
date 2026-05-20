@@ -119,6 +119,7 @@ const LargerScreen = (props) => {
           objectFit="cover"
           width={500}
           height={500}
+          priority
         />
       </Stack>
     </>

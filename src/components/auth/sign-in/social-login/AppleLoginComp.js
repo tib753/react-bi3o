@@ -36,10 +36,14 @@ const AppleLoginComp = (props) => {
   useEffect(() => {
     if (typeof AppleID !== "undefined") {
       setAppleSdkLoaded(true);
-    } else {
-      console.warn("Apple SDK not loaded");
+    } else if (typeof window !== "undefined" && !document.querySelector('script[src*="appleid.auth"]')) {
+      const script = document.createElement("script");
+      script.src = "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js";
+      script.async = true;
+      script.onload = () => setAppleSdkLoaded(true);
+      document.head.appendChild(script);
     }
-  }, []); // Only runs once when the component mounts
+  }, []);
 
   const handleToken = (token) => {
     if (token) {

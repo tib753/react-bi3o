@@ -33,19 +33,8 @@ class CustomDocument extends Document {
             }}
           />
 
-          {/* Social login scripts */}
-          <script
-            type="application/javascript"
-            src="https://accounts.google.com/gsi/client"
-            async
-            defer
-          />
-          <script
-            type="text/javascript"
-            src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
-            async
-            defer
-          />
+          {/* Social login scripts — loaded on-demand inside GoogleLoginComp/AppleLoginComp */}
+
           <meta name="theme-color" content="#111827" />
 
           {/* ✅ Performance — preconnect to external origins */}
