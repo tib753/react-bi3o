@@ -46,7 +46,11 @@ export const getMessagingObject = async () => {
   }
 };
 
-export const auth = getAuth(firebaseApp);
+let _auth = null;
+export const getAuthInstance = () => {
+  if (!_auth) _auth = getAuth(firebaseApp);
+  return _auth;
+};
 
 const ensureNotificationPermission = async () => {
   try {

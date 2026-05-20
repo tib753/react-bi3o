@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { auth } from "../../../firebase.js"; // Adjust the import based on
-// your file
-// structure
+import { getAuthInstance } from "../../../firebase.js";
 
 const useFirebasePhoneAuth = () => {
   const [verificationId, setVerificationId] = useState(null);
@@ -20,7 +18,7 @@ const useFirebasePhoneAuth = () => {
             window.recaptchaVerifier?.reset();
           },
         },
-        auth
+        getAuthInstance(),
       );
     } else {
       window.recaptchaVerifier?.clear();
@@ -32,7 +30,7 @@ const useFirebasePhoneAuth = () => {
     setError(null);
     setUpRecaptcha();
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    signInWithPhoneNumber(getAuthInstance(), phoneNumber, appVerifier)
       .then((confirmationResult) => {
         setVerificationId(confirmationResult.verificationId);
         setIsOtpSent(true);

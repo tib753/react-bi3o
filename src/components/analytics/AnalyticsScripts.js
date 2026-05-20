@@ -66,7 +66,7 @@ export default function AnalyticsScripts() {
         />
       )}
 
-      {config.google_analytics && (
+      {!config.google_tag_manager && config.google_analytics && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${config.google_analytics}`}

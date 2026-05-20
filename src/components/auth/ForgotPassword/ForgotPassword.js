@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { onErrorResponse } from "api-manage/api-error-response/ErrorResponses";
 import { useFireBaseOtpVerify } from "api-manage/hooks/react-query/forgot-password/useFIreBaseOtpVerify";
 import { useOtp } from "api-manage/hooks/react-query/forgot-password/useOtp";
-import { auth } from "firebase";
+import { getAuthInstance } from "../../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useState } from "react";
 import {
@@ -61,7 +61,7 @@ const ForgotPassword = ({ configData }) => {
             window.recaptchaVerifier?.reset();
           },
         },
-        auth
+        getAuthInstance()
       );
     } else {
       // Only reset without re-initializing
@@ -74,7 +74,7 @@ const ForgotPassword = ({ configData }) => {
     const phoneNumber = phone;
     // country code
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    signInWithPhoneNumber(getAuthInstance(), phoneNumber, appVerifier)
       .then((confirmationResult) => {
         setVerificationId(confirmationResult.verificationId);
         setData({ ...data, phone: phoneNumber });
