@@ -10,7 +10,7 @@ import freeDelivery from "./assets/freeDelivery.png";
 import couponImagePercentage from "./assets/couponPer.png";
 import CouponVector from "./CouponVector";
 import CouponButtonComponent from "./CouponButtonComponent";
-import moment from "moment/moment";
+import dayjs from "utils/dateUtils";
 
 export const CouponButtonStyle = styled(Button)(({ theme }) => ({
   width: "111px",
@@ -149,8 +149,8 @@ const Coupon = (props) => {
             copy={copy}
           />
           <Typography fontSize={{ xs: "10px", md: "12px" }} fontWeight="500">
-            {moment(coupon?.start_date)?.format("DD MMM, YYYY")} {t("to")}{" "}
-            {moment(coupon?.end_date)?.format("DD MMM, YYYY")}
+            {dayjs(coupon?.start_date)?.format("DD MMM, YYYY")} {t("to")}{" "}
+            {dayjs(coupon?.end_date)?.format("DD MMM, YYYY")}
           </Typography>
           {/*<Typography fontSize={{ xs: "8px", md: "10px" }}>*/}
           {/*  Available from 8:30 AM - 4:30 PM{" "}*/}

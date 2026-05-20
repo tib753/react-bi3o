@@ -3,7 +3,7 @@ import Countdown from "react-countdown";
 import { styled } from "@mui/material/styles";
 import { Box, Stack } from "@mui/system";
 import { Typography } from "@mui/material";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 const Container = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -61,9 +61,9 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
 
 const CustomCountdown = ({ endDate }) => {
 
-  const endTimeDate = moment(endDate);
+  const endTimeDate = dayjs(endDate);
 
-  const currentDateTime = moment();
+  const currentDateTime = dayjs();
 
   const differenceInMilliseconds = endTimeDate.diff(currentDateTime);
 

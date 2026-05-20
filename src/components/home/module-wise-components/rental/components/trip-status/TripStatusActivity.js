@@ -8,7 +8,7 @@ import CustomModal from "components/custom-component/CustomModal";
 import { t } from "i18next";
 import { Box } from "@mui/system";
 import { getReachedTime } from "components/home/module-wise-components/rental/components/trip-status/tripstatusHelper";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import giftbox from "../../asset/success.gif";
 import loadingGif from "../../asset/loading.gif";
 
@@ -112,11 +112,11 @@ const getStatusConfig = (tripDetails) => ({
           </Typography>
         </Typography>
         <Typography component="span">
-          {moment(tripDetails?.schedule_at, "YYYY-MM-DD HH:mm:ss").format(
+          {dayjs(tripDetails?.schedule_at, "YYYY-MM-DD HH:mm:ss").format(
             "DD MMM, YYYY, hh:mm a"
           )}{" "}
           -{" "}
-          {moment(tripDetails?.completed, "YYYY-MM-DD HH:mm:ss").format(
+          {dayjs(tripDetails?.completed, "YYYY-MM-DD HH:mm:ss").format(
             "DD MMM, YYYY, hh:mm a"
           )}
         </Typography>
@@ -215,7 +215,7 @@ const getStatusConfig = (tripDetails) => ({
               15 - 20 <span>{t("mins")}</span>
             </>
           ) : (
-            moment(
+            dayjs(
               tripDetails?.estimated_trip_end_time,
               "YYYY-MM-DD HH:mm:ss"
             ).format("DD MMM, YYYY, hh:mm a")

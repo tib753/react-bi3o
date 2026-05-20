@@ -1,6 +1,8 @@
 import React from "react";
-import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style";
-import ParcelHeroImage from "./ParcelHeroImage";
+import { HeroImageBox, HeroImageStack, HeroStack } from "./parcel.style";
+import dynamic from "next/dynamic";
+
+const ParcelHeroImage = dynamic(() => import("./ParcelHeroImage"), { ssr: false });
 
 import { Typography, Stack, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";

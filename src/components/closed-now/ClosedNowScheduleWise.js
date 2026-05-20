@@ -1,6 +1,6 @@
 import React from "react";
 
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import { isAvailable } from "../../utils/CustomFunctions";
 import ClosedNowOverlay from "./ClosedNowOverlay";
 
@@ -8,7 +8,7 @@ const ClosedNowScheduleWise = (props) => {
 	const { active, schedules, borderRadius } = props;
 	if (active) {
 		if (schedules.length > 0) {
-			const todayInNumber = moment().weekday();
+			const todayInNumber = dayjs().day();
 			let isOpen = false;
 			let filteredSchedules = schedules.filter(
 				(item) => item.day === todayInNumber

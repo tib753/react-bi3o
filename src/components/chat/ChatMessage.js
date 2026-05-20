@@ -21,7 +21,7 @@ import {
 import CustomImageContainer from "../CustomImageContainer";
 import { t } from "i18next";
 import { getAmountWithSign } from "helper-functions/CardHelpers";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 const ChatMessage = (props) => {
 	const theme = useTheme();
@@ -241,7 +241,7 @@ const ChatMessage = (props) => {
 										</Typography>
 
 										<Typography fontSize="12px">
-											{moment(
+											{dayjs(
 												messgageData?.order?.created_at
 											).format("DD MMM, YYYY")}
 										</Typography>

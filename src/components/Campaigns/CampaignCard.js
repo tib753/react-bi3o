@@ -4,7 +4,7 @@ import { CustomPaperCard } from "../../styled-components/CustomCards.style";
 import CustomImageContainer from "../CustomImageContainer";
 import { Typography, useTheme } from "@mui/material";
 import { t } from "i18next";
-import moment from "moment/moment";
+import dayjs from "utils/dateUtils";
 import { useSelector } from "react-redux";
 
 import { getModuleId } from "../../helper-functions/getModuleId";
@@ -45,11 +45,11 @@ const CampaignCard = ({ data }) => {
           <Typography textAlign="left">{data?.description}</Typography>
           <Typography textAlign="left" fontWeight="500" variant="subtitle2">
             {"Start Date"}:{"  "}
-            {moment(data?.available_date_starts).format("MMMM Do YYYY")}
+            {dayjs(data?.available_date_starts).format("MMMM Do YYYY")}
           </Typography>
           <Typography textAlign="left" fontWeight="500" variant="subtitle2">
             {"Start Date"}:{"  "}
-            {moment(data?.available_date_ends).format("MMMM Do YYYY")}
+            {dayjs(data?.available_date_ends).format("MMMM Do YYYY")}
           </Typography>
           <Typography variant="subtitle2" textAlign="left">
             {t("Daily time: ")}
@@ -59,8 +59,8 @@ const CampaignCard = ({ data }) => {
               variant="h6"
               color={theme.palette.primary.main}
             >
-              {moment(data?.start_time, ["HH:mm"]).format("hh:mm a")} -{" "}
-              {moment(data?.end_time, ["HH:mm"]).format("hh:mm a")}
+              {dayjs(data?.start_time, ["HH:mm"]).format("hh:mm a")} -{" "}
+              {dayjs(data?.end_time, ["HH:mm"]).format("hh:mm a")}
             </Typography>
           </Typography>
         </CustomStackFullWidth>

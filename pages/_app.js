@@ -23,10 +23,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useScrollToTop from "../src/api-manage/hooks/custom-hooks/useScrollToTop";
-import { useJsApiLoader } from "@react-google-maps/api";
-
-// Define libraries array outside component to prevent recreation on every render
-const LIBRARIES = ["places", "maps"];
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
@@ -46,17 +42,11 @@ let persistor = persistStore(store);
 import { haveRtlLanguages } from "../src/components/header/top-navbar/language/rtlLanguageList";
 function MyApp(props) {
 	const { i18n } = useTranslation()
-	const [languageDirection, setLanguageDirection] = useState("rtl")
-
-	// Load Google Maps globally once for the entire app
-	const { isLoaded: isGoogleMapsLoaded } = useJsApiLoader({
-		id: "google-map-script-global",
-		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-		libraries: LIBRARIES,
-		language: typeof window !== "undefined"
-			? JSON.parse(localStorage.getItem("language-setting"))?.languageCode || "ar"
-			: "ar",
-	});
+	const [languageDirection, setLanguageDirection] = useState(
+		typeof document !== "undefined"
+			? document.documentElement.getAttribute("dir") || "rtl"
+			: "rtl"
+	)
 
 	useEffect(() => {
 		const lang = i18n.language;
@@ -94,11 +84,14 @@ function MyApp(props) {
 
 	// Version check
 	useEffect(() => {
-		const storedVersion = localStorage.getItem("appVersion");
-		if (storedVersion !== currentVersion) {
-			localStorage.clear();
-			localStorage.setItem("appVersion", currentVersion);
-		}
+		const id = requestIdleCallback(() => {
+			const storedVersion = localStorage.getItem("appVersion");
+			if (storedVersion !== currentVersion) {
+				localStorage.clear();
+				localStorage.setItem("appVersion", currentVersion);
+			}
+		});
+		return () => cancelIdleCallback(id);
 	}, []);
 
 	return (

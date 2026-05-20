@@ -3,7 +3,7 @@ import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style
 import {alpha, Skeleton, Stack, Typography, useTheme} from "@mui/material";
 import CustomImageContainer from "../CustomImageContainer";
 import { t } from "i18next";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CampaignIcon from "components/campaigns-details/CampaignIcon";
 
@@ -51,22 +51,22 @@ const MiddleSection = ({ campaignsDetails, image }) => {
               paddingRight: { xs: 0, sm: '8px' },
               paddingBottom: { xs: '8px', sm: 0 }}}>
               {campaignsDetails?.available_date_starts
-                ? moment(
+                ? dayjs(
                   campaignsDetails.available_date_starts.replace(/(\d+)(st|nd|rd|th)/, '$1')
                 ).format('MMM D, YYYY')
                 : 'N/A'}
               {' - '}
               {campaignsDetails?.available_date_ends
-                ? moment(
+                ? dayjs(
                   campaignsDetails.available_date_ends.replace(/(\d+)(st|nd|rd|th)/, '$1')
                 ).format('MMM D, YYYY')
                 : 'N/A'}
             </Typography>
-            <Typography> {moment(campaignsDetails?.start_time, ["HH:mm"]).format(
+            <Typography> {dayjs(campaignsDetails?.start_time, ["HH:mm"]).format(
               "hh:mm a"
             )}{" "}
               -{" "}
-              {moment(campaignsDetails?.end_time, ["HH:mm"]).format("hh:mm a")}</Typography>
+              {dayjs(campaignsDetails?.end_time, ["HH:mm"]).format("hh:mm a")}</Typography>
           </Stack>
         </Stack>
       </Stack>

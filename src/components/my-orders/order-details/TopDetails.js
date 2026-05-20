@@ -15,7 +15,7 @@ import { GoogleApi } from "api-manage/hooks/react-query/googleApi";
 import { useGetOrderCancelReason } from "api-manage/hooks/react-query/order/useGetOrderCancelReason";
 import { hasChatAndReview } from "components/my-orders/order-details/other-order/StoreDetails";
 import { getGuestId, getToken } from "helper-functions/getToken";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -185,7 +185,7 @@ const TopDetails = (props) => {
 
   };
 
-  const today = moment(new Date());
+  const today = dayjs(new Date());
   const differenceInMinutes = () => {
     const deliveryTime = trackData?.store?.delivery_time;
     const createdAt = trackData?.created_at;
@@ -201,10 +201,10 @@ const TopDetails = (props) => {
       minTime = Number.parseInt(timeArr[0]);
     }
     const newDeliveryTime = scheduleAt ? scheduleAt : createdAt;
-    const newDeliveryTimeWithAdditionalMin = moment(newDeliveryTime)
+    const newDeliveryTimeWithAdditionalMin = dayjs(newDeliveryTime)
       .add(minTime, "minutes")
       .format();
-    const duration = moment.duration(
+    const duration = dayjs.duration(
       today.diff(newDeliveryTimeWithAdditionalMin)
     );
     const minutes = duration?.asMinutes();
@@ -318,7 +318,7 @@ const TopDetails = (props) => {
               marginLeft="5px"
               color={theme.palette.neutral[600]}
             >
-              {moment(trackData?.created_at)?.format("DD MMM, YYYY")}
+              {dayjs(trackData?.created_at)?.format("DD MMM, YYYY")}
             </Typography>
           </Typography>
 

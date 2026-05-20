@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 const CustomFormatedTime = ({ date }) => {
   const { configData } = useSelector((state) => state.configData);
   let timeFormat = configData?.timeformat;
   if (timeFormat === "12") {
-    return moment(date).format("hh:mm a");
+    return dayjs(date).format("hh:mm a");
   } else {
-    return moment(date).format("HH:mm");
+    return dayjs(date).format("HH:mm");
   }
 };
 

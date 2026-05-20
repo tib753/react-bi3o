@@ -52,6 +52,12 @@ class CustomDocument extends Document {
           />
           <meta name="theme-color" content="#111827" />
 
+          {/* ✅ Performance — preconnect to external origins */}
+          <link rel="preconnect" href="https://bi3o-c3d58.firebaseapp.com" />
+          <link rel="preconnect" href="https://dz.bi3o.com" />
+          <link rel="preconnect" href="https://apis.google.com" />
+          <link rel="preconnect" href="https://maps.googleapis.com" />
+
           {/* ✅ Analytics scripts */}
           {analyticsConfig.google_tag_manager && (
             <script

@@ -1885,5 +1885,8 @@ export const french = {
 	"in stock": "En stock",
 	"min (minimum)": "min (minimum)",
 	"nearby": "A proximite",
-	"order place": "Passer commande"
+	"order place": "Passer commande",
+	"(optional)": "(facultatif)",
+	"(required)": "(obligatoire)",
+	"Details Description": "Description des détails"
 };

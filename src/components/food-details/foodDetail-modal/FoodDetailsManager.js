@@ -142,7 +142,7 @@ const FoodDetailsManager = (props) => {
           <FoodSubTitleTypography
             color={theme.palette.neutral[400]}
             sx={{
-              textAlign: "left",
+              textAlign: theme.direction === "rtl" ? "right" : "left",
               fontSize: "12px",
             }}
           >

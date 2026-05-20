@@ -4,7 +4,7 @@ import { getCurrentModuleType } from "../../helper-functions/getCurrentModuleTyp
 import { ModuleTypes } from "../../helper-functions/moduleTypes";
 export const StyledFooterBackground = styled(Box)(
 	({ theme, nobottommargin }) => ({
-		//minHeight: '500px',
+		minHeight: '300px',
 		width: "100%",
 		backgroundColor: theme.palette.background.custom4,
 		borderRadius:'20px 20px 0 0',

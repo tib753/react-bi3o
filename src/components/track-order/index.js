@@ -42,7 +42,7 @@ import { StepperCustomBorder } from "../checkout/CheckOut.style";
 import { Check } from "@mui/icons-material";
 import CustomImageContainer from "../CustomImageContainer";
 import { Stack } from "@mui/system";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import { useGeolocated } from "react-geolocated";
 import TrackOrderMap from "components/track-order/TrackOrderMap";
@@ -229,7 +229,7 @@ const TrackOrder = ({ configData, trackOrderData }) => {
                   {t(labels?.label)}
                   {labels?.time && (
                     <Typography mt="10px" variant="body2" textAlign="center">
-                      {moment(labels?.time).format("ddd, Do MMM")}
+                      {dayjs(labels?.time).format("ddd, Do MMM")}
                     </Typography>
                   )}
                 </Stack>
@@ -262,7 +262,7 @@ const TrackOrder = ({ configData, trackOrderData }) => {
               </StepLabel>
               {labels?.time && (
                 <Typography mt="10px" variant="body2" textAlign="center">
-                  {moment(labels?.time).format("ddd, Do MMM")}
+                  {dayjs(labels?.time).format("ddd, Do MMM")}
                 </Typography>
               )}
             </Step>

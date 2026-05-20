@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { GoogleMap } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import {
   alpha,
   CircularProgress,
@@ -69,8 +69,11 @@ const GoogleMapComponent = ({
     []
   );
 
-  // Check if Google Maps is loaded from _app.js
-  const isLoaded = typeof window !== "undefined" && !!window.google?.maps;
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script-googlemapcomponent",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
+    libraries: ["places"],
+  });
 
   const [isMounted, setIsMounted] = useState(false);
   const [mapSetup, setMapSetup] = useState(false);

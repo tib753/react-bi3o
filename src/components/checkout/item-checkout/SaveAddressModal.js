@@ -8,8 +8,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddressSelectionList from "../delivery-address/AddressSelectionList";
 
 import NoSaveAddress from "../../address/NoSaveAddress";
-import AddressNotFoundSvg from "../../address/svg/AddressNotFoundSvg";
+import dynamic from "next/dynamic";
 import { useTheme } from "@emotion/react";
+
+const AddressNotFoundSvg = dynamic(
+  () => import("../../address/svg/AddressNotFoundSvg"),
+  {
+    ssr: false,
+  }
+);
 
 import SimpleBar from "simplebar-react";
 import AddNewAddressButton from "../../address/add-new-address/AddNewAddressButton";

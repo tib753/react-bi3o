@@ -1,6 +1,6 @@
 import React from "react";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 export const CustomDateFormat = (date) => {
-  return moment(date).format("ll");
+  return dayjs(date).format("ll");
 };

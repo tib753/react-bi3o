@@ -7,24 +7,21 @@ export const FoodDetailModalStyle = styled(Box)(({ theme, foodmodal }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   maxWidth: foodmodal ? "459px" : "922px",
-  maxHeight: "100%",
+  maxHeight: "90vh",
   width: "100%",
   padding: foodmodal ? "0%" : "1.7%",
   borderRadius: "10px",
   boxShadow: 24,
   border: "none",
-
+  overflowY: "auto",
   color: `${theme.palette.mode === "dark" && "#fff"}`,
   [theme.breakpoints.down("md")]: {
     width: "85%",
   },
-  // [theme.breakpoints.down('sm')]: {
-  //     width: '70%',
-  // },
   [theme.breakpoints.down("sm")]: {
-    width: "85%",
-    overflowY: "auto",
-    top: "70px",
-    transform: "translateX(-50%)",
+    width: "90%",
+    maxHeight: "80vh",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
   },
 }));

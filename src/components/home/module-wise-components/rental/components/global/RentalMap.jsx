@@ -9,6 +9,7 @@ import {
   DirectionsRenderer,
   Polygon,
   InfoWindow,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import { darkStyles, grayMapStyle, styles } from "components/home/module-wise-components/rental/components/global/mapColor";
 import { t } from "i18next";
@@ -33,8 +34,11 @@ const RentalMap = ({
   const [polygonInstance, setPolygonInstance] = useState(null);
   const prevCenterRef = useRef(mapCenter);
   const zoomRef = useRef(18);
-  // Check if Google Maps is loaded from _app.js
-  const isLoaded = typeof window !== "undefined" && !!window.google?.maps;
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script-rentalmap",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
+    libraries: ["places"],
+  });
   const containerStyle = {
     width: "100%",
     height: height || "400px",

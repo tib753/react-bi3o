@@ -1,7 +1,7 @@
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 function getCurrentTime() {
-  const currentTime = moment().format("HH:mm");
+  const currentTime = dayjs().format("HH:mm");
   return currentTime;
 }
 

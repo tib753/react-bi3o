@@ -74,7 +74,7 @@ const CustomLanguage = ({
         localStorage.getItem("language-setting")
       );
       let country = JSON.parse(localStorage.getItem("country"));
-      if (languageSetting) {
+      if (languageSetting && languageSetting !== i18n.language) {
         dispatch(setCountryCode(country));
         dispatch(setLanguage(languageSetting));
         i18n.changeLanguage(languageSetting);

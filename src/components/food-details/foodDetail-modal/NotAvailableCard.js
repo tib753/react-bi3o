@@ -3,7 +3,7 @@ import { Typography, Box, Stack } from "@mui/material";
 // import { isAvailable } from '../../utils/customFunctions'
 import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
-import moment from "moment/moment";
+import dayjs from "utils/dateUtils";
 
 const NotAvailableCard = ({ endTime, startTime }) => {
   const { t } = useTranslation();
@@ -25,9 +25,9 @@ const NotAvailableCard = ({ endTime, startTime }) => {
           </Typography>
 
           <Typography>{t("Available Form")}</Typography>
-          <Typography>{`${moment(startTime, ["HH:mm"]).format(
+          <Typography>{`${dayjs(startTime, ["HH:mm"]).format(
             "hh:mm a"
-          )} - ${moment(endTime, ["HH:mm"]).format("hh:mm a")}`}</Typography>
+          )} - ${dayjs(endTime, ["HH:mm"]).format("hh:mm a")}`}</Typography>
         </Stack>
       </Box>
     </Box>

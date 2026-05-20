@@ -6,6 +6,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -16,8 +17,9 @@ import CustomContainer from "../../container";
 import MobileFrame from "../assets/MobileFrame";
 import HeroLocationForm from "./HeroLocationForm";
 import HeroTitleSection from "./HeroTitleSection";
-import HeroBgSvg from "components/landing-page/HeroBgSvg";
 import NextImage from "components/NextImage";
+
+const HeroBgSvg = dynamic(() => import("components/landing-page/HeroBgSvg"), { ssr: false });
 
 const DynamicModuleSelection = dynamic(() =>
   import("./module-selection/ModuleSelectionRaw")
@@ -59,6 +61,16 @@ const HeroSection = ({ landingPageData }) => {
 
   return (
     <CustomContainer>
+      <Head>
+        {isValidRemoteImage(landingPageData?.header_banner_full_url) && (
+          <link
+            rel="preload"
+            href={landingPageData?.header_banner_full_url}
+            as="image"
+            fetchpriority="high"
+          />
+        )}
+      </Head>
       <CustomBoxFullWidth
         sx={{
           marginTop: calculateTopMargin(),
@@ -87,7 +99,7 @@ const HeroSection = ({ landingPageData }) => {
               landingPageData={landingPageData}
             />
           </Grid>
-          <Grid item xs={4} md={5} align="right">
+          <Grid item xs={4} md={5} sx={{ textAlign: theme.direction === 'rtl' ? 'left' : 'right' }}>
             <CustomStackFullWidth
               height="100%"
               alignItems="flex-start"
@@ -96,24 +108,25 @@ const HeroSection = ({ landingPageData }) => {
             >
               <Box
                 sx={{
-                  height: { xs: "125px", sm: "350px", md: "420px" },
+                  height: { xs: "148px", sm: "370px", md: "427px" },
                   width: { xs: "78px", sm: "210px", md: "240px" },
                   borderRadius: isXSmall ? "5px 5px 0 0" : "16px 16px 0 0",
                   position: "relative",
                   zIndex: "99",
-                  backgroundImage: isValidRemoteImage(
-                    landingPageData?.header_banner_full_url
-                  )
-                    ? `url(${landingPageData?.header_banner_full_url})`
-                    : "none",
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
                   marginInline: "auto",
                   padding: "0",
+                  overflow: "hidden",
                 }}
               >
+                <NextImage
+                  src={landingPageData?.header_banner_full_url}
+                  alt="hero banner"
+                  fill
+                  priority
+                  style={{ objectFit: "cover", borderRadius: "inherit" }}
+                />
                 {isValidRemoteImage(landingPageData?.header_banner_full_url) && (
-                  <Stack margin={isXSmall ? "-5px 0 0 -3px" : "-5px 0 0 -3px"}>
+                  <Stack sx={{ marginTop: "-5px", marginInlineStart: "-3px" }}>
                     <MobileFrame
                       width={isXSmall ? "85" : isSmall ? "215" : "246"}
                       height={isXSmall ? "148" : isSmall ? "370" : "427"}
@@ -127,7 +140,7 @@ const HeroSection = ({ landingPageData }) => {
                   width: { xs: "50px", sm: "120px", md: "210px" },
                   height: { xs: "50px", sm: "110px", md: "190px" },
                   bottom: isXSmall ? 5 : 16,
-                  right: { xs: 7, sm: 10, md: 30 },
+                  insetInlineEnd: { xs: 7, sm: 10, md: 30 },
                   zIndex: 100,
                 }}
               >
@@ -136,7 +149,7 @@ const HeroSection = ({ landingPageData }) => {
                   alt={t("icon")}
                   width={210}
                   height={190}
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   priority
                 />
               </Box>

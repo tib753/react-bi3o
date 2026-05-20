@@ -1595,4 +1595,7 @@ export const arabic = {
 	"Track order": "تتبع الطلب",
 	"Order Id": "معرف الطلب",
 	"No Items found": "لم يتم العثور على أي عناصر",
+	"(optional)": "(اختياري)",
+	"(required)": "(مطلوب)",
+	"Details Description": "وصف التفاصيل",
 };

@@ -4,7 +4,7 @@ import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import { styled, Switch, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { t } from "i18next";
-import moment from "moment/moment";
+import dayjs from "utils/dateUtils";
 import { getDayNumber } from "utils/CustomFunctions";
 
 // Dynamic imports for heavy date picker components
@@ -118,7 +118,7 @@ const ScheduleDelivery = ({ customDispatch, scheduleTime, setDayNumber }) => {
     }
   };
   const handleDateChange = (newValue) => {
-    const dayName = moment(newValue?.$d).format("dddd");
+    const dayName = dayjs(newValue?.$d).format("dddd");
     const selectedDayNumber = getDayNumber(dayName);
     setDayNumber(selectedDayNumber);
     customDispatch({ type: "SET_SCHEDULE_MONTH", payload: newValue });

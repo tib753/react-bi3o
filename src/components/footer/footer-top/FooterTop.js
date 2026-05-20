@@ -10,8 +10,10 @@ import { Box } from "@mui/system";
 import CustomContainer from "../../container";
 import { StyledFooterTop } from "../Footer.style";
 import Subscribe from "./Subscribe";
-import SubscribeImage from "./SubscribeImage";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
+
+const SubscribeImage = dynamic(() => import("./SubscribeImage"), { ssr: false });
 
 const FooterTop = (props) => {
   const { landingPageData } = props;

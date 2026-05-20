@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -236,7 +236,7 @@ const TransactionHistory = (props) => {
                         </Typography>
                       </CustomTableCell>
                       <CustomTableCell>
-                        {moment(item?.created_at).format("D MMMM h:mm A")}
+                        {dayjs(item?.created_at).format("D MMMM h:mm A")}
                       </CustomTableCell>
                     </TableRow>
                   );

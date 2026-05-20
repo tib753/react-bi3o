@@ -153,7 +153,7 @@ const DetailsAndReviews = (props) => {
 						);
 					})}
 				</CustomStackFullWidth>
-				<CustomHeader info={tabs === 0 ? "Details Description " : "Reviews"} />
+				<CustomHeader info={tabs === 0 ? t("Details Description") : "Reviews"} />
 				<CustomStackFullWidth p="0px 30px">
 					{tabs !== 0 && (
 						<ProductReviews

@@ -8,10 +8,9 @@ import {
   VisitBox,
 } from "./Help.style";
 import img from "./assets/image 43.png";
-import img3 from "./assets/image 45.png";
-import img2 from "./assets/image 46.png";
-import img1 from "./assets/image 47.png";
-import SupportImgSvg from "./assets/SupportImgSvg";
+import dynamic from "next/dynamic";
+
+const SupportImgSvg = dynamic(() => import("./assets/SupportImgSvg"), { ssr: false });
 import Link from "next/link";
 import LocationViewOnMap from "../Map/location-view/LocationViewOnMap";
 import NextImage from "components/NextImage";

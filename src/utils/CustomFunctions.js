@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "./dateUtils";
 import { currentDate, nextday, today } from "./formatedDays";
 import { t } from "i18next";
 import {
@@ -22,10 +22,10 @@ export const getNumberWithConvertedDecimalPoint = (
 };
 
 export const isAvailable = (start, end) => {
-  const startTime = moment(start, "HH:mm:ss");
-  const endTime = moment(end, "HH:mm:ss");
-  let currentTime = moment();
-  return moment(currentTime).isBetween(startTime, endTime);
+  const startTime = dayjs(start, "HH:mm:ss");
+  const endTime = dayjs(end, "HH:mm:ss");
+  let currentTime = dayjs();
+  return dayjs(currentTime).isBetween(startTime, endTime);
 };
 
 export const handleTotalAmountWithAddons = (
@@ -44,11 +44,11 @@ export const handleTotalAmountWithAddons = (
 };
 
 export const getDateFormat = (date) => {
-  return moment(date).format("LL");
+  return dayjs(date).format("LL");
 };
 
 export const getDateFormatAnotherWay = (date) => {
-  return moment(date).format("ll");
+  return dayjs(date).format("ll");
 };
 
 export const getIndexFromArrayByComparision = (arrayOfObjects, object) => {
@@ -73,12 +73,12 @@ export const calculateItemBasePrice = (item, selectedOptions) => {
 };
 
 export const FormatedDateWithTime = (date) => {
-  let dateString = moment(date).format("YYYY-MM-DD hh:mm a");
+  let dateString = dayjs(date).format("YYYY-MM-DD hh:mm a");
   return dateString;
 };
 
 export const onlyTimeFormat = (date) => {
-  let timeString = moment(date, "YYYY-MM-DD hh:mm a").format("hh:mm");
+  let timeString = dayjs(date, "YYYY-MM-DD hh:mm a").format("hh:mm");
   return timeString;
 };
 
@@ -396,11 +396,11 @@ export const getProductDiscount = (items, storeData,diffDiscount) => {
   if (storeData?.discount) {
     const endDate = storeData?.discount?.end_date;
     const endTime = storeData?.discount?.end_time;
-    const combinedEndDateTime = moment(
+    const combinedEndDateTime = dayjs(
       `${endDate} ${endTime}`,
       "YYYY-MM-DD HH:mm:ss"
     );
-    const currentDateTime = moment();
+    const currentDateTime = dayjs();
 
     // Check if the store discount is still valid
     if (combinedEndDateTime.isAfter(currentDateTime)) {
@@ -499,52 +499,52 @@ export const getFinalTotalPrice = (
   return totalPrice;
 };
 
-export const currentTime = moment(currentDate).format("HH:mm");
+export const currentTime = dayjs(currentDate).format("HH:mm");
 
 function recursive(start, end, close, list, schedule_order_slot_duration, day) {
-  const checkedEnd = moment(end, "HH:mm").subtract(1, "minutes");
+  const checkedEnd = dayjs(end, "HH:mm").subtract(1, "minutes");
   const date =
     getDayNumber(today) === day
-      ? moment(currentDate).format("yyyy-MM-DD")
+      ? dayjs(currentDate).format("yyyy-MM-DD")
       : nextday;
   if (
     end.isBefore(close) ||
-    moment(end).format("HH:mm") === moment(close).format("HH:mm") ||
-    moment(checkedEnd).format("HH:mm") === moment(close).format("HH:mm")
+    dayjs(end).format("HH:mm") === dayjs(close).format("HH:mm") ||
+    dayjs(checkedEnd).format("HH:mm") === dayjs(close).format("HH:mm")
   ) {
     let label = "";
     if (
-      currentTime > moment(start).format("HH:mm") &&
-      currentTime < moment(end).format("HH:mm")
+      currentTime > dayjs(start).format("HH:mm") &&
+      currentTime < dayjs(end).format("HH:mm")
     ) {
       label = t("Now");
     } else {
-      label = `${moment(start).format("HH:mm")} - ${moment(checkedEnd).format(
+      label = `${dayjs(start).format("HH:mm")} - ${dayjs(checkedEnd).format(
         "HH:mm"
       )}`;
     }
     if (
-      (currentTime < moment(end).format("HH:mm") &&
+      (currentTime < dayjs(end).format("HH:mm") &&
         getDayNumber(today) === day) ||
-      (currentTime > moment(end).format("HH:mm") && getDayNumber(today) !== day)
+      (currentTime > dayjs(end).format("HH:mm") && getDayNumber(today) !== day)
     ) {
       list.push({
         label: label,
-        start: moment(start).format("HH:mm"),
+        start: dayjs(start).format("HH:mm"),
         end:
-          moment(checkedEnd).format("HH:mm") === moment(close).format("HH:mm")
-            ? moment(checkedEnd).format("HH:mm")
-            : moment(end).format("HH:mm"),
+          dayjs(checkedEnd).format("HH:mm") === dayjs(close).format("HH:mm")
+            ? dayjs(checkedEnd).format("HH:mm")
+            : dayjs(end).format("HH:mm"),
         value:
-          moment(checkedEnd).format("HH:mm") === moment(close).format("HH:mm")
-            ? `${date} ${moment(checkedEnd).format("HH:mm")}`
-            : `${date} ${moment(end).format("HH:mm")}`,
+          dayjs(checkedEnd).format("HH:mm") === dayjs(close).format("HH:mm")
+            ? `${date} ${dayjs(checkedEnd).format("HH:mm")}`
+            : `${date} ${dayjs(end).format("HH:mm")}`,
       });
     }
 
     recursive(
       end,
-      moment(end, "HH:mm").add(schedule_order_slot_duration, "minutes"),
+      dayjs(end, "HH:mm").add(schedule_order_slot_duration, "minutes"),
       close,
       list,
       schedule_order_slot_duration,
@@ -564,9 +564,9 @@ export const getAllSchedule = (
   if (schedules && schedules.length > 0) {
     const days = schedules.filter((s) => s.day === day);
     for (let index = 0; index < days.length; index++) {
-      let close = moment(days[index].closing_time, "HH:mm");
-      let start = moment(days[index].opening_time, "HH:mm");
-      let end = moment(start, "HH:mm").add(
+      let close = dayjs(days[index].closing_time, "HH:mm");
+      let start = dayjs(days[index].opening_time, "HH:mm");
+      let end = dayjs(start, "HH:mm").add(
         schedule_order_slot_duration,
         "minutes"
       );
@@ -939,12 +939,12 @@ export const getCalculatedTotal = (
 
 export const isFoodAvailableBySchedule = (cart, selectedTime) => {
   if (selectedTime === "now") {
-    let currentTime = moment();
+    let currentTime = dayjs();
     if (cart.length > 0) {
       let isAvailable = cart.every((item) => {
-        const startTime = moment(item.available_time_starts, "HH:mm:ss");
-        const endTime = moment(item.available_time_ends, "HH:mm:ss");
-        return moment(currentTime).isBetween(startTime, endTime);
+        const startTime = dayjs(item.available_time_starts, "HH:mm:ss");
+        const endTime = dayjs(item.available_time_ends, "HH:mm:ss");
+        return dayjs(currentTime).isBetween(startTime, endTime);
       });
       return !!isAvailable;
     }
@@ -953,10 +953,10 @@ export const isFoodAvailableBySchedule = (cart, selectedTime) => {
       const slug = selectedTime.split(" ").pop();
       if (cart.length > 0) {
         const isAvailable = cart.every((item) => {
-          const startTime = moment(item.available_time_starts, "HH:mm:ss");
-          const endTime = moment(item.available_time_ends, "HH:mm:ss");
-          const currentTime = moment(selectedTime, "HH:mm:ss");
-          return moment(currentTime).isBetween(startTime, endTime);
+          const startTime = dayjs(item.available_time_starts, "HH:mm:ss");
+          const endTime = dayjs(item.available_time_ends, "HH:mm:ss");
+          const currentTime = dayjs(selectedTime, "HH:mm:ss");
+          return dayjs(currentTime).isBetween(startTime, endTime);
         });
         return !!isAvailable;
       }

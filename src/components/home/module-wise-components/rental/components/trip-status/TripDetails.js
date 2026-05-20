@@ -11,7 +11,7 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import { isCurrentTime } from "../rental-checkout/checkoutHeplerFunction";
 import { useSelector } from "react-redux";
 import { FormatedDateWithTime } from "utils/CustomFunctions";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 const TripDetails = ({ tripDetails, setModalType, setOpenModal,checkOut,setOpenTripChange,setOpenModalCheckout }) => {
   const { cartList } = useSelector((state) => state.cart);
@@ -189,7 +189,7 @@ const TripDetails = ({ tripDetails, setModalType, setOpenModal,checkOut,setOpenT
                     ? (isCurrentTime(cartList)
                       ? FormatedDateWithTime(cartList?.user_data?.pickup_time)
                       : FormatedDateWithTime(new Date()))
-                    : moment(
+                    : dayjs(
                       tripDetails?.schedule_at,
                       "YYYY-MM-DD HH:mm:ss"
                     ).format("DD MMM, YYYY, hh:mm a")}

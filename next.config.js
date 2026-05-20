@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 const nextConfig = {
   reactStrictMode: true,
 
@@ -52,6 +57,29 @@ const nextConfig = {
   },
 
   async headers() {
+    /** Dev + Turbopack: immutable static caching breaks HMR (stale chunks → "module factory is not available"). */
+    if (process.env.NODE_ENV !== "production") {
+      return [
+        {
+          source: "/_next/static/:path*",
+          headers: [
+            {
+              key: "Cache-Control",
+              value: "no-store, must-revalidate",
+            },
+          ],
+        },
+        {
+          source: "/static/:path*",
+          headers: [
+            {
+              key: "Cache-Control",
+              value: "no-store, must-revalidate",
+            },
+          ],
+        },
+      ];
+    }
     return [
       {
         source: "/_next/static/:path*",
@@ -76,6 +104,29 @@ const nextConfig = {
 
   compress: true,
   poweredByHeader: false,
+
+  webpack: (config) => {
+    config.optimization.splitChunks = {
+      chunks: 'all',
+      cacheGroups: {
+        mui: {
+          test: /[\\/]node_modules[\\/]@mui[\\/]/,
+          name: 'mui',
+          chunks: 'all',
+        },
+      },
+    };
+
+    // Prevent moment.js from being bundled (replaced by dayjs)
+    config.plugins.push(
+      new (require('webpack').IgnorePlugin)({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      })
+    );
+
+    return config;
+  },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

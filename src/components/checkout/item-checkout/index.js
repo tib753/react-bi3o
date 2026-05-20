@@ -13,7 +13,7 @@ import { useOfflinePayment } from "api-manage/hooks/react-query/offlinePayment/u
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { getStoresOrRestaurants } from "helper-functions/getStoresOrRestaurants";
 import { getGuestId, getToken } from "helper-functions/getToken";
-import moment from "moment/moment";
+import dayjs from "utils/dateUtils";
 import Router from "next/router";
 import React, { useEffect, useReducer, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
@@ -692,7 +692,7 @@ const ItemCheckout = (props) => {
 
   const isSchedules = () => {
     if (storeData?.schedules.length > 0) {
-      const todayInNumber = moment().weekday();
+      const todayInNumber = dayjs().day();
       let isOpen = false;
       let filteredSchedules = storeData?.schedules.filter(
         (item) => item.day === todayInNumber

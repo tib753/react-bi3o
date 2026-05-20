@@ -1,33 +1,46 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { english } from "./en";
 import { arabic } from "./ar";
-import { french } from "./fr";
 
-// the translations
-// (tip move them in a JSON file and import them,
-// or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
-const resources = {
-  ar: {
-    translation: arabic,
-  },
-  en: {
-    translation: english,
-  },
-  fr: {
-    translation: french,
-  },
+const languageLoaders = {
+  en: () => import("./en").then((m) => m.english),
+  fr: () => import("./fr").then((m) => m.french),
 };
 
-i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources,
-    lng: "ar", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
-    fallbackLng: "ar",
-    interpolation: {
-      escapeValue: false, // react already safes from xss
-    },
-  });
+i18n.use(initReactI18next).init({
+  resources: {
+    ar: { translation: arabic },
+  },
+  lng: "ar",
+  fallbackLng: "ar",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+i18n.on("languageChanged", async (lng) => {
+  if (!i18n.hasResourceBundle(lng, "translation") && languageLoaders[lng]) {
+    const translation = await languageLoaders[lng]();
+    i18n.addResourceBundle(lng, "translation", translation);
+  }
+});
+
+// Load non-default language if stored preference exists
+if (typeof window !== "undefined") {
+  const stored = localStorage.getItem("language-setting");
+  if (stored) {
+    try {
+      const langCode = JSON.parse(stored).languageCode || stored.replace(/"/g, "");
+      if (langCode && langCode !== "ar" && languageLoaders[langCode]) {
+        languageLoaders[langCode]().then((translation) => {
+          i18n.addResourceBundle(langCode, "translation", translation);
+          i18n.changeLanguage(langCode);
+        });
+      }
+    } catch {
+      // ignore
+    }
+  }
+}
 
 export default i18n;

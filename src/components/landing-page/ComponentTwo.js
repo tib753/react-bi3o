@@ -8,7 +8,9 @@ import {
 } from "@mui/material";
 import CustomContainer from "../container";
 import DownloadApps from "./DownloadApps";
-import SolutionSvg from "./SolutionSvg";
+import dynamic from "next/dynamic";
+
+const SolutionSvg = dynamic(() => import("./SolutionSvg"), { ssr: false });
 
 export const ComponentTwoContainer = styled(Box)(
   ({ theme, paddingTop, paddingBottom }) => ({

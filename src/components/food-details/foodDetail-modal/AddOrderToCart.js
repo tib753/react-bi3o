@@ -10,7 +10,7 @@ import {
 import toast from "react-hot-toast";
 import { not_logged_in_message } from "../../../utils/toasterMessages";
 import { useWishListDelete } from "../../../api-manage/hooks/react-query/wish-list/useWishListDelete";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 import Loading from "../../custom-loading/Loading";
 
 const AddOrderToCart = (props) => {
@@ -173,9 +173,9 @@ const AddOrderToCart = (props) => {
                   gap="5px"
                 >
                   <Typography>{t("Available will be")}</Typography>
-                  <Typography>{`${moment(product.available_time_starts, [
+                  <Typography>{`${dayjs(product.available_time_starts, [
                     "HH:mm",
-                  ]).format("hh:mm a")} - ${moment(
+                  ]).format("hh:mm a")} - ${dayjs(
                     product.available_time_ends,
                     ["HH:mm"]
                   ).format("hh:mm a")}`}</Typography>

@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack, styled } from "@mui/system";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 const StepperStyled = styled(Stepper)(({ theme }) => ({
   "& .MuiStepConnector-root ": {
     "& .MuiStepConnector-line": {
@@ -55,7 +55,7 @@ const ParcelTrackOderStepper = ({ steps, activeStep }) => {
                 {step?.label}
               </Typography>
               <Typography fontSize="12px">
-                {step?.time && moment(step?.time).format("D MMM, h:mm A")}
+                {step?.time && dayjs(step?.time).format("D MMM, h:mm A")}
               </Typography>
             </Stack>
           </StepLabel>

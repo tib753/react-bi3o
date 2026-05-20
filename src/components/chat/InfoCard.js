@@ -7,7 +7,7 @@ import { useTheme } from "@mui/material/styles";
 
 import useGetUserInfo from "../../api-manage/hooks/react-query/user/useGetUserInfo";
 import { CustomTypographyEllipsis } from "styled-components/CustomTypographies.style";
-import moment from "moment";
+import dayjs from "utils/dateUtils";
 
 export const StyledBadge = styled(Badge)(({ theme }) => ({
 	"& .MuiBadge-badge": {
@@ -110,7 +110,7 @@ const InfoCard = ({
 						{receiver}
 					</Typography>
 					<Typography fontSize="12px">
-						{moment(messageTime).format("hh:mm A")}
+						{dayjs(messageTime).format("hh:mm A")}
 					</Typography>
 				</Stack>
 				<Stack
