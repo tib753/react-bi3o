@@ -23,6 +23,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useScrollToTop from "../src/api-manage/hooks/custom-hooks/useScrollToTop";
+import AnalyticsScripts from "../src/components/analytics/AnalyticsScripts";
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
@@ -127,6 +128,7 @@ function MyApp(props) {
 						<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
 					)}
 				</QueryClientProvider>
+				<AnalyticsScripts />
 			</CacheProvider>
 		</div>
 	);

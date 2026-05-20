@@ -58,9 +58,12 @@ const CustomLanguage = ({
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let languageSetting = JSON.parse(
-        localStorage.getItem("language-setting")
-      );
+      let languageSetting = null;
+      try {
+        languageSetting = JSON.parse(
+          localStorage.getItem("language-setting")
+        );
+      } catch {}
       localStorage.setItem(
         "language-setting",
         JSON.stringify(languageSetting || i18n.language)
@@ -70,10 +73,16 @@ const CustomLanguage = ({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let languageSetting = JSON.parse(
-        localStorage.getItem("language-setting")
-      );
-      let country = JSON.parse(localStorage.getItem("country"));
+      let languageSetting = null;
+      try {
+        languageSetting = JSON.parse(
+          localStorage.getItem("language-setting")
+        );
+      } catch {}
+      let country = null;
+      try {
+        country = JSON.parse(localStorage.getItem("country"));
+      } catch {}
       if (languageSetting && languageSetting !== i18n.language) {
         dispatch(setCountryCode(country));
         dispatch(setLanguage(languageSetting));
@@ -169,7 +178,7 @@ const CustomLanguage = ({
               alt="start"
               width={20}
               height={20}
-              src={languageList?.find((item) => item?.languageCode === language)?.countryFlag}
+              src={languageList?.find((item) => item?.languageCode === (language || i18n.language))?.countryFlag}
             />
           </Stack>
         }
@@ -182,7 +191,7 @@ const CustomLanguage = ({
         {!noText && (
           <Typography color={theme.palette.neutral[1000]}>
             {
-              languageList?.find((item) => item?.languageCode === language)
+              languageList?.find((item) => item?.languageCode === (language || i18n.language))
                 ?.languageName
             }
           </Typography>
