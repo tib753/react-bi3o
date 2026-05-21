@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import { t } from "i18next";
-import { Check } from "@mui/icons-material";
+import Check from "@mui/icons-material/Check";
 
 import { StepperCustomBorder } from "../CheckOut.style";
 import { useTheme } from "@emotion/react";

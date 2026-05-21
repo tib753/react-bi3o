@@ -10,7 +10,7 @@ import { rubik } from "../src/utils/fonts";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { RTL } from "components/rtl";
-import { Toaster } from "react-hot-toast";
+import dynamic from "next/dynamic";
 import { getServerSideProps } from "./index";
 import { SettingsConsumer, SettingsProvider } from "contexts/settings-context";
 import "../src/language/i18n";
@@ -23,7 +23,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useScrollToTop from "../src/api-manage/hooks/custom-hooks/useScrollToTop";
-import AnalyticsScripts from "../src/components/analytics/AnalyticsScripts";
+
+const Toaster = dynamic(() => import("react-hot-toast").then((m) => m.Toaster), { ssr: false });
+const AnalyticsScripts = dynamic(() => import("../src/components/analytics/AnalyticsScripts"), { ssr: false });
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);

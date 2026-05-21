@@ -16,7 +16,7 @@ import ValidationSechemaProfile from "./Validation";
 import * as Yup from "yup";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import { AccountCircle } from "@mui/icons-material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useTheme } from "@mui/material/styles";
 import H1 from "../../typographies/H1";
 import useUpdateProfile from "../../../api-manage/hooks/react-query/profile/useUpdateProfile";

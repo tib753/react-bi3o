@@ -6,7 +6,8 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { useRouter } from "next/router";
 //import { getDataLimit } from "../../utils/customFunctions";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import { getModuleId } from "../../../../helper-functions/getModuleId";
 import { useTranslation } from "react-i18next";
 import { CustomStackFullWidth } from "../../../../styled-components/CustomStyles.style";

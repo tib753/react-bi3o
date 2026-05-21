@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Button, Popover, Stack, Typography, useTheme} from "@mui/material";
 
-import SimpleBar from "simplebar-react";
-import "simplebar-react/dist/simplebar.min.css";
 import CustomAlert from "../../../alert/CustomAlert";
 import { CustomButtonPrimary } from "styled-components/CustomButtons.style";
 import DeliveryAddress from "../../../checkout/delivery-address";
@@ -12,6 +10,13 @@ import useGetGeoCode from "../../../../api-manage/hooks/react-query/google-api/u
 import useGetZoneId from "../../../../api-manage/hooks/react-query/google-api/useGetZone";
 import dynamic from "next/dynamic";
 const MapModal = dynamic(() => import("../../../Map/MapModal"));
+const scrollBoxSx = {
+  maxHeight: "475px",
+  overflowY: "auto",
+  scrollbarWidth: "thin",
+  "&::-webkit-scrollbar": { width: "6px" },
+  "&::-webkit-scrollbar-thumb": { backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "3px" },
+};
 const AddressReselectPopover = (props) => {
   const { anchorEl, onClose, open, t, address, setAddress, token, currentLatLngForMar, ...other } =
     props;
@@ -77,13 +82,6 @@ const AddressReselectPopover = (props) => {
     setOpenMapModal(false);
     onClose();
   };
-  const popOverHeightHandler = () => {
-    if (token) {
-      return "475px";
-    } else {
-      return "150px";
-    }
-  };
   return (
     <>
       <Popover
@@ -103,46 +101,28 @@ const AddressReselectPopover = (props) => {
         {...other}
       >
         <Stack justifyContent="center" textAlign="center" spacing={2}>
-          <SimpleBar
-            className="custom-scrollbar"
-            style={{
-              maxHeight: popOverHeightHandler(),
-              paddingRight: "5px",
-            }}
-          >
-            <Stack width="100%" alignItems="center">
-              {token ? (
-                open && (
-                  <Stack
-                    pt="15px"
-                    gap={{ xs: "0px", sm: "15px" }}
-                    paddingRight="5px"
-                  >
-                    <Typography
-                      fontSize="16px"
-                      fontWeight={500}
-                      textAlign="left"
-                    >
-                      {t("Select from saved addresses or pick from map")}
-                    </Typography>
-                    <DeliveryAddress
-                      setAddress={setAddress}
-                      address={address}
-                      hideAddressSelectionField="true"
-                      renderOnNavbar="true"
-                    />
-                  </Stack>
-                )
-              ) : (
-                <CustomAlert
-                  type="info"
-                  text={t(
-                    "To select from saved addresses, you need to sign in."
-                  )}
-                />
-              )}
-            </Stack>
-          </SimpleBar>
+          <Stack sx={scrollBoxSx} width="100%" alignItems="center" pr="5px">
+            {token ? (
+              open && (
+                <Stack pt="15px" gap={{ xs: "0px", sm: "15px" }}>
+                  <Typography fontSize="16px" fontWeight={500} textAlign="left">
+                    {t("Select from saved addresses or pick from map")}
+                  </Typography>
+                  <DeliveryAddress
+                    setAddress={setAddress}
+                    address={address}
+                    hideAddressSelectionField="true"
+                    renderOnNavbar="true"
+                  />
+                </Stack>
+              )
+            ) : (
+              <CustomAlert
+                type="info"
+                text={t("To select from saved addresses, you need to sign in.")}
+              />
+            )}
+          </Stack>
          <Button
            fullWidth
               onClick={handleAgreeLocation}

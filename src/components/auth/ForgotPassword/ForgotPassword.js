@@ -3,7 +3,6 @@ import { onErrorResponse } from "api-manage/api-error-response/ErrorResponses";
 import { useFireBaseOtpVerify } from "api-manage/hooks/react-query/forgot-password/useFIreBaseOtpVerify";
 import { useOtp } from "api-manage/hooks/react-query/forgot-password/useOtp";
 import { getAuthInstance } from "../../../firebase";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useState } from "react";
 import {
   CustomPaper, CustomStackFullWidth,
@@ -47,9 +46,10 @@ const ForgotPassword = ({ configData }) => {
     });
   };
 
-  const setUpRecaptcha = () => {
-    // Check if reCAPTCHA is already initialized
+  const setUpRecaptcha = async () => {
     if (!window.recaptchaVerifier) {
+      const { RecaptchaVerifier } = await import("firebase/auth");
+      const auth = await getAuthInstance();
       window.recaptchaVerifier = new RecaptchaVerifier(
         "recaptcha-container",
         {
@@ -61,20 +61,20 @@ const ForgotPassword = ({ configData }) => {
             window.recaptchaVerifier?.reset();
           },
         },
-        getAuthInstance()
+        auth
       );
     } else {
-      // Only reset without re-initializing
       window.recaptchaVerifier?.reset();
     }
   };
 
-  const sendOTP = (phone) => {
-    setUpRecaptcha();
+  const sendOTP = async (phone) => {
+    await setUpRecaptcha();
     const phoneNumber = phone;
-    // country code
+    const { signInWithPhoneNumber } = await import("firebase/auth");
+    const auth = await getAuthInstance();
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(getAuthInstance(), phoneNumber, appVerifier)
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         setVerificationId(confirmationResult.verificationId);
         setData({ ...data, phone: phoneNumber });

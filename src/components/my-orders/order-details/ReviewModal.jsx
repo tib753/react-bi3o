@@ -1,6 +1,6 @@
 import React from 'react';
 import {IconButton, Typography} from "@mui/material";
-import {Clear} from "@mui/icons-material";
+import Clear from "@mui/icons-material/Clear";
 import {Stack} from "@mui/system";
 import Box from "@mui/material/Box";
 import {t} from "i18next";

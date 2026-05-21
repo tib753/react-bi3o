@@ -14,12 +14,11 @@ import {
 } from "styled-components/CustomStyles.style";
 import CustomContainer from "../../container";
 import MobileFrame from "../assets/MobileFrame";
-import HeroLocationForm from "./HeroLocationForm";
 import HeroTitleSection from "./HeroTitleSection";
 import NextImage from "components/NextImage";
 
 const HeroBgSvg = dynamic(() => import("components/landing-page/HeroBgSvg"), { ssr: false });
-
+const HeroLocationForm = dynamic(() => import("./HeroLocationForm"), { ssr: false });
 const DynamicModuleSelection = dynamic(() =>
   import("./module-selection/ModuleSelectionRaw")
 );

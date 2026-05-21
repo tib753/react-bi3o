@@ -39,7 +39,7 @@ import shippedImage from "../my-orders/assets/shhiped.png";
 import outForDelivery from "../my-orders/assets/out-for-delivery.png";
 import delivered from "../my-orders/assets/delivery.png";
 import { StepperCustomBorder } from "../checkout/CheckOut.style";
-import { Check } from "@mui/icons-material";
+import Check from "@mui/icons-material/Check";
 import CustomImageContainer from "../CustomImageContainer";
 import { Stack } from "@mui/system";
 import dayjs from "utils/dateUtils";

@@ -12,7 +12,7 @@ import {
   Box,
   alpha,
 } from "@mui/material";
-import { LocationOn } from "@mui/icons-material";
+import LocationOn from "@mui/icons-material/LocationOn";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import { useTranslation } from "react-i18next";
 import useGetAddressList from "api-manage/hooks/react-query/address/useGetAddressList";

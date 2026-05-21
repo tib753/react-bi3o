@@ -1,10 +1,10 @@
 import { Typography, alpha, styled, useTheme } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { setSelectedModule } from "redux/slices/utils";
 import {
@@ -17,9 +17,9 @@ import CustomImageContainer from "../../../CustomImageContainer";
 import { settings } from "./sliderSettings";
 import useGetModule from "api-manage/hooks/react-query/useGetModule";
 import { setModules } from "redux/slices/configData";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import NextImage from "components/NextImage";
+
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 const CardWrapper = styled(Stack)(({ theme, bg_change }) => ({
   backgroundColor: theme.palette.background.paper,

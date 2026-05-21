@@ -2,7 +2,7 @@ import React, { memo, useState } from "react";
 import { Stack } from "@mui/system";
 
 import { Avatar, Typography, useTheme } from "@mui/material";
-import { Accessibility } from "@mui/icons-material";
+import Accessibility from "@mui/icons-material/Accessibility";
 import { t } from "i18next";
 
 import { useSelector } from "react-redux";

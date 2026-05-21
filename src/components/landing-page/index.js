@@ -1,4 +1,4 @@
-import { NoSsr, useMediaQuery, useTheme } from "@mui/material";
+import { Box, NoSsr, Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -6,10 +6,32 @@ import { useGeolocated } from "react-geolocated";
 import CookiesConsent from "../CookiesConsent";
 import PushNotificationLayout from "../PushNotificationLayout";
 import HeroSection from "./hero-section/HeroSection";
+import RegistrationSkeleton from "./RegistrationSkeleton";
+import AppDownloadSkeleton from "./app-download-section/AppDownloadSkeleton";
 const MapModal = dynamic(() => import("../Map/MapModal"));
-const Registration = dynamic(() => import("./Registration"));
-const AppDownloadSection = dynamic(() => import("./app-download-section/index"));
-const Testimonials = dynamic(() => import("./Testimonials"), { ssr: false });
+const Registration = dynamic(() => import("./Registration"), {
+  loading: () => <RegistrationSkeleton />,
+});
+const AppDownloadSection = dynamic(() => import("./app-download-section/index"), {
+  loading: () => <AppDownloadSkeleton />,
+});
+const Testimonials = dynamic(() => import("./Testimonials"), {
+  ssr: false,
+  loading: () => (
+    <Stack spacing={2} alignItems="center" py={4}>
+      <Skeleton variant="text" width={220} height={40} />
+      <Stack direction="row" spacing={3}>
+        {[1, 2, 3].map((i) => (
+          <Box key={i} width={300}>
+            <Skeleton variant="rounded" width={300} height={180} />
+            <Skeleton variant="text" width={200} sx={{ mt: 1 }} />
+            <Skeleton variant="text" width={160} />
+          </Box>
+        ))}
+      </Stack>
+    </Stack>
+  ),
+});
 
 const LandingPage = ({ configData, landingPageData }) => {
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { getAuthInstance } from "../../../firebase.js";
 
 const useFirebasePhoneAuth = () => {
@@ -7,8 +6,10 @@ const useFirebasePhoneAuth = () => {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [error, setError] = useState(null);
 
-  const setUpRecaptcha = () => {
+  const setUpRecaptcha = async () => {
     if (!window.recaptchaVerifier) {
+      const { RecaptchaVerifier } = await import("firebase/auth");
+      const auth = await getAuthInstance();
       window.recaptchaVerifier = new RecaptchaVerifier(
         "recaptcha-container",
         {
@@ -18,7 +19,7 @@ const useFirebasePhoneAuth = () => {
             window.recaptchaVerifier?.reset();
           },
         },
-        getAuthInstance(),
+        auth,
       );
     } else {
       window.recaptchaVerifier?.clear();
@@ -26,11 +27,13 @@ const useFirebasePhoneAuth = () => {
     }
   };
 
-  const sendOTP = (phoneNumber) => {
+  const sendOTP = async (phoneNumber) => {
     setError(null);
-    setUpRecaptcha();
+    await setUpRecaptcha();
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(getAuthInstance(), phoneNumber, appVerifier)
+    const { signInWithPhoneNumber } = await import("firebase/auth");
+    const auth = await getAuthInstance();
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         setVerificationId(confirmationResult.verificationId);
         setIsOtpSent(true);

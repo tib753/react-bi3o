@@ -7,8 +7,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   reactStrictMode: true,
 
-  // Enable source maps in production to reveal the actual file in errors
-  productionBrowserSourceMaps: true,
+  // Disable source maps in production to reduce bundle size
+  productionBrowserSourceMaps: false,
 
   // Optimize images
   images: {
@@ -36,6 +36,12 @@ const nextConfig = {
       'lodash',
       'date-fns',
     ],
+  },
+
+  modularizeImports: {
+    '@mui/icons-material': {
+      transform: '@mui/icons-material/{{member}}',
+    },
   },
 
   // Turbopack configuration (Next.js 16 default)
@@ -133,6 +139,27 @@ const nextConfig = {
             name: 'firebase',
             chunks: 'async',
             enforce: true,
+          },
+          components: {
+            test: /[\\/]src[\\/]components/,
+            name(module) {
+              const path = module.context || '';
+              if (path.includes('landing-page')) return 'landing';
+              if (path.includes('checkout')) return 'checkout';
+              if (path.includes('auth')) return 'auth';
+              if (path.includes('profile')) return 'profile';
+              return 'components';
+            },
+            chunks: 'all',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          commons: {
+            name: 'commons',
+            minChunks: 2,
+            priority: 5,
+            chunks: 'all',
+            reuseExistingChunk: true,
           },
         },
       };

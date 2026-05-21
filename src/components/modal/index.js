@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Clear } from "@mui/icons-material";
+import Clear from "@mui/icons-material/Clear";
 import { Box, Dialog, Stack } from "@mui/material";
 import PropTypes from "prop-types";
 const CustomModal = (props) => {

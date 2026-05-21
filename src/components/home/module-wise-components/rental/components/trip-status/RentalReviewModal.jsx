@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useTranslation } from "react-i18next";
-import { Clear } from "@mui/icons-material";
+import Clear from "@mui/icons-material/Clear";
 import Slider from "react-slick";
 import RentalReviewItem from "components/home/module-wise-components/rental/components/trip-status/RentalReviewItem";
 

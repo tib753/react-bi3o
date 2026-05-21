@@ -13,7 +13,7 @@ import Subscribe from "./Subscribe";
 import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 
-const SubscribeImage = dynamic(() => import("./SubscribeImage"), { ssr: false });
+const SubscribeImage = dynamic(() => import("./SubscribeImage"));
 
 const FooterTop = (props) => {
   const { landingPageData } = props;

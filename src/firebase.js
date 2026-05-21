@@ -1,6 +1,4 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
-import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCyorWOfuTEJc6BXxdEbZEzfT0M6wjZ1Nc",
@@ -17,24 +15,9 @@ const firebaseApp = !getApps().length
   ? initializeApp(firebaseConfig)
   : getApp();
 
-// Initialize Firebase Messaging with browser support check
-const messaging = (async () => {
-  try {
-    const isSupportedBrowser = await isSupported();
-    if (isSupportedBrowser) {
-      return getMessaging(firebaseApp);
-    }
-    console.log('Firebase Messaging is not supported in this browser');
-    return null;
-  } catch (err) {
-    console.error('Error initializing Firebase Messaging:', err);
-    return null;
-  }
-})();
-
-// Correctly export a promise that resolves to messaging instance (or null)
 export const getMessagingObject = async () => {
   try {
+    const { getMessaging, isSupported } = await import("firebase/messaging");
     const isSupportedBrowser = await isSupported();
     if (isSupportedBrowser) {
       return getMessaging(firebaseApp);
@@ -47,9 +30,16 @@ export const getMessagingObject = async () => {
 };
 
 let _auth = null;
+let _authPromise = null;
 export const getAuthInstance = () => {
-  if (!_auth) _auth = getAuth(firebaseApp);
-  return _auth;
+  if (_auth) return Promise.resolve(_auth);
+  if (!_authPromise) {
+    _authPromise = import("firebase/auth").then(({ getAuth }) => {
+      _auth = getAuth(firebaseApp);
+      return _auth;
+    });
+  }
+  return _authPromise;
 };
 
 const ensureNotificationPermission = async () => {
@@ -72,7 +62,8 @@ const ensureNotificationPermission = async () => {
 // fetchToken function
 export const fetchToken = async (setTokenFound, setFcmToken) => {
   try {
-    const messagingInstance = await messaging;
+    const { getToken } = await import("firebase/messaging");
+    const messagingInstance = await getMessagingObject();
     if (!messagingInstance) {
       console.log('Messaging not available');
       return null;
@@ -123,7 +114,7 @@ export const onMessageListener = async () =>
     try {
       const messaging = await getMessagingObject();
       if (!messaging) return;
-
+      const { onMessage } = await import("firebase/messaging");
       onMessage(messaging, (payload) => {
         resolve(payload);
       });

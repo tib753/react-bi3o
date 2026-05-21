@@ -9,13 +9,15 @@ import {
   useTheme,
 } from "@mui/material";
 
+import dynamic from "next/dynamic";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { getLanguage } from "helper-functions/getLanguage";
 import DollarSignHighlighter from "../../DollarSignHighlighter";
 import DownArrow from "../assets/DownArrow";
 import DownArrowRTL from "../assets/DownArrowRTL";
-import HeroLocationForm from "./HeroLocationForm";
 import ModuleSelectionRaw from "./module-selection/ModuleSelectionRaw";
+
+const HeroLocationForm = dynamic(() => import("./HeroLocationForm"), { ssr: false });
 
 const HeroTitleSection = ({ landingPageData }) => {
   const theme = useTheme();

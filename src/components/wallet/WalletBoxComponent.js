@@ -2,7 +2,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { AddCircle, CheckCircle, InfoOutlined } from "@mui/icons-material";
+import AddCircle from "@mui/icons-material/AddCircle";
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import { Button, OutlinedInput, Skeleton, Typography } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { Box, Stack } from "@mui/system";

@@ -33,7 +33,6 @@ import VerifiedIcon from "components/profile/VerifiedIcon";
 import CustomModal from "components/modal";
 import OtpForm from "components/auth/sign-up/OtpForm";
 import { getAuthInstance } from "../../../firebase";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useFireBaseOtpVerify } from "api-manage/hooks/react-query/forgot-password/useFIreBaseOtpVerify";
 
 export const BackIconButton = styled(IconButton)(({ theme }) => ({
@@ -134,8 +133,10 @@ const BasicInformationForm = ({
   });
   const { mutate: fireBaseOtpMutation, isLoading: fireIsLoading } =
     useFireBaseOtpVerify();
-  const setUpRecaptcha = () => {
+  const setUpRecaptcha = async () => {
     if (!window.recaptchaVerifier) {
+      const { RecaptchaVerifier } = await import("firebase/auth");
+      const auth = await getAuthInstance();
       window.recaptchaVerifier = new RecaptchaVerifier(
         "recaptcha-update",
         {
@@ -147,12 +148,11 @@ const BasicInformationForm = ({
             window.recaptchaVerifier?.reset();
           },
         },
-        getAuthInstance()
+        auth
       );
     } else {
       window.recaptchaVerifier.clear();
       window.recaptchaVerifier = null;
-      // setUpRecaptcha()
     }
   };
 
@@ -160,12 +160,11 @@ const BasicInformationForm = ({
     setUpRecaptcha();
     return () => {
       if (recaptchaWrapperRef.current) {
-        //recaptchaWrapperRef.current.clear(); // Clear Recaptcha when component unmounts
         recaptchaWrapperRef.current = null;
       }
     };
   }, []);
-  const sendOTP = (response, values) => {
+  const sendOTP = async (response, values) => {
     const phoneNumber = values?.phone;
     if (!phoneNumber) {
       console.error("Invalid phone number");
@@ -173,11 +172,13 @@ const BasicInformationForm = ({
     }
 
     if (!window.recaptchaVerifier) {
-      setUpRecaptcha();
+      await setUpRecaptcha();
     }
+    const { signInWithPhoneNumber } = await import("firebase/auth");
+    const auth = await getAuthInstance();
     const appVerifier = window.recaptchaVerifier;
 
-    signInWithPhoneNumber(getAuthInstance(), phoneNumber, appVerifier)
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         setVerificationId(confirmationResult.verificationId);
         setOpen(true);

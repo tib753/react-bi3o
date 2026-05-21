@@ -12,7 +12,6 @@ import {
   onSingleErrorResponse,
 } from "api-manage/api-error-response/ErrorResponses";
 import { getGuestId } from "helper-functions/getToken";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useWishListGet } from "api-manage/hooks/react-query/wish-list/useWishListGet";
 import { loginSuccessFull } from "utils/toasterMessages";
 import { setWishList } from "redux/slices/wishList";
@@ -27,9 +26,11 @@ import { t } from "i18next";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { useGetWishList } from "api-manage/hooks/react-query/rental-wishlist/useGetWishlist";
 
-export const setUpRecaptcha = () => {
+export const setUpRecaptcha = async () => {
   if (document.getElementById("recaptcha-container")) {
     if (!window.recaptchaVerifier) {
+      const { RecaptchaVerifier } = await import("firebase/auth");
+      const auth = await getAuthInstance();
       window.recaptchaVerifier = new RecaptchaVerifier(
         "recaptcha-container",
         {
@@ -41,7 +42,7 @@ export const setUpRecaptcha = () => {
             window.recaptchaVerifier?.reset();
           },
         },
-        getAuthInstance(),
+        auth,
       );
     } else {
       window.recaptchaVerifier.clear();
@@ -162,18 +163,19 @@ const AuthModal = ({ modalFor, open, handleClose, setModalFor }) => {
     };
   }, []);
 
-  const sendOTP = (response, setOtpData, setMainToken, phone) => {
+  const sendOTP = async (response, setOtpData, setMainToken, phone) => {
     const phoneNumber = phone;
     if (!phoneNumber) {
       console.error("Invalid phone number");
       return;
     }
     if (!window.recaptchaVerifier) {
-      setUpRecaptcha();
+      await setUpRecaptcha();
     }
-    // country code
+    const { signInWithPhoneNumber } = await import("firebase/auth");
+    const auth = await getAuthInstance();
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(getAuthInstance(), phoneNumber, appVerifier)
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         setVerificationId(confirmationResult.verificationId);
         setOtpData({ type: phone });
