@@ -105,17 +105,38 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
 
-  webpack: (config) => {
-    config.optimization.splitChunks = {
-      chunks: 'all',
-      cacheGroups: {
-        mui: {
-          test: /[\\/]node_modules[\\/]@mui[\\/]/,
-          name: 'mui',
-          chunks: 'all',
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          mui: {
+            test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
+            name: 'mui',
+            chunks: 'all',
+            enforce: true,
+          },
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|react-query|react-redux|react-hook-form)[\\/]/,
+            name: 'react',
+            chunks: 'all',
+            enforce: true,
+          },
+          maps: {
+            test: /[\\/]node_modules[\\/](@react-google-maps|@googlemaps|google-maps)[\\/]/,
+            name: 'maps',
+            chunks: 'async',
+            enforce: true,
+          },
+          firebase: {
+            test: /[\\/]node_modules[\\/]firebase[\\/]/,
+            name: 'firebase',
+            chunks: 'async',
+            enforce: true,
+          },
         },
-      },
-    };
+      };
+    }
 
     // Prevent moment.js from being bundled (replaced by dayjs)
     config.plugins.push(

@@ -33,6 +33,7 @@ const NextImage = ({
    maxWidth,
    borderRadius,
    aspectRatio,
+   priority,
    ...props
  }) => {
   const sanitizeSrc = (value) => {
@@ -64,30 +65,31 @@ const NextImage = ({
   const shimmerWidth = typeof width === "number" && width > 0 ? width : 1;
   const shimmerHeight = typeof height === "number" && height > 0 ? height : 1;
 
-  // Conditionally create style object
   const style = {
     objectFit,
     maxWidth,
     borderRadius,
     aspectRatio,
-    ...props.style, // allow passing additional styles
+    ...props.style,
   };
 
-  const { objectFit: _objectFit, maxWidth: _maxWidth, ...restProps } = props;
+  const { objectFit: _objectFit, maxWidth: _maxWidth, style: _style, fill, ...restProps } = props;
 
   const showShimmer = shimmerWidth >= 40 && shimmerHeight >= 40;
+  const useFill = !!fill;
 
   return (
     <Image
       src={currentSrc}
-      width={width}
-      height={height}
+      {...(useFill ? {} : { width, height })}
       alt={alt}
       onError={handleError}
       placeholder={showShimmer ? `data:image/svg+xml;base64,${toBase64(
         shimmer(shimmerWidth, shimmerHeight)
       )}` : undefined}
       style={style}
+      priority={priority}
+      fill={useFill || undefined}
 
       {...restProps}
     />
