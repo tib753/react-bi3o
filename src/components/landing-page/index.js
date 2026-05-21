@@ -1,29 +1,17 @@
 import { NoSsr, useMediaQuery, useTheme } from "@mui/material";
-import AvailableZoneSection from "components/landing-page/AvailableZoneSection";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useGeolocated } from "react-geolocated";
 import CookiesConsent from "../CookiesConsent";
 import PushNotificationLayout from "../PushNotificationLayout";
-import AppDownloadSection from "./app-download-section/index";
-import ComponentOne from "./ComponentOne";
-import ComponentTwo from "./ComponentTwo";
-import DiscountBanner from "./DiscountBanner";
 import HeroSection from "./hero-section/HeroSection";
-import Registration from "./Registration";
-import FeatureBanner from "components/landing-page/FeatureBanner";
-import useGetBanners from "api-manage/hooks/react-query/useGetBanners";
-import CustomContainer from "components/container";
-import Bannerss from "components/home/banners";
- import Banners from "components/landing-page/Banners";
-import Box from "@mui/material/Box";
 const MapModal = dynamic(() => import("../Map/MapModal"));
+const Registration = dynamic(() => import("./Registration"));
+const AppDownloadSection = dynamic(() => import("./app-download-section/index"));
+const Testimonials = dynamic(() => import("./Testimonials"), { ssr: false });
 
 const LandingPage = ({ configData, landingPageData }) => {
-  const Testimonials = dynamic(() => import("./Testimonials"), {
-    ssr: false,
-  });
 
   // console.log({data})
   const [location, setLocation] = useState(undefined);

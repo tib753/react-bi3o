@@ -89,6 +89,7 @@ const NextImage = ({
       )}` : undefined}
       style={style}
       priority={priority}
+      fetchPriority={priority ? "high" : undefined}
       fill={useFill || undefined}
 
       {...restProps}

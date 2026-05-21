@@ -5,6 +5,7 @@ import {
 	CustomStackFullWidth,
 } from "../../../styled-components/CustomStyles.style";
 import CustomImageContainer from "../../CustomImageContainer";
+import NextImage from "components/NextImage";
 import DollarSignHighlighter from "../../DollarSignHighlighter";
 import CustomButtonComponent from "./CustomButtonComponent";
 
@@ -53,12 +54,13 @@ const SmallerScreen = (props) => {
 			<Grid item xs={12}>
 				<Wrapper>
 					<ImageWrapper>
-						<CustomImageContainer
+						<NextImage
 							src={landingPageData?.business_image_full_url}
-							objectFit="cover"
-							height="auto"
-							width="100%"
-							loading="eager"
+							alt="business"
+							fill
+							priority
+							sizes="(max-width:600px) 100vw, 420px"
+							style={{ objectFit: "cover" }}
 						/>
 					</ImageWrapper>
 					<CustomStackFullWidth
