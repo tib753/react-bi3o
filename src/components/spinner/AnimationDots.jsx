@@ -23,10 +23,10 @@ const AnimationDots = () => {
         marginRight: "3px",
         background: theme.palette.primary.main,
         animation: "wave 1.3s linear infinite",
-        '&:nth-child(2)': {
+        '&:nth-of-type(2)': {
             animationDelay: '-1.1s',
         },
-        '&:nth-child(3)': {
+        '&:nth-of-type(3)': {
             animationDelay: '-0.9s',
         },
         '@keyframes wave': {

@@ -52,10 +52,15 @@ const ModuleContainer = styled(Box)(({ theme, selected }) => ({
 }));
 
 export const zoneWiseModule = (data) => {
-  let currentZoneIds = undefined;
+  let currentZoneIds = [];
   if (typeof window !== "undefined") {
-    currentZoneIds = JSON.parse(localStorage.getItem("zoneid"));
+    try {
+      currentZoneIds = JSON.parse(localStorage.getItem("zoneid"));
+    } catch (e) {
+      currentZoneIds = [];
+    }
   }
+  if (!currentZoneIds || currentZoneIds.length === 0) return data;
   return data.filter((moduleItem) => {
     const zoneIds = moduleItem?.zones?.map((zone) => zone.id);
     return currentZoneIds?.some((id) => zoneIds?.includes(id));

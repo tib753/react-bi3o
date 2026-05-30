@@ -263,6 +263,10 @@ const CarBookingModal = (props) => {
       toast.error("Please select destination location");
       return;
     }
+    if (tripType !== 'hourly' && tripType !== 'day_wise' && !data) {
+      toast.error(t("Please wait while we calculate the distance"));
+      return;
+    }
     if(cartList?.carts?.length>0){
       if (isDifferentProvider) {
         setCartItemData?.(bookingDetails);

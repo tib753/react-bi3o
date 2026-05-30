@@ -13,9 +13,9 @@ export const DistanceCalculate = ({ distance }) => {
     } else {
       return `${(distance / 1000).toFixed(
         configData?.digit_after_decimal_point
-      )}km `;
+      )}${t("km")} `;
     }
   };
 
-  return distance ? getDistance() : "0 km";
+  return distance ? getDistance() : `0 ${t("km")}`;
 };

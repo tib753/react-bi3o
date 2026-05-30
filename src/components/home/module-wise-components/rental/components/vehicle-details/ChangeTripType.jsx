@@ -18,16 +18,21 @@ const ChangeTripType = ({
       <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
         <InfoIcon sx={{ fontSize: "70px" }} />
       </Stack>
-      <Typography textAlign="center"  fontSize="18px" fontWeight="600" color={theme=>theme.palette.error.main}>
-        {t(`Do you want to change trip type`)}
+      <Typography textAlign="center" fontSize="18px" fontWeight="600" color={theme=>theme.palette.error.main}>
+        {t("Do you want to change trip type")}
       </Typography>
-      <Typography
-        textAlign="center"
-
-        fontSize="14px"
-        fontWeight="400"
-      >
-        {t(`Are you sure you,  want to switch trip type from ${cartList?.user_data?.rental_type === "day_wise" ? t("Day wise") : cartList?.user_data?.rental_type?.replace("_", " ")} ${cartList?.user_data?.rental_type==="hourly"?"based to":"to"} ${updateCartObject?.tripType === "day_wise" ? t("Day wise") : updateCartObject?.tripType?.replace("_", " ")} ${updateCartObject?.tripType==="hourly"?"based":""}? `)}
+      <Typography textAlign="center" fontSize="14px" fontWeight="400">
+        {(() => {
+          const fromType =
+            cartList?.user_data?.rental_type === "day_wise"
+              ? t("Day wise")
+              : t(cartList?.user_data?.rental_type?.replace("_", " "));
+          const toType =
+            updateCartObject?.tripType === "day_wise"
+              ? t("Day wise")
+              : t(updateCartObject?.tripType?.replace("_", " "));
+          return `${t("Are you sure you want to switch trip type from")} ${fromType} ${t("to")} ${toType}?`;
+        })()}
       </Typography>
       <Stack direction="row" spacing={2} justifyContent="flex-end">
         <Button

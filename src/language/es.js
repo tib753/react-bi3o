@@ -482,7 +482,7 @@ export const spain = {
   Register: "يسجل",
   "Use Current Location": "انضم كرجل توصيل في",
   "My Orders": "طلباتي",
-  Profile: "الملف الشخصي",
+  Profile: "Perfil",
   "Personal Info": "معلومات شخصية",
   "Fast Name": "اسم سريع",
   "Theme Settings": "إعدادات الموضوع",

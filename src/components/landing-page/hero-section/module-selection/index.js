@@ -49,7 +49,9 @@ export const CustomPaper = styled(Paper)(({ theme }) => ({
   },
 }));
 
-const CustomChildPaper = styled(Paper)(({ theme, is_previously_selected }) => ({
+const CustomChildPaper = styled(Paper, {
+  shouldForwardProp: (prop) => prop !== "is_previously_selected",
+})(({ theme, is_previously_selected }) => ({
   cursor: "pointer",
   padding: "1rem",
 

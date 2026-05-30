@@ -108,19 +108,15 @@ const TripVehicleList = ({
               }}
             >
 
-              {t(`One of the vehicles in your list doesn't have a ${
-                cartLists?.user_data?.trip_type === "distance"
-                  ? t("Distance")
-                  : cartLists?.user_data?.trip_type === "hourly"
-                    ? t("Hourly")
-                    : t("Day wise")
-              } trip. If you proceed with a ${
-                cartLists?.user_data?.trip_type === "distance"
-                  ? t("Distance")
-                  : cartLists?.user_data?.trip_type === "hourly"
-                    ? t("Hourly")
-                    : t("Day wise")
-              } trip, this vehicle will be removed.`)}
+              {(() => {
+                const tripLabel =
+                  cartLists?.user_data?.trip_type === "distance"
+                    ? t("Distance")
+                    : cartLists?.user_data?.trip_type === "hourly"
+                      ? t("Hourly")
+                      : t("Day wise");
+                return `${t("One of the vehicles in your list doesn't have a")} ${tripLabel} ${t("trip. If you proceed with a")} ${tripLabel} ${t("trip, this vehicle will be removed.")}`;
+              })()}
 
 
           </Typography>

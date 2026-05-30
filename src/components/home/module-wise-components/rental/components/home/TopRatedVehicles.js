@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Button, Skeleton } from "@mui/material";
+import { useState, useRef, useEffect } from "react";
+import { Button, Skeleton, Stack } from "@mui/material";
 import Slider from "react-slick";
 import { getLanguage } from "helper-functions/getLanguage";
 import {
@@ -19,6 +19,12 @@ import {
 import { useGetTopRatedVehicleLists } from "../../rental-api-manage/hooks/top-rated/useGetTopRatedVehicleLists";
 import { useRouter } from "next/router";
 
+const FILTER_TABS = [
+	{ key: "all", label: "All" },
+	{ key: "car", label: "Cars" },
+	{ key: "taxi", label: "Taxi" },
+];
+
 const TopRatedVehicles = () => {
 	const { t } = useTranslation();
 	const router = useRouter();
@@ -27,11 +33,29 @@ const TopRatedVehicles = () => {
 	const [isHover, setIsHover] = useState(false);
 	const [showLeftArrow, setShowLeftArrow] = useState(false);
 	const [showRightArrow, setShowRightArrow] = useState(true);
+	const [rentalFilter, setRentalFilter] = useState("all");
 	const sliderRef = useRef(null);
+
+	const filteredVehicles = topRatedVehicles?.vehicles?.filter(
+		(v) => {
+			if (rentalFilter === "all") return true;
+			const vehicleType = v?.rental_type || "car";
+			return vehicleType === rentalFilter;
+		}
+	) || [];
+
+	useEffect(() => {
+		if (sliderRef.current && filteredVehicles?.length > 0) {
+			const timer = setTimeout(() => {
+				sliderRef.current.slickGoTo(0, true);
+			}, 50);
+			return () => clearTimeout(timer);
+		}
+	}, [rentalFilter, lanDirection, filteredVehicles?.length]);
 
 	// Update arrow visibility based on current slide
 	const updateArrowVisibility = (currentSlide) => {
-		const totalSlides = topRatedVehicles?.vehicles?.length;
+		const totalSlides = filteredVehicles?.length;
 		const slidesToShow =
 			window.innerWidth >= 992 ? 4 : window.innerWidth >= 576 ? 2 : 1;
 
@@ -56,6 +80,7 @@ const TopRatedVehicles = () => {
 		autoplaySpeed: 4000,
 		variableHeight: true,
 		swipeToSlide: true,
+		rtl: lanDirection === "rtl",
 
 		prevArrow: isHover && showLeftArrow && <PrevFood displayNoneOnMobile />,
 		nextArrow: isHover && showRightArrow && (
@@ -134,7 +159,7 @@ const TopRatedVehicles = () => {
 						</RTL>
 					</CustomStackFullWidth>
 				</HomeComponentsWrapper>
-			) : topRatedVehicles?.vehicles?.length > 0 ? (
+			) : filteredVehicles?.length > 0 ? (
 				<HomeComponentsWrapper
 					onMouseEnter={() => setIsHover(true)}
 					onMouseLeave={() => setIsHover(false)}
@@ -182,33 +207,49 @@ const TopRatedVehicles = () => {
 							</Button>
 						</CustomStackFullWidth>
 
-						<RTL direction={lanDirection}>
-							<CustomBoxFullWidth
-								sx={{
-									".slick-track ": {
-										marginLeft: "0px",
-										marginRight: "0px",
-									},
-								}}
-							>
-								<Slider ref={sliderRef} {...settings}>
-									{topRatedVehicles?.vehicles?.map(
-										(item, index) => (
-											<Box
-												key={index}
-												sx={{
-													img: {
-														borderRadius: ".5rem",
-													},
-												}}
-											>
-												<CarCard data={item} />
-											</Box>
-										)
-									)}
-								</Slider>
-							</CustomBoxFullWidth>
-						</RTL>
+						<Stack direction="row" spacing={1} sx={{ alignSelf: "flex-start", mb: 1 }}>
+							{FILTER_TABS.map((tab) => (
+								<Button
+									key={tab.key}
+									size="small"
+									variant={rentalFilter === tab.key ? "contained" : "outlined"}
+									onClick={() => setRentalFilter(tab.key)}
+									sx={{ textTransform: "capitalize", minWidth: "auto", px: 2 }}
+								>
+									{t(tab.label)}
+								</Button>
+							))}
+						</Stack>
+
+						<CustomBoxFullWidth
+							sx={{
+								".slick-track ": {
+									marginLeft: "0px",
+									marginRight: "0px",
+								},
+							}}
+						>
+							<RTL direction={lanDirection}>
+								<div dir={lanDirection}>
+									<Slider ref={sliderRef} key={`${rentalFilter}-${lanDirection}`} {...settings}>
+										{filteredVehicles?.map(
+											(item, index) => (
+												<Box
+													key={index}
+													sx={{
+														img: {
+															borderRadius: ".5rem",
+														},
+													}}
+												>
+													<CarCard data={item} />
+												</Box>
+											)
+										)}
+									</Slider>
+								</div>
+							</RTL>
+						</CustomBoxFullWidth>
 					</CustomStackFullWidth>
 				</HomeComponentsWrapper>
 			) : null}

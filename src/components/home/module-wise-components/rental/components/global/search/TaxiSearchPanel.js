@@ -138,42 +138,63 @@ const TaxiSearchPanel = ({
 	}, [places]);
 
 	useEffect(() => {
-		if (placeDetails?.location) {
+		if (placeDetails?.location && placeDetails?.place_id === placeId) {
 			setLocations((prev) => ({
+				...prev,
 				location_name: placeDetails?.formattedAddress,
 				lat: placeDetails?.location?.latitude,
 				lng: placeDetails?.location?.longitude,
 			}));
 		}
-	}, [placeDetails]);
+	}, [placeDetails, placeId]);
 
 	useEffect(() => {
-		refetch();
+		if (locations?.lat && locations?.lng) {
+			refetch();
+		}
 	}, [locations]);
 
 	const handleLocationChange = (field, value) => {
 		if (value) {
 			setPlaceId(value.place_id);
+			setSearchKey(value.description || "");
+			setLocations((prev) => ({
+				...prev,
+				location_name: value.description || "",
+			}));
 		}
 	};
 
-	const handleSearchChange = (event) => setSearchKey(event.target.value);
+	const handleSearchChange = (event) => {
+		setSearchKey(event.target.value);
+		setLocations((prev) => ({
+			...prev,
+			location_name: "",
+			lat: undefined,
+			lng: undefined,
+		}));
+	};
 	useEffect(() => {
+		if (!showSearch) return;
 		dispatch(
 			setRentalSearch({
 				...rentalSearch,
 				destination_location: locations,
 			})
 		);
-		setSearchKey(rentalSearch?.destination_location?.location_name);
-	}, [locations, rentalSearch?.destination_location?.location_name]);
+	}, [showSearch, locations]);
 
 	useEffect(() => {
 		if (
 			rentalSearch?.distanceData?.destination_addresses &&
 			router.pathname !== "/home"
 		) {
-			setSearchKey(rentalSearch.distanceData.destination_addresses[0]);
+			const addr = rentalSearch.distanceData.destination_addresses[0];
+			setSearchKey(addr);
+			setLocations((prev) => ({
+				...prev,
+				location_name: addr,
+			}));
 			setDuration(rentalSearch.duration);
 		}
 	}, [rentalSearch, router.pathname]);
@@ -224,7 +245,7 @@ const TaxiSearchPanel = ({
 
 	//Search Button Click
 	const handleSearchClick = (event) => {
-		if (!searchKey) {
+		if (!searchKey && !locations?.location_name) {
 			toast.error("Please Add Destination Address!");
 			return;
 		}
@@ -247,6 +268,10 @@ const TaxiSearchPanel = ({
 				);
 				return;
 			}
+		}
+		if (tripType !== 'hourly' && tripType !== 'day_wise' && !distanceData) {
+			toast.error(t("Could not calculate distance. Make sure your current location is set."));
+			return;
 		}
 		updateDestinationLocations(locations);
 		
@@ -326,14 +351,16 @@ const TaxiSearchPanel = ({
 		});
 	};
 	const isSearchPage = router.pathname === "/vehicle-search";
-	const handleLocation = (location, locationName) => {
-		
-		 
+	const handleLocation = (location, address) => {
+		const locationName = address
+			|| `${location?.lat?.toFixed(5)}, ${location?.lng?.toFixed(5)}`;
+
 		setLocations({
-			lat: location.lat,
-			lng: location.lng,
+			lat: location?.lat,
+			lng: location?.lng,
 			location_name: locationName,
 		});
+		setSearchKey(locationName);
 	};
 
 
@@ -447,7 +474,7 @@ const TaxiSearchPanel = ({
 						onFocus={handleFocus}
 						disabled={!locations.pickup}
 						value={{
-							description: searchKey,
+							description: locations?.location_name || searchKey,
 						}}
 						width={isSticky ? "70%" : 500}
 						isFocused={isFocused}

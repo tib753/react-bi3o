@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import CustomContainer from "components/container";
 import VehicleDetailsReview from "./VehicleDetailsReview";
 import VisitVendor from "./VisitVendor";
@@ -8,6 +8,7 @@ import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import { useRouter } from "next/router";
 import { useGetVehicleDetails } from "../../rental-api-manage/hooks/react-query/details/useGetVehicleDetails";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Stack } from "@mui/system";
 import useScrollToTop from "api-manage/hooks/custom-hooks/useScrollToTop";
@@ -15,6 +16,7 @@ import useGetVehicleReview from "components/home/module-wise-components/rental/r
 
 const VehicleDetailsPage = () => {
 	useScrollToTop();
+	const { t } = useTranslation();
 	const router = useRouter();
 	const { id, from } = router.query;
 	const { cartList } = useSelector((state) => state.cart);
@@ -23,7 +25,11 @@ const VehicleDetailsPage = () => {
 	);
 	const [selectedPricing, setSelectedPricing] = useState("hourly");
 	const [typeWisePrice, setTypeWisePrice] = useState(null);
-	const { data: vehicleDetails } = useGetVehicleDetails(id);
+	const {
+		data: vehicleDetails,
+		isError,
+		error,
+	} = useGetVehicleDetails(id);
 
 	const isProductExist = () => {
 		return cartList?.carts?.find(
@@ -52,6 +58,21 @@ const VehicleDetailsPage = () => {
 
 
 
+	if (isError) {
+		return (
+			<CustomContainer>
+				<CustomStackFullWidth
+					alignItems="center"
+					justifyContent="center"
+					sx={{ minHeight: "50vh" }}
+				>
+					<Typography variant="h5" color="text.secondary" textAlign="center">
+						{t("Vehicle details not available")}
+					</Typography>
+				</CustomStackFullWidth>
+			</CustomContainer>
+		);
+	}
 	if (!vehicleDetails) {
 		return null;
 	}

@@ -45,7 +45,7 @@ const CustomMapSearch = ({
           options={predictions}
           getOptionLabel={(option) => option?.description}
           onChange={(event, value) => handleChange(event, value)}
-          value={currentLocationValue}
+          value={currentLocationValue || null}
           clearOnBlur={false}
           loading={frommap === "true" ? placesIsLoading : null}
           // open={true}
@@ -139,7 +139,7 @@ const CustomMapSearch = ({
           variant="outlined"
           id="outlined-basic"
           placeholder={t("Search location here...")}
-          value={testLocation ? testLocation : currentLocation}
+          value={testLocation ? testLocation : currentLocation || ""}
           onChange={(event) => HandleChangeForSearch(event)}
           required={true}
           isLanding

@@ -20,13 +20,14 @@ import { useRouter } from "next/router";
 
 
 const VehicleCategories = () => {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const [isHover, setIsHover] = useState(false);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
-  const sliderRef = useRef(null); // Ref for the slider
-  const { data: categories, isFetching ,isLoading} = useGetCategoryVehicleLists();
+	const { t } = useTranslation();
+	const router = useRouter();
+	const lanDirection = getLanguage() ? getLanguage() : "ltr";
+	const [isHover, setIsHover] = useState(false);
+	const [showLeftArrow, setShowLeftArrow] = useState(false);
+	const [showRightArrow, setShowRightArrow] = useState(true);
+	const sliderRef = useRef(null); // Ref for the slider
+	const { data: categories, isFetching ,isLoading} = useGetCategoryVehicleLists();
 
   
 
@@ -63,6 +64,7 @@ const VehicleCategories = () => {
     autoplaySpeed: 4000,
     variableHeight: true,
     swipeToSlide: true,
+    rtl: lanDirection === "rtl",
     prevArrow: isHover && showLeftArrow && <PrevFood displayNoneOnMobile />,
     nextArrow: isHover && showRightArrow && <NextFood displayNoneOnMobile />,
     responsive: [

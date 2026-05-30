@@ -20,6 +20,8 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { darkStyles, grayMapStyle } from "../mapColor.js";
 
+const MAP_LIBRARIES = ["places"];
+
 const GoogleMapComponent = ({
   setDisablePickButton,
   setLocationEnabled,
@@ -70,9 +72,8 @@ const GoogleMapComponent = ({
   );
 
   const { isLoaded } = useJsApiLoader({
-    id: "google-map-script-googlemapcomponent",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-    libraries: ["places"],
+    libraries: MAP_LIBRARIES,
   });
 
   const [isMounted, setIsMounted] = useState(false);

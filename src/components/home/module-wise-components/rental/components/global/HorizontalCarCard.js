@@ -280,7 +280,7 @@ const InformationSection = ({
                   component="div"
                   mt={1}
                 >
-                  {data?.type?.replace("_", " ")}
+                  {t(data?.type?.replace("_", " "))}
                 </Typography>
               </Stack>
             )}

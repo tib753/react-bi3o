@@ -423,7 +423,7 @@ const RentalCarQuickView = ({
                     mt={1}
                     sx={{ textTransform: "capitalize" }}
                   >
-                    {t(carDetails?.fuel_type)}
+                    {t(carDetails?.fuel_type?.replace("_", " "))}
                   </Typography>
                 </Stack>
               )}
@@ -538,7 +538,7 @@ const RentalCarQuickView = ({
                       color: (theme) => theme.palette.neutral[400],
                     }}
                   >
-                    /km
+                    {"/"}{t("km")}
                   </Typography>
                 </Box>
 

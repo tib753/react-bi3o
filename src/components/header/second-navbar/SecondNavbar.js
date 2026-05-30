@@ -343,7 +343,7 @@ const SecondNavBar = ({ configData }) => {
   if (typeof window !== "undefined") {
     location = localStorage.getItem("location");
     token = localStorage.getItem("token");
-    zoneId = JSON.parse(localStorage.getItem("zoneid"));
+    try { zoneId = JSON.parse(localStorage.getItem("zoneid")); } catch (e) { zoneId = null; }
   }
 
   const handleOpenPopover = () => {

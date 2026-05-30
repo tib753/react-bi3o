@@ -350,6 +350,10 @@ const VehicleDetailsRentThisCar = ({
       addToCartHandlerFromCard()
     }else{
       if (from === "from_search") {
+        if (rentalSearch?.tripType !== 'hourly' && rentalSearch?.tripType !== 'day_wise' && !rentalSearch?.distanceData) {
+          toast.error(t("Please wait while we calculate the distance"));
+          return;
+        }
         if (isDifferentProvider) {
           handleDifferentProvider(bookingDetails);
         } else {
@@ -483,7 +487,7 @@ const VehicleDetailsRentThisCar = ({
                 ? `${userData?.estimated_hours || rentalSearch?.duration} ${t("hr")}`
                 : selectedPricing === "day_wise"
                   ? `${userData?.estimated_hours/24 || rentalSearch?.duration/24} ${t("Days")}`
-                  : `${userData?.distance?.toFixed(3)} km`}
+                  : `${userData?.distance?.toFixed(3)} ${t("km")}`}
               )
 
             </Typography>
@@ -549,8 +553,8 @@ const VehicleDetailsRentThisCar = ({
           id={vehicleDetails?.id}
           fromCard={cartList?.carts?.length > 0}
           selectedPricing={selectedPricing}
-          isHourly={vehicleDetails?.trip_hourly}
-          isDistence={vehicleDetails?.trip_distance}
+          isHourly={vehicleDetails?.rental_type === 'taxi' ? false : vehicleDetails?.trip_hourly}
+          isDistence={vehicleDetails?.rental_type === 'taxi' ? true : vehicleDetails?.trip_distance}
           isDifferentProvider={isDifferentProvider}
           handleProviderCheck={handleProviderCheck}
           setCartItemData={setCartItemData}
@@ -560,7 +564,7 @@ const VehicleDetailsRentThisCar = ({
           updateCartObject={updateCartObject}
           setIds={setIds}
           setUpdateCartObject={setUpdateCartObject}
-          isDayWise={vehicleDetails?.trip_day_wise}
+          isDayWise={vehicleDetails?.rental_type === 'taxi' ? false : vehicleDetails?.trip_day_wise}
         />
       )}
 

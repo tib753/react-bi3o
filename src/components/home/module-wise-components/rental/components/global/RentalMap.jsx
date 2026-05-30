@@ -14,6 +14,8 @@ import {
 import { darkStyles, grayMapStyle, styles } from "components/home/module-wise-components/rental/components/global/mapColor";
 import { t } from "i18next";
 
+const MAP_LIBRARIES = ["places"];
+
 const RentalMap = ({
                      location,
                      height,
@@ -35,9 +37,8 @@ const RentalMap = ({
   const prevCenterRef = useRef(mapCenter);
   const zoomRef = useRef(18);
   const { isLoaded } = useJsApiLoader({
-    id: "google-map-script-rentalmap",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
-    libraries: ["places"],
+    libraries: MAP_LIBRARIES,
   });
   const containerStyle = {
     width: "100%",

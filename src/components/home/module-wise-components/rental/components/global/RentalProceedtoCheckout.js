@@ -48,7 +48,7 @@ const RentalProceedtoCheckout = ({
           </>
         ) : (
           <>
-            <b>{rentalUserData?.user_data?.distance?.toFixed(3)}</b> Km
+            <b>{rentalUserData?.user_data?.distance?.toFixed(3)}</b> {t("Km")}
           </>
         )}
       </Typography>

@@ -57,7 +57,7 @@ const nextConfig = {
     return [
       {
         source: '/api/v1/:path*',
-        destination: 'https://dz.bi3o.com/api/v1/:path*',
+        destination: 'http://192.168.1.2/api/v1/:path*',
       },
     ];
   },

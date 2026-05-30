@@ -170,7 +170,7 @@ const getStatusConfig = (tripDetails) => ({
               {tripDetails?.trip_type === "day_wise" ? <Typography fontWeight="700">
                 {tripDetails?.estimated_hours/24} {t("Days")}
               </Typography>: <Typography fontWeight="700">
-                {tripDetails?.distance?.toFixed(1)} Km
+                {tripDetails?.distance?.toFixed(1)} {t("Km")}
               </Typography>}
             </Stack>
           </Stack>

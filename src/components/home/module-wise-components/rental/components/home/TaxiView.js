@@ -281,7 +281,7 @@ const TaxiView = (props) => {
                       >
                         - {cartList?.user_data?.rental_type === "day_wise"
                           ? t("Day wise")
-                          : cartList?.user_data?.rental_type?.replace("_", " ")}
+                          : t(cartList?.user_data?.rental_type?.replace("_", " "))}
                       </Typography>
                       <Typography
                         sx={{
@@ -301,7 +301,7 @@ const TaxiView = (props) => {
                           </>
                         ) : (
                           <>
-                            (<b>{cartList?.user_data?.distance?.toFixed(3)}</b> Km)
+                            (<b>{cartList?.user_data?.distance?.toFixed(3)}</b> {t("Km")})
                           </>
                         )}
                       </Typography>

@@ -64,9 +64,9 @@ const RentalSearchLocation = (props) => {
   return (
     <Autocomplete
       fullWidth
+      freeSolo
       disabled={result === false}
-      defaultValue={value?.description || []}
-      value={value || []}
+      value={value || ""}
       options={predictions || []} // Handle empty predictions gracefully
       noOptionsText={t("No options")}
       getOptionLabel={(option) => option.description || ""}

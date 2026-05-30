@@ -269,7 +269,7 @@ const TripDetails = ({ tripDetails, setModalType, setOpenModal,checkOut,setOpenT
                         color: (theme) => theme.palette.neutral[400],
                       }}
                     >
-                      {tripDetails?.distance?.toFixed(3)} Km
+                      {tripDetails?.distance?.toFixed(3)} {t("Km")}
                     </Typography>
                   )}
               </Box>

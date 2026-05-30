@@ -256,7 +256,7 @@ const VehicleDetailsTopSection = ({
               }}
             >
               {/* Hourly Pricing */}
-              {vehicleDetails?.trip_hourly === 1 ? (
+              {vehicleDetails?.trip_hourly === 1 && vehicleDetails?.rental_type !== 'taxi' ? (
                 <Box
                   sx={{
                     display: "flex",
@@ -306,7 +306,8 @@ const VehicleDetailsTopSection = ({
 
               {/* Divider */}
               {vehicleDetails?.trip_hourly === 1 &&
-              vehicleDetails?.trip_distance === 1 ? (
+              vehicleDetails?.trip_distance === 1 &&
+              vehicleDetails?.rental_type !== 'taxi' ? (
                 <Box
                   sx={{
                     width: "0.2px",
@@ -359,7 +360,7 @@ const VehicleDetailsTopSection = ({
                       color: (theme) => theme.palette.neutral[400],
                     }}
                   >
-                    /km
+                    {"/"}{t("km")}
                   </Typography>
                 </Box>
               ) : null}
@@ -374,7 +375,7 @@ const VehicleDetailsTopSection = ({
                   }}
                 ></Box>
               ) : null}
-              {vehicleDetails?.trip_day_wise === 1 ? (
+              {vehicleDetails?.trip_day_wise === 1 && vehicleDetails?.rental_type !== 'taxi' ? (
                 <Box
                   sx={{
                     display: "flex",

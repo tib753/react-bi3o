@@ -600,6 +600,16 @@ const CarCard = ({
                 ) : null}
 
                 {handleBadgeRental(data)}
+
+                {data?.rental_type === "taxi" ? (
+                  <CustomBadge
+                    bottom={10}
+                    bg_color="#4CAF50"
+                    text={t("Taxi")}
+                    fontSize="12px"
+                    border_radius="0px 5px 5px 0px"
+                  />
+                ) : null}
                 <CustomOverLay
                   border_radius="10px"
                   className="custom_overlay"

@@ -1,23 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
-const styleCache = () => createCache({
-    key: 'rtl',
-    prepend: true,
-    stylisPlugins: [stylisRTLPlugin]
-});
 
 export const RTL = (props) => {
     const { children, direction } = props;
+    const cache = useMemo(() => createCache({
+        key: 'rtl',
+        prepend: true,
+        stylisPlugins: [stylisRTLPlugin]
+    }), []);
+
     useEffect(() => {
         document.dir = direction;
     }, [direction]);
 
     if (direction === 'rtl') {
         return (
-            <CacheProvider value={styleCache()}>
+            <CacheProvider value={cache}>
                 {children}
             </CacheProvider>
         );

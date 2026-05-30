@@ -157,7 +157,7 @@ const CardDetailsSection = ({
             <Stack direction="row" spacing={1} alignItems="center">
               <DirectionsCarFilledIcon />
               <Typography variant="body2" component="div" mt={1}>
-                {item?.vehicles?.type}
+                {t(item?.vehicles?.type?.replace("_", " "))}
               </Typography>
             </Stack>
           )}
