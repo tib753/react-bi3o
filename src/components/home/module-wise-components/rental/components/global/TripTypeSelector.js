@@ -39,13 +39,13 @@ const TripTypeSelector = ({
         sx={{ height: "45px" }}
         placeholder={t("Select Trip Type")}
       >
-        {isDistence===1 || update ? <MenuItem value="distance_wise">
+        {isDistence == 1 || update ? <MenuItem value="distance_wise">
           <ListItemText primary={t("Distance Wise")} />
         </MenuItem>:null }
-       {isHourly===1 || update ?  (<MenuItem value="hourly">
+       {isHourly == 1 || update ?  (<MenuItem value="hourly">
           <ListItemText primary={t("Hourly")} />
         </MenuItem>):null}
-        {isDayWise===1 || update ?  (<MenuItem value="day_wise">
+        {isDayWise == 1 || update ?  (<MenuItem value="day_wise">
           <ListItemText primary={t("Day wise")} />
         </MenuItem>):null}
         

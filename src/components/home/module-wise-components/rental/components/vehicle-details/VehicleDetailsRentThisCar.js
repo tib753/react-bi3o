@@ -553,7 +553,7 @@ const VehicleDetailsRentThisCar = ({
           id={vehicleDetails?.id}
           fromCard={cartList?.carts?.length > 0}
           selectedPricing={selectedPricing}
-          isHourly={vehicleDetails?.rental_type === 'taxi' ? false : vehicleDetails?.trip_hourly}
+          isHourly={vehicleDetails?.trip_hourly}
           isDistence={vehicleDetails?.rental_type === 'taxi' ? true : vehicleDetails?.trip_distance}
           isDifferentProvider={isDifferentProvider}
           handleProviderCheck={handleProviderCheck}
