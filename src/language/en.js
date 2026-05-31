@@ -1195,6 +1195,7 @@ export const english = {
 	"More From This Store!": "More From This Store!",
 	"Product Details": "Product Details",
 	"Detail Description": "Detail Description",
+	"Details Description": "Details Description",
 	"Detailed Reviews": "Detailed Reviews",
 	"Add fund": "Add fund",
 	"Faster & secure way to pay bill": "Faster & secure way to pay bill",
