@@ -436,6 +436,8 @@ export const SliderCustom = styled(Stack)(
 					gap: "5px",
 				},
 			},
+		"& .slick-slide[style]": {
+			left: theme.direction === "rtl" ? "auto !important" : undefined,
 		},
 	})
 );
