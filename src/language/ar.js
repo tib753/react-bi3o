@@ -1665,4 +1665,9 @@ export const arabic = {
 	"Semi-Automatic": "شبه أوتوماتيك",
 	"semi-automatic": "شبه أوتوماتيك",
 	"Distance wise": "حسب المسافة",
+	"Unit Weight": "وزن الوحدة",
+	"order summary": "ملخص الطلب",
+	"Preparing items": "تحضير العناصر",
+	"Preparing foods": "تحضير الأطعمة",
+	"Item is on the way": "العنصر في الطريق"
 };

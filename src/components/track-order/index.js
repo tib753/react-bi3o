@@ -142,26 +142,28 @@ const TrackOrder = ({ configData, trackOrderData }) => {
   }, []);
   const steps = [
     {
-      label: "Order Confirmed",
+      label: t("Order Confirmed"),
       time: trackOrderData?.confirmed,
       img: orderConfirmImage.src,
     },
     {
-      label: `Preparing ${
-        trackOrderData?.module?.module_type === "food" ? "foods" : "items"
-      }`,
+      label:
+        trackOrderData?.module?.module_type === "food"
+          ? t("Preparing foods")
+          : t("Preparing items"),
       time: trackOrderData?.processing,
       img: shippedImage.src,
     },
     {
-      label: ` ${
-        trackOrderData?.module?.module_type === "food" ? "foods" : "items"
-      } is on the way`,
+      label:
+        trackOrderData?.module?.module_type === "food"
+          ? t("Food is on the way")
+          : t("Item is on the way"),
       time: trackOrderData?.picked_up,
       img: outForDelivery.src,
     },
     {
-      label: "Delivered",
+      label: t("Delivered"),
       time: trackOrderData?.delivered,
       img: delivered.src,
     },

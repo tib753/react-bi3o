@@ -1952,4 +1952,9 @@ export const french = {
 	"Semi-Automatic": "Semi-automatique",
 	"semi-automatic": "Semi-automatique",
 	"Distance wise": "Par distance",
+	"Unit Weight": "Poids unitaire",
+	"order summary": "Résumé de la commande",
+	"Preparing items": "Préparation des articles",
+	"Preparing foods": "Préparation des aliments",
+	"Item is on the way": "L'article est en route"
 };

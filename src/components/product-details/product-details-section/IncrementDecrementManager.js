@@ -26,12 +26,6 @@ const IncrementDecrementManager = (props) => {
 
   return (
     <CustomStackFullWidth spacing={2}>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography fontWeight="400" color="customColor.textGray">
-          {t("Unit")} :
-        </Typography>
-        <Typography fontWeight="500">{modalData?.unit_type}</Typography>
-      </Stack>
       <CustomStackFullWidth
         key={modalData}
         direction={productUpdate ? "column" : "row"}

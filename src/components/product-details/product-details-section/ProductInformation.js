@@ -1,6 +1,7 @@
-import { Skeleton, Typography, useTheme } from "@mui/material";
+import { Box, Skeleton, styled, Typography, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useReducer, useState } from "react";
+import { CustomSizeBox } from "../ProductDetails.style";
 import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import IncrementDecrementManager from "./IncrementDecrementManager";
 import ProductInformationBottomSection from "./ProductInformationBottomSection";
@@ -15,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart, setCartList } from "redux/slices/cart";
 import { addWishList } from "redux/slices/wishList";
@@ -92,18 +94,47 @@ const ProductInformation = ({
 		}
 	};
 
+	const computeInitialUnitWeightPrice = (product) => {
+		const uw = Number(product?.unit_weight_kg);
+		if (!(uw > 0) || !product?.variations?.length) return null;
+		let maxP = product.variations[0];
+		product.variations.forEach(v => { if (v.price > maxP.price) maxP = v; });
+		const gMatch = maxP.type?.match(/(\d+)/);
+		const grams = gMatch ? parseInt(gMatch[1]) : 0;
+		if (!(grams > 0)) return null;
+		return Math.round((maxP.price / grams) * (uw * 1000));
+	};
+
 	useEffect(() => {
-		handleInitialTotalPriceVarPriceQuantitySet(
-			productDetailsData,
-			dispatch,
-			cartList,
-			handleChoices,
-			state.selectedOptions,
-			state.modalData
-		);
+		const uw = Number(productDetailsData?.unit_weight_kg);
+		const hasServerSelection = productDetailsData?.selectedOption?.length > 0;
+		if (uw > 0 && !hasServerSelection) {
+			setIsUnitWeightSelected(true);
+			const unitPrice = computeInitialUnitWeightPrice(productDetailsData);
+			dispatch({
+				type: ACTION.setModalData,
+				payload: {
+					...productDetailsData,
+					selectedOption: [],
+					price: unitPrice ?? productDetailsData?.price,
+					totalPrice: unitPrice ?? productDetailsData?.price,
+					quantity: 1,
+				},
+			});
+		} else {
+			handleInitialTotalPriceVarPriceQuantitySet(
+				productDetailsData,
+				dispatch,
+				cartList,
+				handleChoices,
+				state.selectedOptions,
+				state.modalData
+			);
+		}
 	}, [productDetailsData]);
 
 	const handleChoices = (option, choice) => {
+		setIsUnitWeightSelected(false);
 		if (cartList.length > 0) {
 			const itemIsInCart = cartList.find(
 				(item) =>
@@ -143,6 +174,38 @@ const ProductInformation = ({
 			});
 		}
 	};
+
+	const [isUnitWeightSelected, setIsUnitWeightSelected] = useState(false);
+
+	const computeUnitWeightPrice = (product) => {
+		const data = product || state?.modalData?.[0];
+		const uw = Number(data?.unit_weight_kg);
+		if (!(uw > 0) || !data?.variations?.length) return null;
+		let maxP = data.variations[0];
+		data.variations.forEach(v => { if (v.price > maxP.price) maxP = v; });
+		const gMatch = maxP.type?.match(/(\d+)/);
+		const grams = gMatch ? parseInt(gMatch[1]) : 0;
+		if (!(grams > 0)) return null;
+		return Math.round((maxP.price / grams) * (uw * 1000));
+	};
+
+	const handleUnitWeightClick = () => {
+		setIsUnitWeightSelected(true);
+		const unitPrice = computeUnitWeightPrice();
+		if (unitPrice) {
+			dispatch({
+				type: ACTION.setModalData,
+				payload: {
+					...state.modalData[0],
+					selectedOption: [],
+					price: unitPrice,
+					totalPrice: unitPrice,
+					quantity: 1,
+				},
+			});
+		}
+	};
+
 	const decrementQuantity = () => {
 		dispatch({ type: ACTION.decrementQuantity });
 	};
@@ -400,12 +463,18 @@ const ProductInformation = ({
 						</Stack>
 					</Stack>
 				)}
-				<PricePreviewWithStock
-					state={state}
-					theme={theme}
-					productDetailsData={productDetailsData}
-				/>
-
+				<Stack direction="row" alignItems="baseline" spacing={0.5}>
+					<PricePreviewWithStock
+						state={state}
+						theme={theme}
+						productDetailsData={productDetailsData}
+					/>
+					{state?.modalData[0]?.unit_type && (
+						<Typography fontSize="13px" fontWeight="400" color="text.secondary">
+							/{state?.modalData[0]?.unit_type}
+						</Typography>
+					)}
+				</Stack>
 				{modalmanage === "true" ? (
 					<ReadMore limits="130" color={theme.palette.neutral[400]}>
 						{state?.modalData.length > 0 &&
@@ -473,6 +542,50 @@ const ProductInformation = ({
 					<SimpleBar style={{ maxHeight: "315px" }}>
 						<>
 							{topInformation()}
+							{(() => {
+								const modal = state?.modalData?.[0];
+								const uw = Number(modal?.unit_weight_kg);
+								if (!(uw > 0)) return null;
+								const unitType = modal?.unit?.translations?.find(
+									tr => tr.locale === i18n.language
+								)?.value ?? modal?.unit_type;
+								const unitWeightLabel = `${uw} ${unitType}`;
+								const unitPrice = computeUnitWeightPrice();
+								return (
+									<CustomStackFullWidth sx={{ px: "20px", pb: "0px" }}>
+										<Typography fontWeight="600" paddingBottom="3px">
+											{t("Unit Weight")}
+										</Typography>
+										<CustomStackFullWidth direction="row" spacing={2}>
+											<Box
+												onClick={handleUnitWeightClick}
+												sx={{
+													display: "flex",
+													justifyContent: "center",
+													alignItems: "center",
+													padding: "8px 15px",
+													border: "1px solid",
+													borderColor: "primary.main",
+													borderRadius: "2px",
+													cursor: "pointer",
+													bgcolor: isUnitWeightSelected ? "primary.main" : "transparent",
+													color: isUnitWeightSelected ? "neutral.100" : "neutral.1000",
+													ml: "-2px",
+												}}
+											>
+												<Typography
+													fontSize={{ xs: "12px", sm: "14px" }}
+													sx={{
+														color: isUnitWeightSelected ? "neutral.100" : "neutral.1000",
+													}}
+												>
+													{unitWeightLabel}
+												</Typography>
+											</Box>
+										</CustomStackFullWidth>
+									</CustomStackFullWidth>
+								);
+							})()}
 							<Stack
 								padding={{
 									xs: "10px 20px 10px 20px",

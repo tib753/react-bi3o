@@ -9,7 +9,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import { ACTION, initialState, reducer } from "./states";
 
 const getSelectedIndex = (options, selectedOptions) => {
-  let index = 0;
+  if (!selectedOptions) return -1;
+  let index = -1;
   options?.forEach((option, indexNumber) => {
     if (selectedOptions?.type?.split("-")?.includes(option.trim())) {
       index = indexNumber;
@@ -71,8 +72,37 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   );
   if (translationContaining) return translationContaining.value;
   
+  // Search 5: Find any translation with matching value (any locale), then get same key for current language
+  const anyLocaleMatch = productData.translations.find(
+    (t) => t.value && t.value.toString().toLowerCase().trim() === defaultNameLower
+  );
+  if (anyLocaleMatch) {
+    const currentLangTranslation = productData.translations.find(
+      (t) => t.locale === currentLanguage && t.key === anyLocaleMatch.key
+    );
+    if (currentLangTranslation) return currentLangTranslation.value;
+  }
+  
   // If no translation found, return original
   return defaultName;
+};
+
+const getChoiceTitle = (productData, choiceName) => {
+  const currentLanguage = i18n.language || "ar";
+
+  const translation = productData?.translations?.find(
+    (tr) => tr.key === choiceName && tr.locale === currentLanguage
+  );
+
+  if (translation?.value) return translation.value;
+
+  const anyTranslation = productData?.translations?.find(
+    (tr) => tr.key === choiceName
+  );
+
+  if (anyTranslation?.value) return anyTranslation.value;
+
+  return productData?.choice_options?.find(c => c.name === choiceName)?.title ?? choiceName;
 };
 
 const VariationsManager = ({ productDetailsData, handleChoices }) => {
@@ -92,13 +122,13 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
   const borderColor = theme.palette.primary.main;
   const [choice, setChoice] = useState(null);
   const [value, setValue] = useState(
-    productDetailsData?.choice_options?.map((i) => ({
-      type: i?.title,
-      value:
-        i?.options[
-          getSelectedIndex(i?.options, productDetailsData?.selectedOption?.[0])
-        ],
-    }))
+    productDetailsData?.choice_options?.map((i) => {
+      const idx = getSelectedIndex(i?.options, productDetailsData?.selectedOption?.[0]);
+      return {
+        type: i?.title,
+        value: idx >= 0 ? i?.options[idx] : "",
+      };
+    })
   );
   const handleClick = (values, index, choice) => {
     setValue((prev) => {
@@ -112,7 +142,9 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
   }, [value]);
   const handleChoice = (value) => {
     let finalVariation = "";
-    value.forEach((item) => (finalVariation += item.value));
+    value.forEach((item) => {
+      if (item.value) finalVariation += item.value;
+    });
     let option = productDetailsData?.variations?.filter(
       (item) =>
         item.type.replaceAll("-", "").replaceAll(" ", "") ===
@@ -129,7 +161,7 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
         <CustomStackFullWidth key={choiceIndex}>
           <Stack direction="row" spacing={0.5} alignItems="center">
             <Typography fontWeight="600" paddingBottom="3px">
-              {getTranslatedName(productDetailsData, choice?.title)}
+              {getChoiceTitle(productDetailsData, choice?.name)}
             </Typography>
             {/*<Typography fontWeight="600">:</Typography>*/}
             {/*<Typography fontWeight="400">{state.productColor}</Typography>*/}
@@ -143,7 +175,7 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
                 productsize={value[choiceIndex]?.value}
               >
                 <Typography fontSize={{ xs: "12px", sm: "14px" }}>
-                  {getTranslatedName(productDetailsData, item, "option")}
+                  {item}
                 </Typography>
               </CustomSizeBox>
             ))}

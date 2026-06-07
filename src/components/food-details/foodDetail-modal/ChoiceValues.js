@@ -10,54 +10,17 @@ import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.st
 import { CustomTypographyLabel } from "../../../styled-components/CustomTypographies.style";
 import { getAmountWithSign } from "../../../helper-functions/CardHelpers";
 
-const getTranslatedName = (productData, defaultName, type = "title") => {
+const getTranslatedText = (item, keyName, fallback) => {
   const currentLanguage = i18n.language || "ar";
-  if (!defaultName || !productData?.translations?.length) return defaultName;
-  
-  const defaultNameLower = defaultName.toString().toLowerCase().trim();
-  
-  // Search 1: Look for translation where the VALUE matches the defaultName
-  const translationByValue = productData.translations.find(
-    (t) => t.locale === currentLanguage && 
-           t.value && 
-           t.value.toString().toLowerCase().trim() === defaultNameLower
-  );
-  if (translationByValue) return translationByValue.value;
-  
-  // Search 2: Look for translation where the KEY matches the defaultName exactly
-  const translationByKey = productData.translations.find(
-    (t) => t.locale === currentLanguage && 
-           t.key && 
-           t.key.toString().toLowerCase().trim() === defaultNameLower
-  );
-  if (translationByKey) return translationByKey.value;
-  
-  // Search 3: Check if any Arabic/English translation value matches our defaultName
-  const matchingBaseTranslation = productData.translations.find(
-    (t) => (t.locale === "ar" || t.locale === "en") && 
-           t.value && 
-           t.value.toString().toLowerCase().trim() === defaultNameLower
-  );
-  
-  if (matchingBaseTranslation) {
-    // Found a base translation, now find the current language version
-    const currentLangTranslation = productData.translations.find(
-      (t) => t.locale === currentLanguage && 
-             t.key === matchingBaseTranslation.key
+  if (item?.translations?.length) {
+    const translation = item.translations.find(
+      (t) => t.locale === currentLanguage && t.key === keyName
     );
-    if (currentLangTranslation) return currentLangTranslation.value;
+    if (translation?.value) return translation.value;
+    const anyTranslation = item.translations.find((t) => t.key === keyName);
+    if (anyTranslation?.value) return anyTranslation.value;
   }
-  
-  // Search 4: Check if translation value CONTAINS the default name
-  const translationContaining = productData.translations.find(
-    (t) => t.locale === currentLanguage && 
-           t.value && 
-           t.value.toString().toLowerCase().includes(defaultNameLower)
-  );
-  if (translationContaining) return translationContaining.value;
-  
-  // If no translation found, return original
-  return defaultName;
+  return fallback ?? "";
 };
 
 export const ChoiceValues = (props) => {
@@ -129,7 +92,7 @@ export const ChoiceValues = (props) => {
           fontWeight: "500",
         }}
       >
-        {getTranslatedName(productDetailsData, choice?.name)}{" "}
+        {getTranslatedText(choice, "name", choice?.name)}{" "}
         {choice.required === "on" ? t("(required)") : t("(optional)")}:
       </FoodTitleTypography>
       <FormControl fullWidth>
@@ -188,7 +151,7 @@ export const ChoiceValues = (props) => {
                   )
                 }
                 label={
-                  <CustomTypographyLabel>{getTranslatedName(productDetailsData, option.label, "option")}</CustomTypographyLabel>
+                  <CustomTypographyLabel>{getTranslatedText(option, "level", option.label)}</CustomTypographyLabel>
                 }
               />
               <CustomTypographyLabel>

@@ -177,7 +177,40 @@ const PricePreviewWithStock = (props) => {
 			</Typography>
 		);
 	};
+	const getUnitWeightPrice = () => {
+		const unitWeightKG = Number(state?.modalData[0]?.unit_weight_kg);
+		if (!(unitWeightKG > 0)) return null;
+		const variations = state?.modalData[0]?.variations;
+		if (!variations?.length) return null;
+
+		let maxPriceVar = variations[0];
+		variations.forEach(v => {
+			if (v.price > maxPriceVar.price) maxPriceVar = v;
+		});
+
+		const weightMatch = maxPriceVar.type?.match(/(\d+)/);
+		const weightGrams = weightMatch ? parseInt(weightMatch[1]) : 0;
+		if (!(weightGrams > 0)) return null;
+
+		return Math.round((maxPriceVar.price / weightGrams) * (unitWeightKG * 1000));
+	};
+
 	const handlePrice = () => {
+		const unitPrice = getUnitWeightPrice();
+		if (unitPrice !== null && state?.modalData[0]?.variations?.length > 0) {
+			let minPrice = Infinity;
+			state.modalData[0].variations.forEach(v => {
+				if (v.price < minPrice) minPrice = v.price;
+			});
+			if (Number.parseInt(unitPrice) === Number.parseInt(minPrice)) {
+				return <>{priceWithOrWithoutDiscount(unitPrice)}</>;
+			}
+			return (
+				<Stack direction="row" alignItems="center">
+					{handlePriceRange(unitPrice, minPrice)}
+				</Stack>
+			);
+		}
 		if (state?.modalData[0]?.variations?.length > 0) {
 			if (
 				Number.parseInt(state?.modalData[0]?.variations?.[0]?.price) ===

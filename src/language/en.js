@@ -1714,5 +1714,10 @@ Day: "Day",
 	"dual clutch": "Dual-Clutch",
 	"Dual Clutch": "Dual-Clutch",
 	"semi-automatic": "Semi-Automatic",
-	"Semi-Automatic": "Semi-Automatic"
+	"Semi-Automatic": "Semi-Automatic",
+	"Unit Weight": "Unit Weight",
+	"order summary": "order summary",
+	"Preparing items": "Preparing items",
+	"Preparing foods": "Preparing foods",
+	"Item is on the way": "Item is on the way"
 };
