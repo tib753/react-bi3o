@@ -1719,5 +1719,7 @@ Day: "Day",
 	"order summary": "order summary",
 	"Preparing items": "Preparing items",
 	"Preparing foods": "Preparing foods",
-	"Item is on the way": "Item is on the way"
+	"Item is on the way": "Item is on the way",
+	"(optional)": "(optional)",
+	"(required)": "(required)"
 };
