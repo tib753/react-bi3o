@@ -3,6 +3,7 @@ import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useGetRecommendProductsForHome } from "api-manage/hooks/react-query/useGetRecommendProductsForHome";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { getLanguage } from "../../../helper-functions/getLanguage";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,7 +12,7 @@ import ProductCard from "../../cards/ProductCard";
 import ProductCardSimmer from "../../Shimmer/ProductCardSimmer";
 import H2 from "../../typographies/H2";
 import { HomeComponentsWrapper } from "../HomePageComponents";
-import { loveItemSettings } from "./loveItemSettings";
+import { loveItemSettings, NextFood, PrevFood } from "./loveItemSettings";
 import Menus from "./Menus";
 import { setYouWillLoveItems } from "redux/slices/storedData";
 
@@ -129,7 +130,10 @@ const LoveItem = (props) => {
           <CustomStackFullWidth>
             {!isFetched ? (
                 <SliderCustom nopadding="true">
-                  <Slider {...loveItemSettings}>
+                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}
+                    nextArrow={getLanguage() === "rtl" ? <PrevFood displayNoneOnMobile /> : <NextFood displayNoneOnMobile />}
+                    prevArrow={getLanguage() === "rtl" ? <NextFood displayNoneOnMobile /> : <PrevFood displayNoneOnMobile />}
+                  >
                     {[...Array(5)].map((_, index) => {
                       return <ProductCardSimmer key={index} />;
                     })}
@@ -137,7 +141,10 @@ const LoveItem = (props) => {
                 </SliderCustom>
             ) : (
                 <SliderCustom nopadding="true">
-                  <Slider {...loveItemSettings}>
+                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}
+                    nextArrow={getLanguage() === "rtl" ? <PrevFood displayNoneOnMobile /> : <NextFood displayNoneOnMobile />}
+                    prevArrow={getLanguage() === "rtl" ? <NextFood displayNoneOnMobile /> : <PrevFood displayNoneOnMobile />}
+                  >
                     {data?.items?.map((item, index) => {
                       return (
                           <ProductCard

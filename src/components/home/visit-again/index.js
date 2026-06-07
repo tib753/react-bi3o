@@ -1,6 +1,7 @@
 import { alpha, useMediaQuery, useTheme, Card, Skeleton, Box, Grid, Typography } from "@mui/material";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 import { getToken } from "helper-functions/getToken";
+import { getLanguage } from "../../../helper-functions/getLanguage";
 import { ModuleTypes } from "helper-functions/moduleTypes";
 import React, { useState, Suspense } from "react";
 import dynamic from "next/dynamic";
@@ -21,7 +22,7 @@ import VisitAgainCard from "../../cards/VisitAgainCard";
 import CustomContainer from "../../container";
 import H1 from "../../typographies/H1";
 import Subtitle1 from "../../typographies/Subtitle1";
-import { settings } from "./SliderSettings";
+import { settings, WhiteNext, WhitePrev } from "./SliderSettings";
 
 const VisitAgainShimmerCard = () => {
   const theme = useTheme();
@@ -169,7 +170,10 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
                minHeight:"200px"
             }}
           >
-            <Slider {...settings}>
+            <Slider {...settings} rtl={getLanguage() === "rtl"}
+              nextArrow={getLanguage() === "rtl" ? <WhitePrev displayNoneOnMobile /> : <WhiteNext displayNoneOnMobile />}
+              prevArrow={getLanguage() === "rtl" ? <WhiteNext displayNoneOnMobile /> : <WhitePrev displayNoneOnMobile />}
+            >
               {isLoading ? (
                 [...Array(5)].map((_, index) => (
                   <VisitAgainShimmerCard key={index} />
