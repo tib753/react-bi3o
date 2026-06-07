@@ -28,6 +28,7 @@ const LoveItem = (props) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isRtl = getLanguage() === "rtl";
   const params = {
     offset: 1,
     limit: 15,
@@ -130,8 +131,8 @@ const LoveItem = (props) => {
           <CustomStackFullWidth>
             {!isFetched ? (
                 <SliderCustom nopadding="true">
-                  <div dir={getLanguage() === "rtl" ? "rtl" : "ltr"}>
-                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}>
+                  <div dir={isRtl ? "rtl" : "ltr"}>
+                  <Slider {...loveItemSettings} rtl={isRtl}>
                     {[...Array(5)].map((_, index) => {
                       return <ProductCardSimmer key={index} />;
                     })}
@@ -140,8 +141,8 @@ const LoveItem = (props) => {
                 </SliderCustom>
             ) : (
                 <SliderCustom nopadding="true">
-                  <div dir={getLanguage() === "rtl" ? "rtl" : "ltr"}>
-                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}>
+                  <div dir={isRtl ? "rtl" : "ltr"}>
+                  <Slider {...loveItemSettings} rtl={isRtl}>
                     {data?.items?.map((item, index) => {
                       return (
                           <ProductCard

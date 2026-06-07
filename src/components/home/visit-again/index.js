@@ -70,6 +70,7 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
   const theme = useTheme();
   const token = getToken();
   const isSmallScreen = useMediaQuery('(min-width:600px)');
+  const isRtl = getLanguage() === "rtl";
 
   const getModuleWiseData = () => {
     switch (getCurrentModuleType()) {
@@ -170,8 +171,8 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
                minHeight:"200px",
             }}
           >
-            <div dir={getLanguage() === "rtl" ? "rtl" : "ltr"}>
-            <Slider {...settings} rtl={getLanguage() === "rtl"}>
+            <div dir={isRtl ? "rtl" : "ltr"}>
+            <Slider {...settings} rtl={isRtl}>
             
               {isLoading ? (
                 [...Array(5)].map((_, index) => (
