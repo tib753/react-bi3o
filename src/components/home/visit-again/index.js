@@ -172,7 +172,12 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
             }}
           >
             <div dir={isRtl ? "rtl" : "ltr"}>
-            <Slider {...settings} rtl={isRtl}>
+            <Slider {...settings} rtl={isRtl}
+              responsive={settings.responsive.map(r => ({
+                ...r,
+                settings: { ...r.settings, rtl: isRtl }
+              }))}
+            >
             
               {isLoading ? (
                 [...Array(5)].map((_, index) => (
