@@ -117,7 +117,7 @@ const ProfileTab = ({
                     }}
                   >
                     {" "}
-                    {t(item?.name.replace("-", " "))}
+                    {t(item?.name.replace(/-/g, " "))}
                   </Typography>
                 </UserProfileTab>
               </Box>
