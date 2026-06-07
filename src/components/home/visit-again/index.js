@@ -167,13 +167,12 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
             sx={{
               backgroundColor: getModuleWiseData?.()?.bgColor,
               padding: { xs: "0px", md: "17px" },
-               minHeight:"200px"
+               minHeight:"200px",
             }}
           >
-            <Slider {...settings} rtl={getLanguage() === "rtl"}
-              nextArrow={getLanguage() === "rtl" ? <WhitePrev displayNoneOnMobile /> : <WhiteNext displayNoneOnMobile />}
-              prevArrow={getLanguage() === "rtl" ? <WhiteNext displayNoneOnMobile /> : <WhitePrev displayNoneOnMobile />}
-            >
+            <div dir={getLanguage() === "rtl" ? "rtl" : "ltr"}>
+            <Slider {...settings} rtl={getLanguage() === "rtl"}>
+            
               {isLoading ? (
                 [...Array(5)].map((_, index) => (
                   <VisitAgainShimmerCard key={index} />
@@ -191,6 +190,7 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
                 })
               )}
             </Slider>
+            </div>
           </SliderCustom>
         </CustomStackFullWidth>
     </>

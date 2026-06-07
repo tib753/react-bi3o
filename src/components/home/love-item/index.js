@@ -130,21 +130,18 @@ const LoveItem = (props) => {
           <CustomStackFullWidth>
             {!isFetched ? (
                 <SliderCustom nopadding="true">
-                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}
-                    nextArrow={getLanguage() === "rtl" ? <PrevFood displayNoneOnMobile /> : <NextFood displayNoneOnMobile />}
-                    prevArrow={getLanguage() === "rtl" ? <NextFood displayNoneOnMobile /> : <PrevFood displayNoneOnMobile />}
-                  >
+                  <div dir={getLanguage() === "rtl" ? "rtl" : "ltr"}>
+                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}>
                     {[...Array(5)].map((_, index) => {
                       return <ProductCardSimmer key={index} />;
                     })}
                   </Slider>
+                  </div>
                 </SliderCustom>
             ) : (
                 <SliderCustom nopadding="true">
-                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}
-                    nextArrow={getLanguage() === "rtl" ? <PrevFood displayNoneOnMobile /> : <NextFood displayNoneOnMobile />}
-                    prevArrow={getLanguage() === "rtl" ? <NextFood displayNoneOnMobile /> : <PrevFood displayNoneOnMobile />}
-                  >
+                  <div dir={getLanguage() === "rtl" ? "rtl" : "ltr"}>
+                  <Slider {...loveItemSettings} rtl={getLanguage() === "rtl"}>
                     {data?.items?.map((item, index) => {
                       return (
                           <ProductCard
@@ -157,6 +154,7 @@ const LoveItem = (props) => {
                       );
                     })}
                   </Slider>
+                  </div>
                 </SliderCustom>
             )}
           </CustomStackFullWidth>
