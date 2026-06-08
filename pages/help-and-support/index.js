@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import MainLayout from "../../src/components/layout/MainLayout";
 import HelpAndSupport from "../../src/components/help-and-support";
@@ -6,9 +6,17 @@ import { useTranslation } from "react-i18next";
 import SEO from "../../src/components/seo";
 import CustomContainer from "../../src/components/container";
 import { getImageUrl } from "utils/CustomFunctions";
+import { useDispatch } from "react-redux";
+import { setConfigData } from "redux/slices/configData";
 
 const Index = ({ configData, landingPageData }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (configData) {
+      dispatch(setConfigData(configData));
+    }
+  }, [configData]);
 
   // Handle cases where `configData` is missing
   if (!configData) {

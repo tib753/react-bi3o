@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGetModule from "../../api-manage/hooks/react-query/useGetModule";
 import { setSelectedModule } from "../../redux/slices/utils";
+import { setConfigData } from "../../redux/slices/configData";
 import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style";
 import FooterComponent from "../footer";
 import HeaderComponent from "../header";
@@ -23,6 +24,11 @@ const MainLayout = ({ children, configData }) => {
 	useEffect(() => {
 		refetch();
 	}, []);
+	useEffect(() => {
+		if (configData) {
+			dispatch(setConfigData(configData));
+		}
+	}, [configData]);
 	if (data) {
 		const selectedModuleType = JSON.parse(
 			localStorage.getItem("module")
