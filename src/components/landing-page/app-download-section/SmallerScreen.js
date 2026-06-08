@@ -14,11 +14,11 @@ const Wrapper = styled(CustomBoxFullWidth)(({ theme }) => ({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "center",
+	minHeight: "300px",
 }));
 
 const ImageWrapper = styled(CustomStackFullWidth)(({ theme }) => ({
-	// position: "relative",
-	opacity: 0.1,
+	position: "relative",
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "center",
