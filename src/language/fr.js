@@ -1856,6 +1856,7 @@ export const french = {
 	"Minute": "Minute",
 	"Mobile app": "Application mobile",
 	"NID": "NID",
+	"No Trips Found": "Aucun trajet trouvé",
 	"New Arrivals": "Nouveautes",
 	"No favourite found": "Aucun favori trouve",
 	"Overlay": "Superposition",

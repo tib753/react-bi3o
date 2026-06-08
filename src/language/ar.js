@@ -1563,6 +1563,7 @@ export const arabic = {
 	"Currently You don't have any message selected.": "لم يتم تحديد أي رسالة حالياً",
 	"Common Conditions": "الشروط العامة",
 	"Items Not Found!": "لم يتم العثور على عناصر!",
+	"No Trips Found": "لا توجد رحلات",
 	"New Arrivals": "وصل حديثًا",
 	
 	"Currently Open": "مفتوح حالياً",

@@ -1601,6 +1601,7 @@ Day: "Day",
 	"Common Conditions": "Common Conditions",
 	"Items Not Found!": "Items Not Found!",
 	
+	"No Trips Found": "No Trips Found",
 	"New Arrivals": "New Arrivals",
 	"From You": "From You",
 	"Track Now": "Track Now",
