@@ -1455,6 +1455,11 @@ export const arabic = {
 	"Profile Image": "صورة الملف الشخصي",
 	"Deliveryman Type": "نوع مندوب التوصيل",
 	"Salary based": "بنظام راتب ثابت",
+	"pickup area": "منطقة الاستلام",
+	"Select pickup area": "اختر منطقة الاستلام",
+	"Minimum Pickup Time": "الحد الأدنى لوقت الاستلام",
+	"Maximum Pickup Time": "الحد الأقصى لوقت الاستلام",
+	"Max Pickup Time": "أقصى وقت استلام",
 	"Earning is required": "قيمة الأرباح مطلوبة",
 	
 	"Select Zone": "اختر المنطقة",
