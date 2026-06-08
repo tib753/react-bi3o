@@ -113,6 +113,7 @@ const PharmacyCategoryCard = ({ image, title, id, onlyshimmer }) => {
               color={hover && "primary.main"}
               noWrap
               component="h4"
+              sx={{ unicodeBidi: "plaintext" }}
             >
               {onlyshimmer ? (<Skeleton width="70px" variant="text" />) : title}
             </Typography>

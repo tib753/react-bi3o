@@ -114,6 +114,7 @@ const FoodCategoryCard = (props) => {
               display: "-webkit-box",
               WebkitLineClamp: "1",
               WebkitBoxOrient: "vertical",
+              unicodeBidi: "plaintext",
               transition: "all ease 0.3s",
               "&:hover": {
                 color: "primary.main",
