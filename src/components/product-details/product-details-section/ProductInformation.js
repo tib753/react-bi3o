@@ -570,7 +570,6 @@ const ProductInformation = ({
 													cursor: "pointer",
 													bgcolor: isUnitWeightSelected ? "primary.main" : "transparent",
 													color: isUnitWeightSelected ? "neutral.100" : "neutral.1000",
-													ml: "-2px",
 												}}
 											>
 												<Typography
@@ -597,6 +596,7 @@ const ProductInformation = ({
 									<VariationsManager
 										productDetailsData={state.modalData[0]}
 										handleChoices={handleChoices}
+										isUnitWeightSelected={isUnitWeightSelected}
 									/>
 								)}
 								{/*<SizeVariation productDetailsData={productDetailsData} />*/}

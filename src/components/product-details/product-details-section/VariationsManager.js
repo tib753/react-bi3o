@@ -105,7 +105,7 @@ const getChoiceTitle = (productData, choiceName) => {
   return productData?.choice_options?.find(c => c.name === choiceName)?.title ?? choiceName;
 };
 
-const VariationsManager = ({ productDetailsData, handleChoices }) => {
+const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected }) => {
   const theme = useTheme();
   // Debug logging for translations
   if (productDetailsData?.choice_options?.length > 0) {
@@ -130,6 +130,17 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
       };
     })
   );
+  useEffect(() => {
+    if (isUnitWeightSelected) {
+      setValue(
+        productDetailsData?.choice_options?.map((i) => ({
+          type: i?.title,
+          value: "",
+        }))
+      );
+    }
+  }, [isUnitWeightSelected]);
+
   const handleClick = (values, index, choice) => {
     setValue((prev) => {
       prev[index].value = values;
