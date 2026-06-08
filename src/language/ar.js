@@ -1015,6 +1015,7 @@ export const arabic = {
 	"You can not Order more then 1000à§³ on COD order":
 		"لا يمكنك طلب أكثر من 1000 دج عند اختيار الدفع عند الاستلام",
 	WishList: "قائمة الرغبات",
+	Wishlist: "قائمة الرغبات",
 	processing: "قيد المعالجة",
 	refunded: "تم الاسترداد",
 	"refund requested": "استرداد طلب",
@@ -1210,13 +1211,13 @@ export const arabic = {
 	"Product Details": "تفاصيل المنتج",
 	"Detail Description": "وصف التفاصيل",
 	"Detailed Reviews": "مراجعات مفصلة",
-	"Add fund": "إضافة الصندوق",
+	"Add fund": "إضافة رصيد",
 	"Faster & secure way to pay bill": "طريقة أسرع وآمنة لدفع الفاتورة",
 	"Add fund by from secured digital payment gateways":
-		"أضف صندوقًا من بوابات الدفع الرقمية المضمونة",
-	"Add Fund to Wallet": "إضافة صندوق إلى محفظة",
+		"أضف رصيدًا من بوابات الدفع الرقمية المضمونة",
+	"Add Fund to Wallet": "إضافة رصيد إلى محفظة",
 	"If you want to add fund to your wallet then click add fund button":
-		"إذا كنت ترغب في إضافة صندوق إلى محفظتك ، فانقر فوق زر إضافة صندوق الصندوق",
+		"إذا كنت ترغب في إضافة رصيد إلى محفظتك ، فانقر فوق زر إضافة رصيد",
 	"Applied filters:": "تم تطبيق الفلتر:",
 	"The service": "الخدمة",
 	"you can rely on.": "يمكنك الاعتماد على.",

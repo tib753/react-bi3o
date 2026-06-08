@@ -999,6 +999,7 @@ export const english = {
 	"You can not Order more then 1000৳ on COD order":
 		"You can not Order more then 1000৳ on COD order",
 	WishList: "WishList",
+	Wishlist: "Wishlist",
 	processing: "processing",
 	refunded: "refunded",
 	"refund requested": "refund requested",
