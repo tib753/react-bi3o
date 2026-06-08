@@ -57,7 +57,7 @@ const HelpAndSupport = (props) => {
           <Box sx={{ cursor: "pointer" }} onClick={handleOpenCloseMap}>
             <VisitBox>
               <HelpImgBox>
-                <NextImage src={img1} alt={t("help")} fill />
+                <NextImage src={img1} alt={t("help")} width={76} height={76} />
               </HelpImgBox>
               <Box sx={{ textAlign: "center" }}>
                 <Typography
@@ -77,7 +77,7 @@ const HelpAndSupport = (props) => {
           <Link href={`mailto:${configData?.email}`}>
             <VisitBox>
               <HelpImgBox>
-                <NextImage src={img2} alt={t("help")} fill />
+                <NextImage src={img2} alt={t("help")} width={76} height={76} />
               </HelpImgBox>
               <Box sx={{ textAlign: "center" }}>
                 <Typography
@@ -97,7 +97,7 @@ const HelpAndSupport = (props) => {
           <Link href={`tel:${configData?.phone}`}>
             <VisitBox>
               <HelpImgBox>
-                <NextImage src={img3} alt={t("help")} fill />
+                <NextImage src={img3} alt={t("help")} width={76} height={76} />
               </HelpImgBox>
               <Box sx={{ textAlign: "center" }}>
                 <Typography
