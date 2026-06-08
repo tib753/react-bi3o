@@ -1135,6 +1135,7 @@ export const french = {
   "They create a account on": "Ils créent un compte sur",
   "using your code and place their first order": "en utilisant votre code et passent leur première commande",
   "No Address Found": "Aucune adresse trouvée",
+  "No address found": "Aucune adresse trouvée",
   "Road": "Route",
   "Additional Information": "Informations supplémentaires",
   "Phone Number is required": "Le numéro de téléphone est obligatoire",

@@ -1303,6 +1303,7 @@ export const arabic = {
 	"using your code and place their first order":
 		"باستخدام الكود الخاص بك ووضع طلبهم الأول",
 	"No Address Found": "لم يتم العثور على أي عنوان",
+	"No address found": "لم يتم العثور على أي عنوان",
 	Road: "الشارع",
 	"Additional Information": "معلومات إضافية",
 	"Phone Number is required": "رقم الهاتف مطلوب",

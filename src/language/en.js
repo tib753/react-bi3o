@@ -1293,6 +1293,7 @@ export const english = {
 	"using your code and place their first order":
 		"using your code and place their first order",
 	"No Address Found": "No Address Found",
+	"No address found": "No address found",
 	Road: "Road",
 	"Additional Information": "Additional Information",
 	"Phone Number is required": "Phone Number is required",
