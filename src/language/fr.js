@@ -822,6 +822,8 @@ export const french = {
   "You have no channels.": "Vous n'avez pas de canaux.",
   "admin": "administrateur",
   "delivery man": "livreur",
+  Vendor: "Vendeur",
+  "Delivery Man": "Livreur",
   "vendor": "vendeur",
   "Delete My Account": "Supprimer mon compte",
   "Are you sure you want to delete your account?": "Êtes-vous sûr de vouloir supprimer votre compte ?",

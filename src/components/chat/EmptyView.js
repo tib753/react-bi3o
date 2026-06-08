@@ -39,7 +39,7 @@ const EmptyView = (props) => {
 				sx={{ mt: 2 }}
 				variant="subtitle1"
 			>
-				{t("Currently You don’t have any message selected.")}
+				{t("Currently You don't have any message selected.")}
 			</Typography>
 			<Typography fontSize="12px" color={theme.palette.neutral[400]}>
 				{t(

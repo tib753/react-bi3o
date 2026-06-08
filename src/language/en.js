@@ -912,6 +912,8 @@ export const english = {
 	"You have no channels.": "You have no channels.",
 	admin: "admin",
 	"delivery man": "delivery man",
+	Vendor: "Vendor",
+	"Delivery Man": "Delivery Man",
 	vendor: "vendor",
 	"Delete My Account": "Delete My Account",
 	"Are you sure you want to delete your account?":

@@ -929,6 +929,8 @@ export const arabic = {
 	"You have no channels.": "ليس لديك قنوات.",
 	admin: "مسؤول",
 	"delivery man": "مندوب التوصيل",
+	Vendor: "بائع",
+	"Delivery Man": "مندوب التوصيل",
 	vendor: "بائع",
 	"Delete My Account": "احذف حسابي",
 	"Are you sure you want to delete your account?":
