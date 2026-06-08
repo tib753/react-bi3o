@@ -7,7 +7,7 @@ export const IDENTITY_TYPE = [
 
 export const DELIVERY_MAN_TYPE = [
   { label: "Freelancer", value: "1" },
-  { label: "Salary based  ", value: "0" },
+  { label: "Salary based", value: "0" },
 ];
 
 export const FORM_TITLE = {
