@@ -12,7 +12,7 @@ import ProductCard from "../../cards/ProductCard";
 import ProductCardSimmer from "../../Shimmer/ProductCardSimmer";
 import H2 from "../../typographies/H2";
 import { HomeComponentsWrapper } from "../HomePageComponents";
-import { loveItemSettings, NextFood, PrevFood } from "./loveItemSettings";
+import { loveItemSettings } from "./loveItemSettings";
 import Menus from "./Menus";
 import { setYouWillLoveItems } from "redux/slices/storedData";
 
@@ -130,19 +130,26 @@ const LoveItem = (props) => {
           </CustomStackFullWidth>
           <CustomStackFullWidth>
             {!isFetched ? (
-                <SliderCustom nopadding="true">
-                  <div dir={isRtl ? "rtl" : "ltr"}>
-                  <Slider {...loveItemSettings} rtl={isRtl}>
+                <SliderCustom nopadding="true" sx={{"& .slick-slide": { float: isRtl ? "right" : "left" }}}>
+                  <Slider {...loveItemSettings} rtl={isRtl}
+                    responsive={loveItemSettings.responsive.map(r => ({
+                      ...r,
+                      settings: { ...r.settings, rtl: isRtl }
+                    }))}
+                  >
                     {[...Array(5)].map((_, index) => {
                       return <ProductCardSimmer key={index} />;
                     })}
                   </Slider>
-                  </div>
                 </SliderCustom>
             ) : (
-                <SliderCustom nopadding="true">
-                  <div dir={isRtl ? "rtl" : "ltr"}>
-                  <Slider {...loveItemSettings} rtl={isRtl}>
+                <SliderCustom nopadding="true" sx={{"& .slick-slide": { float: isRtl ? "right" : "left" }}}>
+                  <Slider {...loveItemSettings} rtl={isRtl}
+                    responsive={loveItemSettings.responsive.map(r => ({
+                      ...r,
+                      settings: { ...r.settings, rtl: isRtl }
+                    }))}
+                  >
                     {data?.items?.map((item, index) => {
                       return (
                           <ProductCard
@@ -155,7 +162,6 @@ const LoveItem = (props) => {
                       );
                     })}
                   </Slider>
-                  </div>
                 </SliderCustom>
             )}
           </CustomStackFullWidth>

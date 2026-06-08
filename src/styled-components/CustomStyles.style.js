@@ -425,19 +425,24 @@ export const SliderCustom = styled(Stack)(
 		width: "100%",
 		paddingY: "10px",
 		"& .slick-slider": {
-			direction: theme.direction === "rtl" ? "rtl" : "ltr",
 			"& .slick-slide": {
-				float: theme.direction === "rtl" ? "right" : "left",
 				padding: padding ?? "6px",
 			},
 			"& .slick-list": {
 				paddingY: nopadding !== "true" && "8px",
+				//transform: "translate3d(0px, 0px, 0px) !important",
+				//paddingBottom: "1rem !important",
 				"& .slick-track": {
+					float: float
+						? float
+						: theme.direction === "ltr"
+						? "left"
+						: "right",
 					gap: "5px",
+					
+					//paddingBottom: paddingBottom && "1rem !important",
 				},
 			},
-		"& .slick-slide[style]": {
-			left: theme.direction === "rtl" ? "auto !important" : undefined,
 		},
 	})
 );

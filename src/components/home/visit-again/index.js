@@ -22,7 +22,7 @@ import VisitAgainCard from "../../cards/VisitAgainCard";
 import CustomContainer from "../../container";
 import H1 from "../../typographies/H1";
 import Subtitle1 from "../../typographies/Subtitle1";
-import { settings, WhiteNext, WhitePrev } from "./SliderSettings";
+import { settings } from "./SliderSettings";
 
 const VisitAgainShimmerCard = () => {
   const theme = useTheme();
@@ -169,9 +169,11 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
               backgroundColor: getModuleWiseData?.()?.bgColor,
               padding: { xs: "0px", md: "17px" },
                minHeight:"200px",
+               "& .slick-slide": {
+                 float: isRtl ? "right" : "left",
+               },
             }}
           >
-            <div dir={isRtl ? "rtl" : "ltr"}>
             <Slider {...settings} rtl={isRtl}
               responsive={settings.responsive.map(r => ({
                 ...r,
@@ -196,7 +198,6 @@ const VisitAgain = ({ configData, visitedStores, isVisited, isLoading }) => {
                 })
               )}
             </Slider>
-            </div>
           </SliderCustom>
         </CustomStackFullWidth>
     </>
