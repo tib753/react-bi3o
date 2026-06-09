@@ -1,4 +1,4 @@
-import { Box, Skeleton, styled, Typography, useTheme } from "@mui/material";
+import { Box, styled, Typography, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useReducer, useState } from "react";
 import { CustomSizeBox } from "../ProductDetails.style";
@@ -366,40 +366,36 @@ const ProductInformation = ({
 					md: "0px",
 				}}
 			>
-				{state.modalData[0]?.store_name ? (
-					router.pathname !== `/store/[id]` ? (
-						<Link
-							href={{
-								pathname: "/store/[id]",
-								query: {
-									id: `${state.modalData[0]?.store_id}`,
-									module_id: `${getModuleId()}`,
-									lat: currentLocation?.lat,
-									lng: currentLocation?.lng,
-									store_zone_id: `${state?.modalData[0]?.zone_id}`,
+				{state.modalData[0]?.store_name && router.pathname !== `/store/[id]` ? (
+					<Link
+						href={{
+							pathname: "/store/[id]",
+							query: {
+								id: `${state.modalData[0]?.store_id}`,
+								module_id: `${getModuleId()}`,
+								lat: currentLocation?.lat,
+								lng: currentLocation?.lng,
+								store_zone_id: `${state?.modalData[0]?.zone_id}`,
+							},
+						}}
+					>
+						{" "}
+						<Typography
+							variant="body1"
+							fontWeight="400"
+							lineHeight="normal"
+							color="customColor.textGray"
+							sx={{
+								"&:hover": {
+									color: (theme) => theme.palette.primary.main,
 								},
 							}}
+							component="h2"
 						>
-							{" "}
-							<Typography
-								variant="body1"
-								fontWeight="400"
-								lineHeight="normal"
-								color="customColor.textGray"
-								sx={{
-									"&:hover": {
-										color: (theme) => theme.palette.primary.main,
-									},
-								}}
-								component="h2"
-							>
-								{state.modalData[0]?.store_name}
-							</Typography>
-						</Link>
-					) : null
-				) : (
-					<Skeleton width={100} variant="text" />
-				)}
+							{state.modalData[0]?.store_name}
+						</Typography>
+					</Link>
+				) : null}
 				{state.modalData[0]?.name ? (
 					<CustomStackFullWidth
 						direction="row"
@@ -417,9 +413,7 @@ const ProductInformation = ({
 						{state.modalData[0]?.stock > 0 &&
 							isVariationAvailable(state.modalData[0]) && <InStockTag />}
 					</CustomStackFullWidth>
-				) : (
-					<Skeleton width={100} variant="text" />
-				)}
+				) : null}
 				{state.modalData[0]?.generic_name[0] && (
 					<Typography
 						fontSize={{ xs: "12px", sm: "12px" }}
