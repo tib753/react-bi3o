@@ -552,7 +552,7 @@ const ProductInformation = ({
 								const unitWeightLabel = `${uw} ${unitType}`;
 								const unitPrice = computeUnitWeightPrice();
 								return (
-									<CustomStackFullWidth sx={{ px: "20px", pb: "0px" }}>
+									<CustomStackFullWidth sx={{ px: { xs: "20px", sm: "20px", md: "0px" }, pb: "0px" }}>
 										<Typography fontWeight="600" paddingBottom="3px">
 											{t("Unit Weight")}
 										</Typography>
