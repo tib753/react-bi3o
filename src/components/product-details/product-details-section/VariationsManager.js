@@ -174,12 +174,12 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
             <Typography fontWeight="600" paddingBottom="3px">
               {choice?.name}
             </Typography>
-            {choice?.title && choice?.title !== choice?.name && (
-              <Typography fontSize="13px" sx={{ color: 'black' }}>
-                {choice?.title}
-              </Typography>
-            )}
           </Stack>
+          {choice?.title && choice?.title !== choice?.name && (
+            <Typography fontSize="13px" sx={{ color: 'black', paddingBottom: '3px' }}>
+              {choice?.title}
+            </Typography>
+          )}
           <CustomStackFullWidth direction="row" spacing={2}>
             {choice?.options?.map((item, index) => (
               <CustomSizeBox
