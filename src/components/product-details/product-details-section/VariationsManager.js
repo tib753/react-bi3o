@@ -174,7 +174,7 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
             <Typography fontWeight="600" paddingBottom="3px">
               {choice?.name}
             </Typography>
-            {choice?.title && choice?.title !== choice?.name && (
+            {choice?.title && (
               <Typography fontSize="13px" color="text.secondary">
                 {choice?.title}
               </Typography>
