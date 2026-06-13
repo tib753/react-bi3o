@@ -946,9 +946,13 @@ const ItemCheckout = (props) => {
       configData?.active_payment_method_list?.length === 1 &&
       isZoneDigital?.digital_payment
     ) {
-      setPaymentMethod(configData?.active_payment_method_list[0]?.gateway);
+      const onlyGateway = configData?.active_payment_method_list[0];
+      if (onlyGateway?.gateway === 'chargily' && Number(payableAmount) < 50) {
+        return;
+      }
+      setPaymentMethod(onlyGateway?.gateway);
       setPaymentMethodImage(
-        configData?.active_payment_method_list[0]?.gateway_image_full_url
+        onlyGateway?.gateway_image_full_url
       );
     }
   };

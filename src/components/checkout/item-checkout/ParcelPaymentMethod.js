@@ -68,6 +68,7 @@ const ParcelPaymentMethod = (props) => {
     offlinePaymentOptions,
     setPaymentMethodImage,
     getParcelPayment,
+    payableAmount,
   } = props;
   const token = getToken();
   const router = useRouter();
@@ -250,7 +251,9 @@ const ParcelPaymentMethod = (props) => {
                   configData?.digital_payment_info?.digital_payment &&
                   getParcelPayment()[0]?.digital_payment && (
                     <>
-                      {configData?.active_payment_method_list?.map(
+                      {configData?.active_payment_method_list?.filter(
+                        (item) => !(item?.gateway === 'chargily' && Number(payableAmount) < 50)
+                      )?.map(
                         (item, index) => {
                           return (
                             <PaymentMethodCard

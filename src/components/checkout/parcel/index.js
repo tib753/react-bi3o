@@ -685,6 +685,7 @@ const ParcelCheckout = () => {
                       parcel="true"
                       offlinePaymentOptions={offlinePaymentOptions}
                       getParcelPayment={getParcelPayment}
+                      payableAmount={finalTotal}
                     />
                   </CustomPaperBigCard>
                 )}

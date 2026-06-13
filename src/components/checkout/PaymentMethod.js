@@ -46,6 +46,7 @@ const PaymentMethod = ({
           offlinePaymentOptions={offlinePaymentOptions}
           setPaymentMethodImage={setPaymentMethodImage}
           getParcelPayment={getParcelPayment}
+          payableAmount={payableAmount}
         />
       ) : (
         <OtherModulePayment
