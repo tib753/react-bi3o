@@ -904,6 +904,7 @@ export const english = {
 	picked_up: "picked_up",
 	accepted: "accepted",
 	confirmed: "confirmed",
+	Confirmed: "Confirmed",
 	canceled: "canceled",
 	Canceled: "Canceled",
 	cash_on_delivery: "cash_on_delivery",
@@ -1735,5 +1736,6 @@ Day: "Day",
 	"(optional)": "(optional)",
 	"(required)": "(required)",
 	"(Vat/Tax incl.)": "(Vat/Tax incl.)",
-	"Delete Your Account": "Delete Your Account"
+	"Delete Your Account": "Delete Your Account",
+	"Subscribed Successfully": "Subscribed Successfully"
 };

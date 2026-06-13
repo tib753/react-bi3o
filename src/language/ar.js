@@ -922,6 +922,7 @@ export const arabic = {
 	picked_up: "التقطت",
 	accepted: "قبلت",
 	confirmed: "تم التأكيد",
+	Confirmed: "مؤكد",
 	canceled: "تم الإلغاء",
 	Canceled: "ملغي",
 	cash_on_delivery: "الدفع عند الاستلام",
@@ -1683,5 +1684,6 @@ export const arabic = {
 	"Item is on the way": "العنصر في الطريق",
 	"What\u2019s Wrong With This Order?": "ما المشكلة في هذا الطلب؟",
 	"(Vat/Tax incl.)": "(شامل ض.ق.م/الضريبة)",
-	"Delete Your Account": "حذف الحساب"
+	"Delete Your Account": "حذف الحساب",
+	"Subscribed Successfully": "تم الاشتراك بنجاح"
 };
