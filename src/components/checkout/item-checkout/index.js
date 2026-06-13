@@ -527,6 +527,12 @@ const ItemCheckout = (props) => {
         ? isFoodAvailableBySchedule(itemsList, scheduleAt)
         : true;
     if (isAvailable) {
+      if (paymentMethod === 'chargily' && Number(payableAmount) < 50) {
+        toast.error(t("Minimum payment amount for Chargily is 50 DZD"), {
+          position: "bottom-right",
+        });
+        return;
+      }
       const walletAmount = customerData?.data?.wallet_balance;
       let productList = page === "campaign" ? campaignItemList : cartList;
       if (paymentMethod === "wallet") {
