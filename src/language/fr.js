@@ -1971,5 +1971,9 @@ export const french = {
 	"What\u2019s Wrong With This Order?": "Quel est le problème avec cette commande ?",
 	"(Vat/Tax incl.)": "(TVA/Taxe incl.)",
 	"Delete Your Account": "Supprimer le compte",
-	"Subscribed Successfully": "Abonnement réussi"
+	"Subscribed Successfully": "Abonnement réussi",
+	"Minimum payment amount for Chargily is 50 DZD": "Le montant minimum de paiement pour Chargily est de 50 DZD",
+	"Your payment has failed, and your order": "Votre paiement a échoué, et votre commande",
+	"Failed": "Échoué",
+	"Item added to favorites": "Article ajouté aux favoris"
 };
