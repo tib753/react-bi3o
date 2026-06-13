@@ -722,6 +722,11 @@ const ItemCheckout = (props) => {
     }
   };
   const placeOrder = () => {
+    const amt = parseFloat(String(payableAmount ?? '').replace(/[^0-9.]/g, ''));
+    if (paymentMethod === 'chargily' && amt > 0 && amt < 50) {
+      toast.error(t("Minimum payment amount for Chargily is 50 DZD"));
+      return;
+    }
     if (storeData?.active) {
       //checking restaurant or shop open or not
       if (isSchedules()) {
