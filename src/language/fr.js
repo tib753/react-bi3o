@@ -1975,5 +1975,6 @@ export const french = {
 	"Minimum payment amount for Chargily is 50 DZD": "Le montant minimum de paiement pour Chargily est de 50 DZD",
 	"Your payment has failed, and your order": "Votre paiement a échoué, et votre commande",
 	"Failed": "Échoué",
-	"Item added to favorites": "Article ajouté aux favoris"
+	"Item added to favorites": "Article ajouté aux favoris",
+	"Item removed from favorites": "Article retiré des favoris"
 };

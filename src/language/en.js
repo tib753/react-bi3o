@@ -1741,5 +1741,6 @@ Day: "Day",
 	"Minimum payment amount for Chargily is 50 DZD": "Minimum payment amount for Chargily is 50 DZD",
 	"Your payment has failed, and your order": "Your payment has failed, and your order",
 	"Failed": "Failed",
-	"Item added to favorites": "Item added to favorites"
+	"Item added to favorites": "Item added to favorites",
+	"Item removed from favorites": "Item removed from favorites"
 };

@@ -1689,5 +1689,6 @@ export const arabic = {
 	"Minimum payment amount for Chargily is 50 DZD": "الحد الأدنى للدفع عبر Chargily هو 50 د.ج",
 	"Your payment has failed, and your order": "فشلت عملية الدفع، وطلبك",
 	"Failed": "فشل",
-	"Item added to favorites": "تمت إضافة العنصر إلى المفضلة"
+	"Item added to favorites": "تمت إضافة العنصر إلى المفضلة",
+	"Item removed from favorites": "تمت إزالة العنصر من المفضلة"
 };
