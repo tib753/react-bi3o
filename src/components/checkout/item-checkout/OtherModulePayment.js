@@ -474,7 +474,7 @@ const OtherModulePayment = (props) => {
                 <CustomStackFullWidth spacing={1}>
                   <Grid container>
                     {configData?.active_payment_method_list?.filter(
-                      (item) => !(item?.gateway === 'chargily' && Number(payableAmount) < 50)
+                      (item) => !(item?.gateway === 'chargily' && parseFloat(String(payableAmount ?? '').replace(/[^0-9.]/g, '')) < 50)
                     )?.map(
                       (item, index) => {
                         return (
