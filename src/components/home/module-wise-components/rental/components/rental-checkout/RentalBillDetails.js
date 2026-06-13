@@ -190,7 +190,7 @@ const RentalBillDetails = ({
                }}
                component="span"
              >
-               {" "} {vatTax?.tax_included === 1 && vatTax?.tax_included!==null && ("(Vat/Tax incl.)")}
+               {" "} {vatTax?.tax_included === 1 && vatTax?.tax_included!==null && t("(Vat/Tax incl.)")}
              </Typography>
             </Typography>
             <Typography

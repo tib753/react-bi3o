@@ -118,7 +118,7 @@ const RefundModal = (props) => {
         <CustomStackFullWidth spacing={1}>
           <Stack alignItems="start" justifyContent="center">
             <DialogTitle id="alert-dialog-title" sx={{ padding: "10px 24px" }}>
-              <Typography>{t("What’s Wrong With This Order? ")}</Typography>
+              <Typography>{t("What's Wrong With This Order?")}</Typography>
             </DialogTitle>
           </Stack>
           <DialogContent sx={{ padding: "10px 24px" }}>

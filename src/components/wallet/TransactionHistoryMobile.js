@@ -70,7 +70,7 @@ const TransactionHistoryMobile = ({
           <CustomSelect value={value} onChange={(e) => handleChange(e)}>
             {transaction_options?.map((item, i) => (
               <MenuItem key={i} value={item?.value}>
-                {item?.label}
+                {t(item?.label)}
               </MenuItem>
             ))}
           </CustomSelect>

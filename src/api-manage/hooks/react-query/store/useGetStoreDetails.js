@@ -11,8 +11,9 @@ const getData = async (store_id) => {
 };
 
 export default function useGetStoreDetails(store_id) {
-  return useQuery("store-details_s", () => getData(store_id), {
-    enabled: false,
+  return useQuery(["store-details", store_id], () => getData(store_id), {
+    enabled: !!store_id,
+    cacheTime: 0,
     onError: onSingleErrorResponse,
   });
 }

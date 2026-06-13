@@ -465,7 +465,7 @@ const OrderCalculation = (props) => {
                 >
                 {t("Total")}
                 <Typography sx={{marginInlineStart:"5px"}} component="span" fontSize="12px" fontWeight="400" color={theme.palette.primary.main}>
-                  {(taxAmount?.tax_included === 1 )&& ("(Vat/Tax incl.)")}
+                  {(taxAmount?.tax_included === 1 )&& t("(Vat/Tax incl.)")}
                 </Typography>
                 </Typography>
               </Grid>

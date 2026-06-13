@@ -816,6 +816,7 @@ export const french = {
   "accepted": "accepté",
   "confirmed": "confirmé",
   "canceled": "annulé",
+  "Canceled": "Annulé",
   "cash_on_delivery": "paiement_à_la_livraison",
   "delivered": "livré",
   "Comment": "Commentaire",
@@ -1965,5 +1966,8 @@ export const french = {
 	"order summary": "Résumé de la commande",
 	"Preparing items": "Préparation des articles",
 	"Preparing foods": "Préparation des aliments",
-	"Item is on the way": "L'article est en route"
+	"Item is on the way": "L'article est en route",
+	"What\u2019s Wrong With This Order?": "Quel est le problème avec cette commande ?",
+	"(Vat/Tax incl.)": "(TVA/Taxe incl.)",
+	"Delete Your Account": "Supprimer le compte"
 };

@@ -657,7 +657,7 @@ const ParcelCheckout = () => {
                                 color="primary"
                                 component="span"
                               >
-                                {"(Vat/Tax incl.)"}
+                                {t("(Vat/Tax incl.)")}
                               </Typography>
                             )}
                         </Typography>

@@ -246,7 +246,7 @@ const PrescriptionOrderCalculation = ({
         <Grid item md={8} xs={8} pl=".5rem">
           <Typography component="span" fontWeight="bold" color={theme.palette.primary.main}>
             {t("Total")}
-            {" "} <Typography component="span" fontWeight="400" fontSize="14px" xs={{marginInlineStart:"5px"}}>{taxAmount?.tax_included === 1 && taxAmount?.tax_included!==null && ("(Vat/Tax incl.)")}</Typography>
+            {" "} <Typography component="span" fontWeight="400" fontSize="14px" xs={{marginInlineStart:"5px"}}>{taxAmount?.tax_included === 1 && taxAmount?.tax_included!==null && t("(Vat/Tax incl.)")}</Typography>
 
           </Typography>
         </Grid>

@@ -905,6 +905,7 @@ export const english = {
 	accepted: "accepted",
 	confirmed: "confirmed",
 	canceled: "canceled",
+	Canceled: "Canceled",
 	cash_on_delivery: "cash_on_delivery",
 	delivered: "delivered",
 	// "away":"away"
@@ -1096,6 +1097,7 @@ export const english = {
 	"We will be back very soon.": "We will be back very soon.",
 	Organic: "Organic",
 	"Theme mode": "Theme mode",
+	"What\u2019s Wrong With This Order?": "What's Wrong With This Order?",
 	"What's Wrong With This Order?": "What's Wrong With This Order?",
 	"Getting Order List...": "Getting Order List...",
 	"Add Cutlery": "Add Cutlery",
@@ -1679,7 +1681,7 @@ Day: "Day",
 	"See All": "See All",
 	"Sorry you canât delete your account !": "Sorry you can't delete your account !",
 	"Vehicles": "Vehicles",
-	"Whatâs Wrong With This Order?": "What's Wrong With This Order?",
+	"What's Wrong With This Order?": "What's Wrong With This Order?",
 	"You can not Order more then 1000à§³ on COD order":
 		"You can not Order more then 1000 on COD order",
 	"You wonât be able to recover your data again":
@@ -1731,5 +1733,7 @@ Day: "Day",
 	"Preparing foods": "Preparing foods",
 	"Item is on the way": "Item is on the way",
 	"(optional)": "(optional)",
-	"(required)": "(required)"
+	"(required)": "(required)",
+	"(Vat/Tax incl.)": "(Vat/Tax incl.)",
+	"Delete Your Account": "Delete Your Account"
 };

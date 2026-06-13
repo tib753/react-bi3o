@@ -316,7 +316,7 @@ const WalletBoxComponent = (props) => {
               name="amount"
               id="amount"
               type="number"
-              placeholder="Enter Amount"
+              placeholder={t("Enter Amount")}
               value={formik.values.amount}
               onChange={formik.handleChange}
               error={formik.touched.amount && Boolean(formik.errors.amount)}

@@ -923,6 +923,7 @@ export const arabic = {
 	accepted: "قبلت",
 	confirmed: "تم التأكيد",
 	canceled: "تم الإلغاء",
+	Canceled: "ملغي",
 	cash_on_delivery: "الدفع عند الاستلام",
 	delivered: "تم التوصيل",
 	Comment: "تعليق",
@@ -1679,5 +1680,8 @@ export const arabic = {
 	"order summary": "ملخص الطلب",
 	"Preparing items": "تحضير العناصر",
 	"Preparing foods": "تحضير الأطعمة",
-	"Item is on the way": "العنصر في الطريق"
+	"Item is on the way": "العنصر في الطريق",
+	"What\u2019s Wrong With This Order?": "ما المشكلة في هذا الطلب؟",
+	"(Vat/Tax incl.)": "(شامل ض.ق.م/الضريبة)",
+	"Delete Your Account": "حذف الحساب"
 };
