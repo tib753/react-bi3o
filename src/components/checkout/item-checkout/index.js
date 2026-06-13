@@ -527,7 +527,7 @@ const ItemCheckout = (props) => {
         ? isFoodAvailableBySchedule(itemsList, scheduleAt)
         : true;
     if (isAvailable) {
-      const chargilyMinAmount = parseFloat(String(payableAmount ?? '').replace(/[^0-9.]/g, ''));
+      const chargilyMinAmount = parseFloat(String(totalAmount ?? '').replace(/[^0-9.]/g, ''));
       if (paymentMethod === 'chargily' && chargilyMinAmount < 50) {
         toast.error(t("Minimum payment amount for Chargily is 50 DZD"), {
           position: "bottom-right",
@@ -722,7 +722,7 @@ const ItemCheckout = (props) => {
     }
   };
   const placeOrder = () => {
-    const amt = parseFloat(String(payableAmount ?? '').replace(/[^0-9.]/g, ''));
+    const amt = parseFloat(String(totalAmount ?? '').replace(/[^0-9.]/g, ''));
     if (paymentMethod === 'chargily' && amt > 0 && amt < 50) {
       toast.error(t("Minimum payment amount for Chargily is 50 DZD"));
       return;
@@ -959,7 +959,7 @@ const ItemCheckout = (props) => {
       isZoneDigital?.digital_payment
     ) {
       const onlyGateway = configData?.active_payment_method_list[0];
-      const onlyGatewayAmount = parseFloat(String(payableAmount ?? '').replace(/[^0-9.]/g, ''));
+      const onlyGatewayAmount = parseFloat(String(totalAmount ?? '').replace(/[^0-9.]/g, ''));
       if (onlyGateway?.gateway === 'chargily' && onlyGatewayAmount < 50) {
         return;
       }
