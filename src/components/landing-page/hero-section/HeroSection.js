@@ -131,14 +131,18 @@ const HeroSection = ({ landingPageData }) => {
                   bottom: isXSmall ? 5 : 16,
                   insetInlineEnd: { xs: 7, sm: 10, md: 30 },
                   zIndex: 100,
+                  overflow: "hidden",
                 }}
               >
                 <NextImage
                   src={landingPageData?.header_icon_full_url}
                   alt={t("icon")}
-                  width={210}
-                  height={190}
-                  style={{ objectFit: "cover" }}
+                  fill
+                  sizes="(max-width:600px) 50px, (max-width:900px) 120px, 210px"
+                  style={{
+                    objectFit: "cover",
+                    transform: theme.direction === "ltr" ? "scaleX(-1)" : "none",
+                  }}
                   priority
                 />
               </Box>
