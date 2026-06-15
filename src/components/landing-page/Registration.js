@@ -17,8 +17,8 @@ import { IsSmallScreen } from "utils/CommonValues";
 import CustomImageContainer from "../CustomImageContainer";
 import DollarSignHighlighter from "../DollarSignHighlighter";
 import CustomContainer from "../container";
-import deliveryMan from "./assets/delivery-man.svg";
-import seller from "./assets/seller.svg";
+import deliveryMan from "./assets/delivery-man.png";
+import seller from "./assets/seller.png";
 import { useDispatch } from "react-redux";
 import { setAllData } from "redux/slices/storeRegistrationData";
 
