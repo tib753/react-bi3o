@@ -98,8 +98,6 @@ const HeroSection = ({ landingPageData }) => {
                 sx={{
                   height: { xs: "148px", sm: "370px", md: "427px" },
                   width: { xs: "78px", sm: "210px", md: "240px" },
-                  transform: "scale(0.98)",
-                  transformOrigin: "bottom center",
                   borderRadius: isXSmall ? "5px 5px 0 0" : "16px 16px 0 0",
                   position: "relative",
                   zIndex: "99",
