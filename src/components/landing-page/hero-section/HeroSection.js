@@ -111,7 +111,8 @@ const HeroSection = ({ landingPageData }) => {
                   alt="hero banner"
                   fill
                   priority
-                  sizes="(max-width:600px) 78px, (max-width:900px) 210px, 240px"
+                  quality={100}
+                  sizes="(max-width:600px) 148px, (max-width:900px) 427px, 640px"
                   style={{ objectFit: "cover", borderRadius: "inherit" }}
                 />
                 {isValidRemoteImage(landingPageData?.header_banner_full_url) && (
