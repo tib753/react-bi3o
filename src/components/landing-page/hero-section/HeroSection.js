@@ -113,7 +113,7 @@ const HeroSection = ({ landingPageData }) => {
                   priority
                   quality={100}
                   sizes="(max-width:600px) 148px, (max-width:900px) 427px, 640px"
-                  style={{ objectFit: "cover", borderRadius: "inherit" }}
+                  style={{ objectFit: "cover", objectPosition: "50% 48%", borderRadius: "inherit" }}
                 />
                 {isValidRemoteImage(landingPageData?.header_banner_full_url) && (
                   <Stack sx={{ marginTop: "-5px", marginInlineStart: "-3px" }}>
