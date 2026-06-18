@@ -4,11 +4,11 @@ import { Box } from "@mui/system";
 import PrevIcon from "../../icons/PrevIcon";
 import NextIcon from "../../icons/NextIcon";
 
-export const LeftButton = ({ onClick, hidden }) => {
+const Prev = ({ onClick, className }) => {
   const theme = useTheme();
-  if (hidden) return null;
   return (
     <Box
+      className={className}
       style={{
         position: "absolute",
         left: 0,
@@ -47,11 +47,11 @@ export const LeftButton = ({ onClick, hidden }) => {
   );
 };
 
-export const RightButton = ({ onClick, hidden }) => {
+const Next = ({ onClick, className }) => {
   const theme = useTheme();
-  if (hidden) return null;
   return (
     <Box
+      className={className}
       style={{
         position: "absolute",
         right: 0,
@@ -83,3 +83,6 @@ export const RightButton = ({ onClick, hidden }) => {
     </Box>
   );
 };
+
+export const moduleWiseNext = () => <Next />;
+export const moduleWisePrev = () => <Prev />;
