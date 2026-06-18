@@ -27,8 +27,22 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
       : `linear-gradient(to left, rgba(255, 255, 255, 0) 0%, ${theme.palette.neutral[100]} 100%)`,
 
   zIndex: 1,
-  right: right === "true" && 0,
-  left: right !== "true" && 0,
+  right:
+    right === "true"
+      ? theme.direction === "ltr"
+        ? 0
+        : "auto"
+      : theme.direction === "ltr"
+      ? "auto"
+      : 0,
+  left:
+    right === "true"
+      ? theme.direction === "ltr"
+        ? "auto"
+        : 0
+      : theme.direction === "ltr"
+      ? 0
+      : "auto",
   position: "absolute",
   alignItems: "center",
   justifyContent: "center",
@@ -40,7 +54,8 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
 const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
   zIndex: 1,
   top: "50%",
-  left: 0,
+  left: theme.direction === "ltr" ? 0 : "auto",
+  right: theme.direction === "ltr" ? "auto" : 0,
   display: isdisabled && "none",
   background: (theme) =>
     `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.main} 54.03%, ${theme.palette.primary.main} 100%)`,
@@ -48,7 +63,8 @@ const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
 const NextWrapper = styled(Box)(({ theme, isdisabled }) => ({
   top: "50%",
   zIndex: 1,
-  right: 8,
+  right: theme.direction === "ltr" ? 8 : "auto",
+  left: theme.direction === "ltr" ? "auto" : 8,
   display: isdisabled && "none",
   background: `linear-gradient(180deg, ${alpha(
     theme.palette.primary.main,

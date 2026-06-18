@@ -9,7 +9,8 @@ const PrevWrapper = styled(Box)(
   ({ theme, isdisabled, left, width, height }) => ({
     zIndex: 1,
     top: "50%",
-    left: left ? left : "0px",
+    left: theme.direction === "ltr" ? (left ? left : "0px") : "auto",
+    right: theme.direction === "ltr" ? "auto" : (left ? left : "0px"),
     display: isdisabled ? "none" : "flex",
     backgroundColor: theme.palette.neutral[100],
     borderRadius: "50%",
@@ -21,7 +22,8 @@ const PrevWrapper = styled(Box)(
 );
 const NextWrapper = styled(Box)(({ theme, isdisabled, width, height }) => ({
   zIndex: 1,
-  right: 0,
+  right: theme.direction === "ltr" ? 0 : "auto",
+  left: theme.direction === "ltr" ? "auto" : 0,
   display: isdisabled ? "none" : "flex",
   backgroundColor: theme.palette.neutral[100],
   borderRadius: "50%",
@@ -43,8 +45,22 @@ const ButtonContainer = styled(Box)(
       : "linear-gradient(to right, rgba(75, 86, 107, 0.15) 0%, rgba(75, 86, 107, 0) 100%)",
 
     zIndex: 1,
-    right: right === "true" && 0,
-    left: right !== "true" && 0,
+    right:
+      right === "true"
+        ? theme.direction === "ltr"
+          ? 0
+          : "auto"
+        : theme.direction === "ltr"
+        ? "auto"
+        : 0,
+    left:
+      right === "true"
+        ? theme.direction === "ltr"
+          ? "auto"
+          : 0
+        : theme.direction === "ltr"
+        ? 0
+        : "auto",
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
