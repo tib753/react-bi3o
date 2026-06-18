@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Suspense, useState } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -53,13 +53,10 @@ const FeaturedCategories = () => {
   const slider = useRef(null);
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
   const isRtl = getLanguage() === "rtl";
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const handleAfterChange = (index) => setCurrentSlide(index);
   const sliderContainerSx = {
     direction: isRtl ? "rtl" : "ltr",
     width: "100%",
     "& .slick-list, & .slick-track": {
-      direction: "ltr",
       padding: "0 !important",
       margin: "0 !important",
     },
@@ -89,11 +86,10 @@ const FeaturedCategories = () => {
               })}
             </Slider>
             <LeftButton
-              onClick={() => slider.current?.slickNext()}
+              onClick={() => slider.current?.slickPrev()}
             />
             <RightButton
-              onClick={() => slider.current?.slickPrev()}
-              hidden={currentSlide === 0}
+              onClick={() => slider.current?.slickNext()}
             />
           </CustomBoxFullWidth>
         );
@@ -119,11 +115,10 @@ const FeaturedCategories = () => {
               })}
             </Slider>
             <LeftButton
-              onClick={() => slider.current?.slickNext()}
+              onClick={() => slider.current?.slickPrev()}
             />
             <RightButton
-              onClick={() => slider.current?.slickPrev()}
-              hidden={currentSlide === 0}
+              onClick={() => slider.current?.slickNext()}
             />
           </CustomBoxFullWidth>
         );
@@ -147,11 +142,10 @@ const FeaturedCategories = () => {
               })}
             </Slider>
             <LeftButton
-              onClick={() => slider.current?.slickNext()}
+              onClick={() => slider.current?.slickPrev()}
             />
             <RightButton
-              onClick={() => slider.current?.slickPrev()}
-              hidden={currentSlide === 0}
+              onClick={() => slider.current?.slickNext()}
             />
           </CustomBoxFullWidth>
         );
@@ -179,11 +173,10 @@ const FeaturedCategories = () => {
               })}
             </Slider>
             <LeftButton
-              onClick={() => slider.current?.slickNext()}
+              onClick={() => slider.current?.slickPrev()}
             />
             <RightButton
-              onClick={() => slider.current?.slickPrev()}
-              hidden={currentSlide === 0}
+              onClick={() => slider.current?.slickNext()}
             />
           </CustomBoxFullWidth>
         );
@@ -250,7 +243,6 @@ const FeaturedCategories = () => {
     slidesToShow: 5,
     slidesToScroll: 1,
     arrows: false,
-    afterChange: handleAfterChange,
     initialSlide: 0,
 
     responsive: [
@@ -389,7 +381,6 @@ const FeaturedCategories = () => {
     slidesToShow: 8.5,
 
     arrows: false,
-    afterChange: handleAfterChange,
     initialSlide: 0,
 
     responsive: [
@@ -486,7 +477,6 @@ const FeaturedCategories = () => {
     slidesToScroll: 3,
     // autoplay: true,
     arrows: false,
-    afterChange: handleAfterChange,
     initialSlide: 0,
     responsive: [
       {
