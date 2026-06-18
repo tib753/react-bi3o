@@ -29,6 +29,8 @@ const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
         justifyContent: "center",
         padding: 0,
         margin: 0,
+        opacity: 1,
+        pointerEvents: "auto",
         ...(isSmall ? { display: "none" } : {}),
       }}
     >
@@ -79,6 +81,8 @@ const Prev = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
         justifyContent: "center",
         padding: 0,
         margin: 0,
+        opacity: 1,
+        pointerEvents: "auto",
         ...(isSmall ? { display: "none" } : {}),
       }}
     >
