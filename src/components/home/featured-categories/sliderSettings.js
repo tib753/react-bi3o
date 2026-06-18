@@ -18,7 +18,9 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
   width: "auto",
   background: "transparent",
   zIndex: 10,
+  /* rtl:ignore */
   right: right === "true" && 0,
+  /* rtl:ignore */
   left: right !== "true" && 0,
   position: "absolute",
   alignItems: "center",
