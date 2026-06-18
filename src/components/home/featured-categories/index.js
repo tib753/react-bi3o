@@ -215,8 +215,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    nextArrow: moduleWiseNext(slider, isRtl),
-    prevArrow: moduleWisePrev(slider, isRtl),
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
 
     responsive: [
@@ -354,8 +354,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 8.5,
 
-    nextArrow: moduleWiseNext(slider, isRtl),
-    prevArrow: moduleWisePrev(slider, isRtl),
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
 
     responsive: [
@@ -451,8 +451,8 @@ const FeaturedCategories = () => {
     slidesToShow: 7,
     slidesToScroll: 3,
     // autoplay: true,
-    nextArrow: moduleWiseNext(slider, isRtl),
-    prevArrow: moduleWisePrev(slider, isRtl),
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
     responsive: [
       {

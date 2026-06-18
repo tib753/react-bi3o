@@ -3,7 +3,6 @@ import React from "react";
 import { ButtonLeft, ButtonRight } from "./index";
 import { alpha, styled, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import { getLanguage } from "../../../helper-functions/getLanguage";
 import PrevIcon from "../../icons/PrevIcon";
 import NextIcon from "../../icons/NextIcon";
 import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
@@ -53,70 +52,66 @@ const NextWrapper = styled(Box)(({ theme, isdisabled }) => ({
   )} 100%)`,
   borderRadius: "50%",
 }));
-const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtlProp }) => {
+const Next = ({ onClick, className, displayNoneOnMobile }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const displayNone = isSmall ? (displayNoneOnMobile ? true : false) : false;
-  const handleClick = isRtlProp && sliderRef ? () => sliderRef.current?.slickPrev?.() : onClick;
-  const handleDisabled = isRtlProp ? displayNone : (displayNone || className?.includes("slick-disabled"));
   return (
     <ButtonContainer
-      isdisabled={handleDisabled}
+      isdisabled={displayNone || className?.includes("slick-disabled")}
       right="true"
     >
       <NextWrapper
         className={`client-nav client-next ${className}`}
-        onClick={handleClick}
+        onClick={onClick}
         isdisabled={className?.includes("slick-disabled")}
       >
-        {getLanguage() === "rtl" ? <PrevIcon /> : <NextIcon />}
+        <NextIcon />
       </NextWrapper>
     </ButtonContainer>
   );
 };
-const Prev = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtlProp }) => {
+const Prev = ({ onClick, className, displayNoneOnMobile }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const displayNone = isSmall ? (displayNoneOnMobile ? true : false) : false;
-  const handleClick = isRtlProp && sliderRef ? () => sliderRef.current?.slickNext?.() : onClick;
-  const handleDisabled = isRtlProp ? displayNone : (displayNone || className?.includes("slick-disabled"));
   return (
     <ButtonContainer
-      isdisabled={handleDisabled}
+      isdisabled={displayNone || className?.includes("slick-disabled")}
     >
       <PrevWrapper
         className={`client-nav client-prev ${className}`}
-        onClick={handleClick}
+        onClick={onClick}
         isdisabled={className?.includes("slick-disabled")}
       >
-        {getLanguage() === "rtl" ? <NextIcon /> : <PrevIcon />}
+        <PrevIcon />
       </PrevWrapper>
     </ButtonContainer>
   );
 };
 
-export const moduleWiseNext = (sliderRef, isRtl) => {
+export const moduleWiseNext = () => {
   switch (getCurrentModuleType()) {
     case ModuleTypes.GROCERY:
-      return <Next displayNoneOnMobile sliderRef={sliderRef} isRtl={isRtl} />;
+      return <Next displayNoneOnMobile />;
     case ModuleTypes.PHARMACY:
-      return <WhiteNext noboxshadow displayNoneOnMobile sliderRef={sliderRef} isRtl={isRtl} />;
+      return <WhiteNext noboxshadow displayNoneOnMobile />;
     case ModuleTypes.ECOMMERCE:
-      return <Next displayNoneOnMobile sliderRef={sliderRef} isRtl={isRtl} />;
+      return <Next displayNoneOnMobile />;
     case ModuleTypes.FOOD:
-      return <WhiteNext noboxshadow displayNoneOnMobile sliderRef={sliderRef} isRtl={isRtl} />;
+      return <WhiteNext noboxshadow displayNoneOnMobile />;
   }
 };
-export const moduleWisePrev = (sliderRef, isRtl) => {
+export const moduleWisePrev = () => {
   switch (getCurrentModuleType()) {
     case ModuleTypes.GROCERY:
-      return <Prev displayNoneOnMobile sliderRef={sliderRef} isRtl={isRtl} />;
+      return <Prev displayNoneOnMobile />;
     case ModuleTypes.PHARMACY:
-      return <WhitePrev noboxshadow sliderRef={sliderRef} isRtl={isRtl} />;
+      return <WhitePrev noboxshadow />;
     case ModuleTypes.ECOMMERCE:
-      return <Prev displayNoneOnMobile sliderRef={sliderRef} isRtl={isRtl} />;
+      return <Prev displayNoneOnMobile />;
     case ModuleTypes.FOOD:
-      return <WhitePrev displayNoneOnMobile noboxshadow sliderRef={sliderRef} isRtl={isRtl} />;
+      return <WhitePrev displayNoneOnMobile noboxshadow />;
   }
 };
 
