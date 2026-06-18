@@ -140,7 +140,7 @@ const AdsCard = (props) => {
   useEffect(() => {
     // Handle autoplay state based on video end
     if (ended && sliderRef.current) {
-      sliderRef.current.slickPlay();
+      sliderRef.current?.slickPlay?.();
     }
   }, [ended]);
 
