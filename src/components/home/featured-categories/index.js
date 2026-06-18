@@ -57,7 +57,6 @@ const FeaturedCategories = () => {
     direction: isRtl ? "rtl" : "ltr",
     width: "100%",
     "& .slick-list, & .slick-track": {
-      direction: "ltr",
       padding: "0 !important",
       margin: "0 !important",
     },
@@ -217,6 +216,9 @@ const FeaturedCategories = () => {
     slidesToScroll: 1,
     nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
     prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
+    rtl: isRtl,
+    swipeToSlide: true,
+    edgeFriction: 0,
     initialSlide: 0,
 
     responsive: [
@@ -356,6 +358,9 @@ const FeaturedCategories = () => {
 
     nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
     prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
+    rtl: isRtl,
+    swipeToSlide: true,
+    edgeFriction: 0,
     initialSlide: 0,
 
     responsive: [
@@ -453,6 +458,9 @@ const FeaturedCategories = () => {
     // autoplay: true,
     nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
     prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
+    rtl: isRtl,
+    swipeToSlide: true,
+    edgeFriction: 0,
     initialSlide: 0,
     responsive: [
       {

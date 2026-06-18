@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 import PrevIcon from "../../icons/PrevIcon";
 import NextIcon from "../../icons/NextIcon";
 import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
+import { getLanguage } from "../../../helper-functions/getLanguage";
 import { WhiteNext, WhitePrev } from "../visit-again/SliderSettings";
 import { ModuleTypes } from "../../../helper-functions/moduleTypes";
 const Next = ({ onClick, displayNoneOnMobile, className }) => {
@@ -47,7 +48,7 @@ const Next = ({ onClick, displayNoneOnMobile, className }) => {
           height: 36,
         }}
       >
-        <NextIcon />
+        {getLanguage() === "rtl" ? <PrevIcon /> : <NextIcon />}
       </Box>
     </Box>
   );
@@ -87,7 +88,7 @@ const Prev = ({ onClick, displayNoneOnMobile, className }) => {
           borderRadius: "50%",
         }}
       >
-        <PrevIcon />
+        {getLanguage() === "rtl" ? <NextIcon /> : <PrevIcon />}
       </Box>
     </Box>
   );
