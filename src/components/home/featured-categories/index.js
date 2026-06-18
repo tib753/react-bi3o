@@ -58,6 +58,8 @@ const FeaturedCategories = () => {
     width: "100%",
     "& .slick-list, & .slick-track": {
       direction: "ltr",
+      padding: "0 !important",
+      margin: "0 !important",
     },
   };
 
@@ -213,8 +215,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    nextArrow: moduleWiseNext(),
-    prevArrow: moduleWisePrev(),
+    nextArrow: moduleWiseNext(slider, isRtl),
+    prevArrow: moduleWisePrev(slider, isRtl),
     initialSlide: 0,
 
     responsive: [
@@ -352,8 +354,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 8.5,
 
-    nextArrow: moduleWiseNext(),
-    prevArrow: moduleWisePrev(),
+    nextArrow: moduleWiseNext(slider, isRtl),
+    prevArrow: moduleWisePrev(slider, isRtl),
     initialSlide: 0,
 
     responsive: [
@@ -449,8 +451,8 @@ const FeaturedCategories = () => {
     slidesToShow: 7,
     slidesToScroll: 3,
     // autoplay: true,
-    nextArrow: moduleWiseNext(),
-    prevArrow: moduleWisePrev(),
+    nextArrow: moduleWiseNext(slider, isRtl),
+    prevArrow: moduleWisePrev(slider, isRtl),
     initialSlide: 0,
     responsive: [
       {
