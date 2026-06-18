@@ -54,7 +54,7 @@ const FeaturedCategories = () => {
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
   const isRtl = getLanguage() === "rtl";
   const sliderContainerSx = {
-    direction: isRtl ? "rtl" : "ltr",
+    direction: "ltr",
     width: "100%",
   };
 
