@@ -19,6 +19,7 @@ import ShopCategoryCard from "../../cards/ShopCategoryCard";
 import { HomeComponentsWrapper } from "../HomePageComponents";
 import FeaturedItemCard from "./card";
 import { moduleWiseNext, moduleWisePrev } from "./sliderSettings";
+import { getLanguage } from "../../../helper-functions/getLanguage";
 
 // Lazy load Slider component
 const Slider = dynamic(() => import("react-slick"), {
@@ -51,9 +52,9 @@ const FeaturedCategories = () => {
   const { featuredCategories } = useSelector((state) => state.storedData);
   const slider = useRef(null);
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
-  /** react-slick RTL mode reverses slide order / initial index; slick stays LTR like EN & FR */
+  const isRtl = getLanguage() === "rtl";
   const sliderContainerSx = {
-    direction: "ltr",
+    direction: isRtl ? "rtl" : "ltr",
     width: "100%",
   };
 
@@ -209,8 +210,9 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    nextArrow: moduleWiseNext(),
-    prevArrow: moduleWisePrev(),
+    rtl: isRtl,
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
 
     responsive: [
@@ -348,8 +350,9 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 8.5,
 
-    nextArrow: moduleWiseNext(),
-    prevArrow: moduleWisePrev(),
+    rtl: isRtl,
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
 
     responsive: [
@@ -445,8 +448,9 @@ const FeaturedCategories = () => {
     slidesToShow: 7,
     slidesToScroll: 3,
     // autoplay: true,
-    nextArrow: moduleWiseNext(),
-    prevArrow: moduleWisePrev(),
+    rtl: isRtl,
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
     responsive: [
       {

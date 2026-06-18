@@ -16,7 +16,7 @@ import { ModuleTypes } from "../../../helper-functions/moduleTypes";
 const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
   top: 0,
   height: "100%",
-  width: "73px",
+  width: "42px",
   background:
     right === "true"
       ? theme.direction === "ltr"
