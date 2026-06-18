@@ -54,8 +54,11 @@ const FeaturedCategories = () => {
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
   const isRtl = getLanguage() === "rtl";
   const sliderContainerSx = {
-    direction: "ltr",
+    direction: isRtl ? "rtl" : "ltr",
     width: "100%",
+    "& .slick-list, & .slick-track": {
+      direction: "ltr",
+    },
   };
 
   const moduleWiseCard = () => {
@@ -210,9 +213,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    rtl: isRtl,
-    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
-    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
+    nextArrow: moduleWiseNext(),
+    prevArrow: moduleWisePrev(),
     initialSlide: 0,
 
     responsive: [
@@ -350,9 +352,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 8.5,
 
-    rtl: isRtl,
-    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
-    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
+    nextArrow: moduleWiseNext(),
+    prevArrow: moduleWisePrev(),
     initialSlide: 0,
 
     responsive: [
@@ -448,9 +449,8 @@ const FeaturedCategories = () => {
     slidesToShow: 7,
     slidesToScroll: 3,
     // autoplay: true,
-    rtl: isRtl,
-    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
-    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
+    nextArrow: moduleWiseNext(),
+    prevArrow: moduleWisePrev(),
     initialSlide: 0,
     responsive: [
       {

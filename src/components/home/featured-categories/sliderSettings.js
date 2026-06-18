@@ -26,7 +26,7 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
       ? `linear-gradient(to right, ${theme.palette.neutral[100]} 0%, rgba(255, 255, 255, 0) 100%)`
       : `linear-gradient(to left, rgba(255, 255, 255, 0) 0%, ${theme.palette.neutral[100]} 100%)`,
 
-  zIndex: 1,
+  zIndex: 10,
   right: right === "true" && 0,
   left: right !== "true" && 0,
   position: "absolute",
