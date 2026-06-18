@@ -245,7 +245,7 @@ const FeaturedCategories = () => {
 
   const shopCategorySliderSettings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -259,7 +259,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 5,
           slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -267,7 +267,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 4.5,
           slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -275,7 +275,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -283,7 +283,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 2,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -291,7 +291,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 3.8,
           slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -299,7 +299,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 3.2,
           slidesToScroll: 2,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -307,7 +307,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -315,7 +315,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 2.5,
           slidesToScroll: 1,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -323,7 +323,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 2.3,
           slidesToScroll: 1,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -331,7 +331,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 2.1,
           slidesToScroll: 1,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -339,7 +339,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -347,7 +347,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 1.8,
           slidesToScroll: 1,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -355,7 +355,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 1.6,
           slidesToScroll: 1,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -384,7 +384,7 @@ const FeaturedCategories = () => {
 
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 8.5,
 
@@ -398,7 +398,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 8,
           //slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -406,7 +406,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 7,
           //slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -414,7 +414,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 6.5,
           //slidesToScroll: 2,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -422,7 +422,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 6.5,
           //slidesToScroll: 2,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -430,7 +430,7 @@ const FeaturedCategories = () => {
         settings: {
           slidesToShow: 6,
           //slidesToScroll: 3,
-          infinite: false,
+          infinite: true,
         },
       },
       {
@@ -480,7 +480,7 @@ const FeaturedCategories = () => {
 
   const foodCategorySliderSettings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 7,
     slidesToScroll: 3,
