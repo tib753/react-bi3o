@@ -55,6 +55,9 @@ const FeaturedCategories = () => {
     direction: isRtl ? "rtl" : "ltr",
     width: "100%",
     position: "relative",
+    "& .slick-list, & .slick-track": {
+      direction: "ltr",
+    },
   };
 
   const moduleWiseCard = () => {
