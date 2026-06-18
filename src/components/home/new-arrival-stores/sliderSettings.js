@@ -7,8 +7,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
   zIndex: 1,
   top: "50%",
-  left: theme.direction === "ltr" ? 0 : "auto",
-  right: theme.direction === "ltr" ? "auto" : 0,
+  left: 0,
   display: isdisabled ? "none" : "flex !important",
   backgroundColor: `${theme.palette.primary.main} !important`, // Add !important here
   color: `${theme.palette.neutral[100]} !important`, // Add !important here
@@ -24,8 +23,7 @@ const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
 }));
 const NextWrapper = styled(Box)(({ theme, isdisabled }) => ({
   zIndex: 1,
-  right: theme.direction === "ltr" ? 0 : "auto",
-  left: theme.direction === "ltr" ? "auto" : 0,
+  right: 0,
   display: isdisabled ? "none " : "flex !important",
   backgroundColor: `${theme.palette.primary.main} !important`, // Add !important here
   color: `${theme.palette.neutral[100]} !important`, // Add !important here
@@ -51,22 +49,8 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
       : "linear-gradient(to right, rgba(75, 86, 107, 0.15) 0%, rgba(75, 86, 107, 0) 100%)",
 
   zIndex: 1,
-  right:
-    right === "true"
-      ? theme.direction === "ltr"
-        ? 0
-        : "auto"
-      : theme.direction === "ltr"
-      ? "auto"
-      : 0,
-  left:
-    right === "true"
-      ? theme.direction === "ltr"
-        ? "auto"
-        : 0
-      : theme.direction === "ltr"
-      ? 0
-      : "auto",
+  right: right === "true" && 0,
+  left: right !== "true" && 0,
   position: "absolute",
   alignItems: "center",
   justifyContent: "center",

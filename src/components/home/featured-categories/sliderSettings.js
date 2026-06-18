@@ -21,28 +21,14 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
     right === "true"
       ? theme.direction === "ltr"
         ? `linear-gradient(270deg, ${theme.palette.neutral[100]} 0%, rgba(255, 255, 255, 0) 100%)`
-        : `linear-gradient(270deg,  rgba(255, 255, 255, 0) 0%, ${theme.palette.neutral[100]} 100%)`
+        : `linear-gradient(270deg, ${theme.palette.neutral[100]} 0%, rgba(255, 255, 255, 0) 100%)`
       : theme.direction === "ltr"
       ? `linear-gradient(to right, ${theme.palette.neutral[100]} 0%, rgba(255, 255, 255, 0) 100%)`
       : `linear-gradient(to left, rgba(255, 255, 255, 0) 0%, ${theme.palette.neutral[100]} 100%)`,
 
   zIndex: 1,
-  right:
-    right === "true"
-      ? theme.direction === "ltr"
-        ? 0
-        : "auto"
-      : theme.direction === "ltr"
-      ? "auto"
-      : 0,
-  left:
-    right === "true"
-      ? theme.direction === "ltr"
-        ? "auto"
-        : 0
-      : theme.direction === "ltr"
-      ? 0
-      : "auto",
+  right: right === "true" && 0,
+  left: right !== "true" && 0,
   position: "absolute",
   alignItems: "center",
   justifyContent: "center",
@@ -54,8 +40,7 @@ const ButtonContainer = styled(Box)(({ theme, right, isdisabled }) => ({
 const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
   zIndex: 1,
   top: "50%",
-  left: theme.direction === "ltr" ? 0 : "auto",
-  right: theme.direction === "ltr" ? "auto" : 0,
+  left: 0,
   display: isdisabled && "none",
   background: (theme) =>
     `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.main} 54.03%, ${theme.palette.primary.main} 100%)`,
@@ -63,8 +48,7 @@ const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
 const NextWrapper = styled(Box)(({ theme, isdisabled }) => ({
   top: "50%",
   zIndex: 1,
-  right: theme.direction === "ltr" ? 8 : "auto",
-  left: theme.direction === "ltr" ? "auto" : 8,
+  right: 8,
   display: isdisabled && "none",
   background: `linear-gradient(180deg, ${alpha(
     theme.palette.primary.main,

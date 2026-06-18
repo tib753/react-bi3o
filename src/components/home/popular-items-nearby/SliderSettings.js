@@ -8,22 +8,8 @@ import { NextFood, PrevFood } from "../best-reviewed-items/SliderSettings";
 
 const IconWrapper = styled(Box)(({ theme, isdisabled, left }) => ({
   zIndex: 1,
-  right:
-    left !== "true"
-      ? theme.direction === "ltr"
-        ? 0
-        : "auto"
-      : theme.direction === "ltr"
-      ? "auto"
-      : 0,
-  left:
-    left == "true"
-      ? theme.direction === "ltr"
-        ? 0
-        : "auto"
-      : theme.direction === "ltr"
-      ? "auto"
-      : 0,
+  right: left !== "true" && 0,
+  left: left == "true" && 0,
   background: "rgba(255, 255, 255, 0.6)",
   boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
   width: "40px",

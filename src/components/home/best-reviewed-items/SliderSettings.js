@@ -40,22 +40,8 @@ const ButtonContainer = styled(Box)(
 				  }  100%)`,
 
 		zIndex: 1,
-		right:
-			right === "true"
-				? theme.direction === "ltr"
-					? "-8px"
-					: "auto"
-				: theme.direction === "ltr"
-				? "auto"
-				: 0,
-		left:
-			right === "true"
-				? theme.direction === "ltr"
-					? "auto"
-					: "-8px"
-				: theme.direction === "ltr"
-				? 0
-				: "auto",
+		right: right === "true" && "-8px",
+		left: right !== "true" && 0,
 		position: "absolute",
 		alignItems: "center",
 		justifyContent: "center",
@@ -70,8 +56,7 @@ const ButtonContainer = styled(Box)(
 const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
 	zIndex: 1,
 	top: "50%",
-	left: theme.direction === "ltr" ? 0 : "auto",
-	right: theme.direction === "ltr" ? "auto" : 0,
+	left: 0,
 	display: isdisabled ? "none" : "flex",
 	alignItems: "center",
 	justifyContent: "center",
@@ -88,8 +73,7 @@ const PrevWrapper = styled(Box)(({ theme, isdisabled }) => ({
 const NextWrapper = styled(Box)(({ theme, isdisabled }) => ({
 	top: "50%",
 	zIndex: 1,
-	right: theme.direction === "ltr" ? 8 : "auto",
-	left: theme.direction === "ltr" ? "auto" : 8,
+	right: 8,
 	display: isdisabled ? "none" : "flex",
 	// backgroundColor: "rgba(255, 255, 255, 0.8)",
 	backgroundColor: theme.palette.primary.main,

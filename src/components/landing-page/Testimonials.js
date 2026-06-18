@@ -23,20 +23,20 @@ const Slider = dynamic(() => import("react-slick"), {
 const PrevWrapper = styled(Box)(({ theme }) => ({
 	zIndex: 1,
 	[theme.breakpoints.down("lg")]: {
-		[theme.direction === "ltr" ? "left" : "right"]: -5,
+		left: -5,
 	},
 	[theme.breakpoints.down("sm")]: {
-		[theme.direction === "ltr" ? "left" : "right"]: -10,
+		left: -10,
 		display: "none",
 	},
 }));
 const NextWrapper = styled(Box)(({ theme }) => ({
 	zIndex: 1,
 	[theme.breakpoints.down("lg")]: {
-		[theme.direction === "ltr" ? "right" : "left"]: -5,
+		right: -5,
 	},
 	[theme.breakpoints.down("sm")]: {
-		[theme.direction === "ltr" ? "right" : "left"]: -5,
+		right: -5,
 		display: "none",
 	},
 }));
