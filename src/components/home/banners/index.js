@@ -69,11 +69,11 @@ const Banners = ({feature}) => {
   //     refetchBannerData();
   //   }
   // }, [banners]);
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch(setBanners(data));
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      dispatch(setBanners(data));
+    }
+  }, [data]);
   useEffect(() => {
     if (banners) {
       handleBannersData();
