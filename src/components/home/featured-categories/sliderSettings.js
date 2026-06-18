@@ -6,13 +6,10 @@ import NextIcon from "../../icons/NextIcon";
 import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
 import { WhiteNext, WhitePrev } from "../visit-again/SliderSettings";
 import { ModuleTypes } from "../../../helper-functions/moduleTypes";
-const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtlProp, currentSlide, totalSlides, slidesToShow }) => {
+const Next = ({ onClick, displayNoneOnMobile, className }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const displayNone = isSmall ? (displayNoneOnMobile ? true : false) : false;
-  const handleClick = isRtlProp && sliderRef ? () => sliderRef.current?.slickPrev?.() : onClick;
-  const isAtStart = isRtlProp && (currentSlide || 0) <= 0;
-  const visible = isRtlProp ? !(displayNone || isAtStart) : !(displayNone || className?.includes("slick-disabled"));
+  if (isSmall && displayNoneOnMobile) return null;
   return (
     <Box
       style={{
@@ -22,25 +19,21 @@ const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
         left: "auto",
         height: "100%",
         width: "auto",
-        background: "transparent",
         zIndex: 10,
-        display: visible ? "flex" : "none",
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: 0,
         margin: 0,
-        opacity: 1,
-        pointerEvents: "auto",
-        ...(isSmall ? { display: "none" } : {}),
       }}
     >
       <Box
-        className={`client-nav client-next ${className}`}
-        onClick={handleClick}
+        onClick={onClick}
         style={{
-          top: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           zIndex: 1,
-          right: 8,
           background: `linear-gradient(180deg, ${alpha(
             theme.palette.primary.main,
             0.1
@@ -50,6 +43,8 @@ const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
           )} 100%)`,
           borderRadius: "50%",
           cursor: "pointer",
+          width: 36,
+          height: 36,
         }}
       >
         <NextIcon />
@@ -57,14 +52,10 @@ const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
     </Box>
   );
 };
-const Prev = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtlProp, currentSlide, totalSlides, slidesToShow }) => {
+const Prev = ({ onClick, displayNoneOnMobile, className }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const displayNone = isSmall ? (displayNoneOnMobile ? true : false) : false;
-  const handleClick = isRtlProp && sliderRef ? () => sliderRef.current?.slickNext?.() : onClick;
-  const maxIndex = Math.max(0, (totalSlides || 0) - Math.ceil(slidesToShow || 1));
-  const isAtEnd = isRtlProp && (currentSlide || 0) >= maxIndex;
-  const visible = isRtlProp ? !(displayNone || isAtEnd) : !(displayNone || className?.includes("slick-disabled"));
+  if (isSmall && displayNoneOnMobile) return null;
   return (
     <Box
       style={{
@@ -74,27 +65,26 @@ const Prev = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
         right: "auto",
         height: "100%",
         width: "auto",
-        background: "transparent",
         zIndex: 10,
-        display: visible ? "flex" : "none",
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: 0,
         margin: 0,
-        opacity: 1,
-        pointerEvents: "auto",
-        ...(isSmall ? { display: "none" } : {}),
       }}
     >
       <Box
-        className={`client-nav client-prev ${className}`}
-        onClick={handleClick}
+        onClick={onClick}
         style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           zIndex: 1,
-          top: "50%",
-          left: 0,
           background: `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.main} 54.03%, ${theme.palette.primary.main} 100%)`,
           cursor: "pointer",
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
         }}
       >
         <PrevIcon />
@@ -103,28 +93,28 @@ const Prev = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtl
   );
 };
 
-export const moduleWiseNext = (extraProps) => {
+export const moduleWiseNext = () => {
   switch (getCurrentModuleType()) {
     case ModuleTypes.GROCERY:
-      return <Next displayNoneOnMobile {...extraProps} />;
+      return <Next displayNoneOnMobile />;
     case ModuleTypes.PHARMACY:
-      return <WhiteNext noboxshadow displayNoneOnMobile {...extraProps} />;
+      return <WhiteNext noboxshadow displayNoneOnMobile />;
     case ModuleTypes.ECOMMERCE:
-      return <Next displayNoneOnMobile {...extraProps} />;
+      return <Next displayNoneOnMobile />;
     case ModuleTypes.FOOD:
-      return <WhiteNext noboxshadow displayNoneOnMobile {...extraProps} />;
+      return <WhiteNext noboxshadow displayNoneOnMobile />;
   }
 };
-export const moduleWisePrev = (extraProps) => {
+export const moduleWisePrev = () => {
   switch (getCurrentModuleType()) {
     case ModuleTypes.GROCERY:
-      return <Prev displayNoneOnMobile {...extraProps} />;
+      return <Prev displayNoneOnMobile />;
     case ModuleTypes.PHARMACY:
-      return <WhitePrev noboxshadow {...extraProps} />;
+      return <WhitePrev noboxshadow />;
     case ModuleTypes.ECOMMERCE:
-      return <Prev displayNoneOnMobile {...extraProps} />;
+      return <Prev displayNoneOnMobile />;
     case ModuleTypes.FOOD:
-      return <WhitePrev displayNoneOnMobile noboxshadow {...extraProps} />;
+      return <WhitePrev displayNoneOnMobile noboxshadow />;
   }
 };
 

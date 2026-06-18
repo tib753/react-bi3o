@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Suspense } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -52,7 +52,6 @@ const FeaturedCategories = () => {
   const { featuredCategories } = useSelector((state) => state.storedData);
   const slider = useRef(null);
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
-  const [currentSlide, setCurrentSlide] = useState(0);
   const isRtl = getLanguage() === "rtl";
   const sliderContainerSx = {
     direction: isRtl ? "rtl" : "ltr",
@@ -216,10 +215,9 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    nextArrow: moduleWiseNext(isRtl ? { sliderRef: slider, isRtl, currentSlide, totalSlides: data?.data?.length, slidesToShow: 5 } : undefined),
-    prevArrow: moduleWisePrev(isRtl ? { sliderRef: slider, isRtl, currentSlide, totalSlides: data?.data?.length, slidesToShow: 5 } : undefined),
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
-    afterChange: setCurrentSlide,
 
     responsive: [
       {
@@ -356,10 +354,9 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 8.5,
 
-    nextArrow: moduleWiseNext(isRtl ? { sliderRef: slider, isRtl, currentSlide, totalSlides: data?.data?.length, slidesToShow: 8.5 } : undefined),
-    prevArrow: moduleWisePrev(isRtl ? { sliderRef: slider, isRtl, currentSlide, totalSlides: data?.data?.length, slidesToShow: 8.5 } : undefined),
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
-    afterChange: setCurrentSlide,
 
     responsive: [
       {
@@ -454,10 +451,9 @@ const FeaturedCategories = () => {
     slidesToShow: 7,
     slidesToScroll: 3,
     // autoplay: true,
-    nextArrow: moduleWiseNext(isRtl ? { sliderRef: slider, isRtl, currentSlide, totalSlides: data?.data?.length, slidesToShow: 7 } : undefined),
-    prevArrow: moduleWisePrev(isRtl ? { sliderRef: slider, isRtl, currentSlide, totalSlides: data?.data?.length, slidesToShow: 7 } : undefined),
+    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
+    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
     initialSlide: 0,
-    afterChange: setCurrentSlide,
     responsive: [
       {
         breakpoint: 1450,
