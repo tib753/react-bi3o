@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { useInView } from "react-intersection-observer";
 import { alpha, useMediaQuery, useTheme } from "@mui/material";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
-import { filterTypeStores } from "components/search/filterTypes";
+import { getFilterTypeStores } from "components/search/filterTypes";
 import SideBarWithData from "components/search/SideBarWithData";
 import useGetSearchPageData from "api-manage/hooks/react-query/search/useGetSearchPageData";
 import MobileSideDrawer from "components/home/search/MobileSideDrawer";
@@ -25,6 +25,7 @@ import {
 
 const SearchResult = (props) => {
   const { t } = useTranslation();
+  const filterTypeStores = getFilterTypeStores(t);
   const {
     searchValue,
     configData,

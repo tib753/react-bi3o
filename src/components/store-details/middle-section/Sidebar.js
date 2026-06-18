@@ -29,7 +29,6 @@ import { ModuleTypes } from "helper-functions/moduleTypes";
 import { useSelector } from "react-redux";
 import Funnel from "components/svg-components/Funnel";
 import StoreFilter from "components/store-details/middle-section/StoreFilter";
-import {filterTypeItems} from "components/search/filterTypes";
 import {debounce} from "utils/CustomFunctions";
 
 export const CustomPaperBox = styled(Box)(({ theme }) => ({

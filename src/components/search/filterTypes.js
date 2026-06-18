@@ -1,6 +1,4 @@
-import { t } from "i18next";
-
-export const filterTypeItems = [
+export const getFilterTypeItems = (t) => [
   // { label: "On Sale", value: "on_sale", checked: false },
   // { label: "Nearby", value: "nearby", checked: false },
   { label: t("Available for Now"), value: "available_now", checked: false },
@@ -27,7 +25,7 @@ export const filterTypeItems = [
   // },
 ];
 
-export const filterTypeStores = [
+export const getFilterTypeStores = (t) => [
   // { label: "On Sale", value: "on_sale", checked: false },
 
   {

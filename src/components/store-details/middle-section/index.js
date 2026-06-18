@@ -37,7 +37,7 @@ import { removeDuplicates } from "utils/CustomFunctions";
 import DotSpin from "../../DotSpin";
 import SearchIcon from "@mui/icons-material/Search";
 import StoreFilter from "components/store-details/middle-section/StoreFilter";
-import {filterTypeItems} from "components/search/filterTypes";
+import {getFilterTypeItems} from "components/search/filterTypes";
 
 export const handleShimmerProducts = () => {
   return (
@@ -489,9 +489,9 @@ const MiddleSection = (props) => {
   }
   const checkModuleWiseFilterItem= () => {
     if(getCurrentModuleType() === ModuleTypes.FOOD){
-      return filterTypeItems
+      return getFilterTypeItems(t)
     }else{
-      return filterTypeItems?.filter((item)=>item.value!=="available_now")
+      return getFilterTypeItems(t)?.filter((item)=>item.value!=="available_now")
 
     }
   }
