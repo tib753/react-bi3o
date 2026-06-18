@@ -54,18 +54,22 @@ const NextWrapper = styled(Box)(({ theme, isdisabled }) => ({
   )} 100%)`,
   borderRadius: "50%",
 }));
-const Next = ({ onClick, className, displayNoneOnMobile }) => {
+const Next = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtlProp, currentSlide, totalSlides, slidesToShow }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const displayNone = isSmall ? (displayNoneOnMobile ? true : false) : false;
+  const handleClick = isRtlProp && sliderRef ? () => sliderRef.current?.slickPrev?.() : onClick;
+  const maxIndex = Math.max(0, (totalSlides || 0) - Math.ceil(slidesToShow || 1));
+  const isAtEnd = isRtlProp && (currentSlide || 0) <= 0;
+  const handleDisabled = isRtlProp ? (displayNone || isAtEnd) : (displayNone || className?.includes("slick-disabled"));
   return (
     <ButtonContainer
-      isdisabled={displayNone || className?.includes("slick-disabled")}
+      isdisabled={handleDisabled}
       right="true"
     >
       <NextWrapper
         className={`client-nav client-next ${className}`}
-        onClick={onClick}
+        onClick={handleClick}
         isdisabled={className?.includes("slick-disabled")}
       >
         <NextIcon />
@@ -73,17 +77,21 @@ const Next = ({ onClick, className, displayNoneOnMobile }) => {
     </ButtonContainer>
   );
 };
-const Prev = ({ onClick, className, displayNoneOnMobile }) => {
+const Prev = ({ onClick, className, displayNoneOnMobile, sliderRef, isRtl: isRtlProp, currentSlide, totalSlides, slidesToShow }) => {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const displayNone = isSmall ? (displayNoneOnMobile ? true : false) : false;
+  const handleClick = isRtlProp && sliderRef ? () => sliderRef.current?.slickNext?.() : onClick;
+  const maxIndex = Math.max(0, (totalSlides || 0) - Math.ceil(slidesToShow || 1));
+  const isAtEnd = isRtlProp && (currentSlide || 0) >= maxIndex;
+  const handleDisabled = isRtlProp ? (displayNone || isAtEnd) : (displayNone || className?.includes("slick-disabled"));
   return (
     <ButtonContainer
-      isdisabled={displayNone || className?.includes("slick-disabled")}
+      isdisabled={handleDisabled}
     >
       <PrevWrapper
         className={`client-nav client-prev ${className}`}
-        onClick={onClick}
+        onClick={handleClick}
         isdisabled={className?.includes("slick-disabled")}
       >
         <PrevIcon />
@@ -92,28 +100,28 @@ const Prev = ({ onClick, className, displayNoneOnMobile }) => {
   );
 };
 
-export const moduleWiseNext = () => {
+export const moduleWiseNext = (extraProps) => {
   switch (getCurrentModuleType()) {
     case ModuleTypes.GROCERY:
-      return <Next displayNoneOnMobile />;
+      return <Next displayNoneOnMobile {...extraProps} />;
     case ModuleTypes.PHARMACY:
-      return <WhiteNext noboxshadow displayNoneOnMobile />;
+      return <WhiteNext noboxshadow displayNoneOnMobile {...extraProps} />;
     case ModuleTypes.ECOMMERCE:
-      return <Next displayNoneOnMobile />;
+      return <Next displayNoneOnMobile {...extraProps} />;
     case ModuleTypes.FOOD:
-      return <WhiteNext noboxshadow displayNoneOnMobile />;
+      return <WhiteNext noboxshadow displayNoneOnMobile {...extraProps} />;
   }
 };
-export const moduleWisePrev = () => {
+export const moduleWisePrev = (extraProps) => {
   switch (getCurrentModuleType()) {
     case ModuleTypes.GROCERY:
-      return <Prev displayNoneOnMobile />;
+      return <Prev displayNoneOnMobile {...extraProps} />;
     case ModuleTypes.PHARMACY:
-      return <WhitePrev noboxshadow />;
+      return <WhitePrev noboxshadow {...extraProps} />;
     case ModuleTypes.ECOMMERCE:
-      return <Prev displayNoneOnMobile />;
+      return <Prev displayNoneOnMobile {...extraProps} />;
     case ModuleTypes.FOOD:
-      return <WhitePrev displayNoneOnMobile noboxshadow />;
+      return <WhitePrev displayNoneOnMobile noboxshadow {...extraProps} />;
   }
 };
 
