@@ -1,31 +1,24 @@
 import React from "react";
-import { alpha, useMediaQuery, useTheme } from "@mui/material";
+import { alpha, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import PrevIcon from "../../icons/PrevIcon";
 import NextIcon from "../../icons/NextIcon";
-import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
-import { getLanguage } from "../../../helper-functions/getLanguage";
-import { WhiteNext, WhitePrev } from "../visit-again/SliderSettings";
-import { ModuleTypes } from "../../../helper-functions/moduleTypes";
-const Next = ({ onClick, displayNoneOnMobile, className }) => {
+
+export const LeftButton = ({ onClick, hidden }) => {
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  if (isSmall && displayNoneOnMobile) return null;
+  if (hidden) return null;
   return (
     <Box
       style={{
         position: "absolute",
-        top: 0,
-        right: 0,
-        left: "auto",
-        height: "100%",
-        width: "auto",
+        left: 0,
+        right: "auto",
         zIndex: 10,
+        top: 0,
+        height: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: 0,
-        margin: 0,
       }}
     >
       <Box
@@ -34,7 +27,9 @@ const Next = ({ onClick, displayNoneOnMobile, className }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          zIndex: 1,
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
           background: `linear-gradient(180deg, ${alpha(
             theme.palette.primary.main,
             0.1
@@ -42,36 +37,31 @@ const Next = ({ onClick, displayNoneOnMobile, className }) => {
             theme.palette.primary.main,
             0.3
           )} 100%)`,
-          borderRadius: "50%",
           cursor: "pointer",
-          width: 36,
-          height: 36,
+          zIndex: 1,
         }}
       >
-        {getLanguage() === "rtl" ? <PrevIcon /> : <NextIcon />}
+        <PrevIcon />
       </Box>
     </Box>
   );
 };
-const Prev = ({ onClick, displayNoneOnMobile, className }) => {
+
+export const RightButton = ({ onClick, hidden }) => {
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  if (isSmall && displayNoneOnMobile) return null;
+  if (hidden) return null;
   return (
     <Box
       style={{
         position: "absolute",
-        top: 0,
-        left: 0,
-        right: "auto",
-        height: "100%",
-        width: "auto",
+        right: 0,
+        left: "auto",
         zIndex: 10,
+        top: 0,
+        height: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: 0,
-        margin: 0,
       }}
     >
       <Box
@@ -80,42 +70,16 @@ const Prev = ({ onClick, displayNoneOnMobile, className }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          zIndex: 1,
-          background: `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.main} 54.03%, ${theme.palette.primary.main} 100%)`,
-          cursor: "pointer",
           width: 36,
           height: 36,
           borderRadius: "50%",
+          background: theme.palette.primary.main,
+          cursor: "pointer",
+          zIndex: 1,
         }}
       >
-        {getLanguage() === "rtl" ? <NextIcon /> : <PrevIcon />}
+        <NextIcon />
       </Box>
     </Box>
   );
 };
-
-export const moduleWiseNext = () => {
-  switch (getCurrentModuleType()) {
-    case ModuleTypes.GROCERY:
-      return <Next displayNoneOnMobile />;
-    case ModuleTypes.PHARMACY:
-      return <WhiteNext noboxshadow displayNoneOnMobile />;
-    case ModuleTypes.ECOMMERCE:
-      return <Next displayNoneOnMobile />;
-    case ModuleTypes.FOOD:
-      return <WhiteNext noboxshadow displayNoneOnMobile />;
-  }
-};
-export const moduleWisePrev = () => {
-  switch (getCurrentModuleType()) {
-    case ModuleTypes.GROCERY:
-      return <Prev displayNoneOnMobile />;
-    case ModuleTypes.PHARMACY:
-      return <WhitePrev noboxshadow />;
-    case ModuleTypes.ECOMMERCE:
-      return <Prev displayNoneOnMobile />;
-    case ModuleTypes.FOOD:
-      return <WhitePrev displayNoneOnMobile noboxshadow />;
-  }
-};
-

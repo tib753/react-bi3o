@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Suspense } from "react";
+import React, { useEffect, useRef, Suspense, useState } from "react";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -18,7 +18,7 @@ import PharmacyCategoryCard from "../../cards/PharmacyCategoryCard";
 import ShopCategoryCard from "../../cards/ShopCategoryCard";
 import { HomeComponentsWrapper } from "../HomePageComponents";
 import FeaturedItemCard from "./card";
-import { moduleWiseNext, moduleWisePrev } from "./sliderSettings";
+import { LeftButton, RightButton } from "./sliderSettings";
 import { getLanguage } from "../../../helper-functions/getLanguage";
 
 // Lazy load Slider component
@@ -53,10 +53,13 @@ const FeaturedCategories = () => {
   const slider = useRef(null);
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
   const isRtl = getLanguage() === "rtl";
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const handleAfterChange = (index) => setCurrentSlide(index);
   const sliderContainerSx = {
     direction: isRtl ? "rtl" : "ltr",
     width: "100%",
     "& .slick-list, & .slick-track": {
+      direction: "ltr",
       padding: "0 !important",
       margin: "0 !important",
     },
@@ -69,6 +72,7 @@ const FeaturedCategories = () => {
           <CustomBoxFullWidth
             sx={{
               ...sliderContainerSx,
+              position: "relative",
             }}
           >
             <Slider {...settings} ref={slider}>
@@ -84,6 +88,13 @@ const FeaturedCategories = () => {
                 );
               })}
             </Slider>
+            <LeftButton
+              onClick={() => slider.current?.slickNext()}
+            />
+            <RightButton
+              onClick={() => slider.current?.slickPrev()}
+              hidden={currentSlide === 0}
+            />
           </CustomBoxFullWidth>
         );
       case ModuleTypes.PHARMACY:
@@ -91,6 +102,7 @@ const FeaturedCategories = () => {
           <CustomBoxFullWidth
             sx={{
               ...sliderContainerSx,
+              position: "relative",
             }}
           >
             <Slider {...settings} ref={slider}>
@@ -106,6 +118,13 @@ const FeaturedCategories = () => {
                 );
               })}
             </Slider>
+            <LeftButton
+              onClick={() => slider.current?.slickNext()}
+            />
+            <RightButton
+              onClick={() => slider.current?.slickPrev()}
+              hidden={currentSlide === 0}
+            />
           </CustomBoxFullWidth>
         );
       case ModuleTypes.ECOMMERCE:
@@ -113,6 +132,7 @@ const FeaturedCategories = () => {
           <CustomBoxFullWidth
             sx={{
               ...sliderContainerSx,
+              position: "relative",
             }}
           >
             <Slider {...shopCategorySliderSettings} ref={slider}>
@@ -126,6 +146,13 @@ const FeaturedCategories = () => {
                 );
               })}
             </Slider>
+            <LeftButton
+              onClick={() => slider.current?.slickNext()}
+            />
+            <RightButton
+              onClick={() => slider.current?.slickPrev()}
+              hidden={currentSlide === 0}
+            />
           </CustomBoxFullWidth>
         );
       case ModuleTypes.FOOD:
@@ -133,6 +160,7 @@ const FeaturedCategories = () => {
           <CustomBoxFullWidth
             sx={{
               ...sliderContainerSx,
+              position: "relative",
             }}
           >
             <Slider {...foodCategorySliderSettings} ref={slider}>
@@ -150,6 +178,13 @@ const FeaturedCategories = () => {
                 );
               })}
             </Slider>
+            <LeftButton
+              onClick={() => slider.current?.slickNext()}
+            />
+            <RightButton
+              onClick={() => slider.current?.slickPrev()}
+              hidden={currentSlide === 0}
+            />
           </CustomBoxFullWidth>
         );
     }
@@ -214,11 +249,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
-    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
-    rtl: isRtl,
-    swipeToSlide: true,
-    edgeFriction: 0,
+    arrows: false,
+    afterChange: handleAfterChange,
     initialSlide: 0,
 
     responsive: [
@@ -356,11 +388,8 @@ const FeaturedCategories = () => {
     speed: 500,
     slidesToShow: 8.5,
 
-    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
-    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
-    rtl: isRtl,
-    swipeToSlide: true,
-    edgeFriction: 0,
+    arrows: false,
+    afterChange: handleAfterChange,
     initialSlide: 0,
 
     responsive: [
@@ -456,11 +485,8 @@ const FeaturedCategories = () => {
     slidesToShow: 7,
     slidesToScroll: 3,
     // autoplay: true,
-    nextArrow: isRtl ? moduleWisePrev() : moduleWiseNext(),
-    prevArrow: isRtl ? moduleWiseNext() : moduleWisePrev(),
-    rtl: isRtl,
-    swipeToSlide: true,
-    edgeFriction: 0,
+    arrows: false,
+    afterChange: handleAfterChange,
     initialSlide: 0,
     responsive: [
       {
