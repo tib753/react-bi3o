@@ -586,13 +586,14 @@ const ProductInformation = ({
 									md: "0px",
 								}}
 							>
-								{state.modalData[0]?.variations?.length > 0 && (
-									<VariationsManager
-										productDetailsData={state.modalData[0]}
-										handleChoices={handleChoices}
-										isUnitWeightSelected={isUnitWeightSelected}
-									/>
-								)}
+                  {state.modalData[0]?.variations?.length > 0 && (
+                    <VariationsManager
+                      productDetailsData={state.modalData[0]}
+                      handleChoices={handleChoices}
+                      isUnitWeightSelected={isUnitWeightSelected}
+                      setIsUnitWeightSelected={setIsUnitWeightSelected}
+                    />
+                  )}
 								{/*<SizeVariation productDetailsData={productDetailsData} />*/}
 								{state.modalData.length > 0 && (
 									<IncrementDecrementManager

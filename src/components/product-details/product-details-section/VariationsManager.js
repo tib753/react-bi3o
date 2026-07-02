@@ -116,7 +116,7 @@ const getChoiceTitle = (productData, choiceName) => {
   return productData?.choice_options?.find(c => c.name === choiceName)?.title ?? choiceName;
 };
 
-const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected }) => {
+const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected, setIsUnitWeightSelected }) => {
   const theme = useTheme();
   // Debug logging for translations
   if (productDetailsData?.choice_options?.length > 0) {
@@ -153,6 +153,9 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
   }, [isUnitWeightSelected]);
 
   const handleClick = (values, index, choice) => {
+    if (isUnitWeightSelected && setIsUnitWeightSelected) {
+      setIsUnitWeightSelected(false);
+    }
     setValue((prev) => {
       prev[index].value = values;
       return [...prev];
@@ -181,13 +184,8 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
     <CustomStackFullWidth spacing={1.4}>
       {productDetailsData?.choice_options?.map((choice, choiceIndex) => (
         <CustomStackFullWidth key={choiceIndex}>
-          <Stack direction="row" spacing={0.5} alignItems="center">
-            <Typography fontWeight="600" paddingBottom="3px">
-              {choice?.name}
-            </Typography>
-          </Stack>
           {choice?.title && choice?.title !== choice?.name && (
-            <Typography fontSize="13px" sx={{ color: 'black', paddingBottom: '3px' }}>
+            <Typography fontWeight="600" paddingBottom="3px">
               {choice?.title}
             </Typography>
           )}
