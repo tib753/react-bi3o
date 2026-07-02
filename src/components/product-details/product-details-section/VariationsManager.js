@@ -87,6 +87,17 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   return defaultName;
 };
 
+const getTranslatedOption = (choice, optionValue, index) => {
+  const currentLanguage = i18n.language || "ar";
+  if (choice?.translations?.length > 0) {
+    const translation = choice.translations.find(
+      (t) => t.locale === currentLanguage && t.key === `option_${index}`
+    );
+    if (translation?.value) return translation.value;
+  }
+  return optionValue;
+};
+
 const getChoiceTitle = (productData, choiceName) => {
   const currentLanguage = i18n.language || "ar";
 
@@ -189,7 +200,7 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
                 productsize={value[choiceIndex]?.value}
               >
                 <Typography fontSize={{ xs: "12px", sm: "14px" }}>
-                  {item}
+                  {getTranslatedOption(choice, item, index)}
                 </Typography>
               </CustomSizeBox>
             ))}
