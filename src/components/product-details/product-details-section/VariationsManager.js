@@ -98,22 +98,21 @@ const getTranslatedOption = (choice, optionValue, index) => {
   return optionValue;
 };
 
-const getChoiceTitle = (productData, choiceName) => {
+const getChoiceTitle = (productData, choice) => {
   const currentLanguage = i18n.language || "ar";
+  const key = `choice_${choice?.attribute_id}`;
 
   const translation = productData?.translations?.find(
-    (tr) => tr.key === choiceName && tr.locale === currentLanguage
+    (tr) => tr.key === key && tr.locale === currentLanguage
   );
-
   if (translation?.value) return translation.value;
 
   const anyTranslation = productData?.translations?.find(
-    (tr) => tr.key === choiceName
+    (tr) => tr.key === key
   );
-
   if (anyTranslation?.value) return anyTranslation.value;
 
-  return productData?.choice_options?.find(c => c.name === choiceName)?.title ?? choiceName;
+  return choice?.title ?? choice?.name ?? '';
 };
 
 const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected, setIsUnitWeightSelected }) => {
@@ -178,7 +177,7 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
       {productDetailsData?.choice_options?.map((choice, choiceIndex) => (
         <CustomStackFullWidth key={choiceIndex}>
           <Typography fontWeight="600" paddingBottom="3px">
-            {getChoiceTitle(productDetailsData, choice?.name)}
+            {getChoiceTitle(productDetailsData, choice)}
           </Typography>
           <CustomStackFullWidth direction="row" spacing={2}>
             {choice?.options?.map((item, index) => (
