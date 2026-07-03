@@ -170,6 +170,7 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
     handleChoice(value);
   }, [value]);
   const handleChoice = (value) => {
+    if (isUnitWeightSelected) return;
     let finalVariation = "";
     value.forEach((item) => {
       if (item.value) finalVariation += item.value;
