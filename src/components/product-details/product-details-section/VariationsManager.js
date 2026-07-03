@@ -131,36 +131,17 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
   useEffect(() => {
     if (isUnitWeightSelected) {
       setValue((prev) =>
-        prev.map((item, i) => {
-          const c = productDetailsData?.choice_options?.[i];
-          if (c && isWeightChoice(c)) return { ...item, value: "" };
-          return item;
-        })
+        prev.map((item) => ({ ...item, value: "" }))
       );
     }
   }, [isUnitWeightSelected]);
 
-  const isWeightChoice = (choice) => {
-    const text = choice?.name || choice?.title || '';
-    return /وزن|weight|kg|كغ/i.test(text);
-  };
-
   const handleClick = (values, index, choice) => {
-    if (isUnitWeightSelected && setIsUnitWeightSelected && isWeightChoice(choice)) {
+    if (isUnitWeightSelected && setIsUnitWeightSelected) {
       setIsUnitWeightSelected(false);
     }
     setValue((prev) => {
       const newVal = prev.map((item, i) => ({ ...item }));
-      if (isUnitWeightSelected && isWeightChoice(choice)) {
-        newVal.forEach((_, i) => {
-          if (newVal[i].value === "" && i !== index) {
-            const opt = productDetailsData?.choice_options?.[i];
-            if (opt && !isWeightChoice(opt) && opt.options?.length > 0) {
-              newVal[i].value = opt.options[0];
-            }
-          }
-        });
-      }
       newVal[index].value = values;
       return newVal;
     });
