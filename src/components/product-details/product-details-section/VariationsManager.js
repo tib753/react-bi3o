@@ -118,18 +118,6 @@ const getChoiceTitle = (productData, choiceName) => {
 
 const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected, setIsUnitWeightSelected }) => {
   const theme = useTheme();
-  // Debug logging for translations
-  if (productDetailsData?.choice_options?.length > 0) {
-    console.log("=== TRANSLATION DEBUG ===");
-    console.log("Current Language:", i18n.language);
-    console.log("Choice Options:", productDetailsData.choice_options);
-    console.log("Translations Array:", productDetailsData.translations);
-    productDetailsData.choice_options.forEach((choice, idx) => {
-      const translated = getTranslatedName(productDetailsData, choice?.title);
-      console.log(`Choice ${idx}: "${choice?.title}" -> Translated: "${translated}"`);
-    });
-    console.log("========================");
-  }
   const borderColor = theme.palette.primary.main;
   const [choice, setChoice] = useState(null);
   const [value, setValue] = useState(
@@ -152,8 +140,13 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
     }
   }, [isUnitWeightSelected]);
 
+  const isWeightChoice = (choice) => {
+    const text = choice?.name || choice?.title || '';
+    return /وزن|weight|kg|كغ|غ|g\b/i.test(text);
+  };
+
   const handleClick = (values, index, choice) => {
-    if (isUnitWeightSelected && setIsUnitWeightSelected) {
+    if (isUnitWeightSelected && setIsUnitWeightSelected && isWeightChoice(choice)) {
       setIsUnitWeightSelected(false);
     }
     setValue((prev) => {
@@ -184,11 +177,9 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
     <CustomStackFullWidth spacing={1.4}>
       {productDetailsData?.choice_options?.map((choice, choiceIndex) => (
         <CustomStackFullWidth key={choiceIndex}>
-          {choice?.title && choice?.title !== choice?.name && (
-            <Typography fontWeight="600" paddingBottom="3px">
-              {choice?.title}
-            </Typography>
-          )}
+          <Typography fontWeight="600" paddingBottom="3px">
+            {getChoiceTitle(productDetailsData, choice?.name)}
+          </Typography>
           <CustomStackFullWidth direction="row" spacing={2}>
             {choice?.options?.map((item, index) => (
               <CustomSizeBox
