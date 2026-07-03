@@ -25,8 +25,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   
   const defaultNameLower = defaultName.toString().toLowerCase().trim();
   
-  // Search 1: Look for translation where the VALUE matches the defaultName (e.g., key="Weight", value="وزن" or "Poids")
-  // This handles cases where the backend sends translation with the Arabic text as value
   const translationByValue = productData.translations.find(
     (t) => t.locale === currentLanguage && 
            t.value && 
@@ -34,7 +32,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   );
   if (translationByValue) return translationByValue.value;
   
-  // Search 2: Look for translation where the KEY matches the defaultName exactly
   const translationByKey = productData.translations.find(
     (t) => t.locale === currentLanguage && 
            t.key && 
@@ -42,13 +39,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   );
   if (translationByKey) return translationByKey.value;
   
-  // Search 3: Look for translation where the KEY is "name" or "title" and the value in another language matches
-  // This handles variations where title might be stored with key="title" and Arabic value
-  const allTranslationKeys = productData.translations.filter(
-    (t) => t.key === type || t.key === "name"
-  );
-  
-  // Check if any Arabic/English translation value matches our defaultName
   const matchingBaseTranslation = productData.translations.find(
     (t) => (t.locale === "ar" || t.locale === "en") && 
            t.value && 
@@ -56,7 +46,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   );
   
   if (matchingBaseTranslation) {
-    // Found a base translation, now find the current language version
     const currentLangTranslation = productData.translations.find(
       (t) => t.locale === currentLanguage && 
              t.key === matchingBaseTranslation.key
@@ -64,7 +53,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
     if (currentLangTranslation) return currentLangTranslation.value;
   }
   
-  // Search 4: Original search - check if translation value CONTAINS the default name
   const translationContaining = productData.translations.find(
     (t) => t.locale === currentLanguage && 
            t.value && 
@@ -72,7 +60,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
   );
   if (translationContaining) return translationContaining.value;
   
-  // Search 5: Find any translation with matching value (any locale), then get same key for current language
   const anyLocaleMatch = productData.translations.find(
     (t) => t.value && t.value.toString().toLowerCase().trim() === defaultNameLower
   );
@@ -83,7 +70,6 @@ const getTranslatedName = (productData, defaultName, type = "title") => {
     if (currentLangTranslation) return currentLangTranslation.value;
   }
   
-  // If no translation found, return original
   return defaultName;
 };
 
@@ -98,26 +84,29 @@ const getTranslatedOption = (choice, optionValue, index) => {
   return optionValue;
 };
 
-const getChoiceTitle = (productData, choice) => {
+const getAttrTranslatedOption = (attr, optionValue, index) => {
   const currentLanguage = i18n.language || "ar";
-  const key = `choice_${choice?.attribute_id}`;
+  if (attr?.translations?.length > 0) {
+    const translation = attr.translations.find(
+      (t) => t.locale === currentLanguage && t.key === `option_${index}`
+    );
+    if (translation?.value) return translation.value;
+  }
+  return optionValue;
+};
 
-  const translation = productData?.translations?.find(
-    (tr) => tr.key === key && tr.locale === currentLanguage
-  );
-  if (translation?.value) return translation.value;
-
-  const anyTranslation = productData?.translations?.find(
-    (tr) => tr.key === key
-  );
-  if (anyTranslation?.value) return anyTranslation.value;
-
-  return choice?.title ?? choice?.name ?? '';
+const isNewSystem = (data) => {
+  return data?.product_attributes?.length > 0 || data?.product_variants?.length > 0;
 };
 
 const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected, setIsUnitWeightSelected }) => {
   const theme = useTheme();
   const borderColor = theme.palette.primary.main;
+  const newSystem = isNewSystem(productDetailsData);
+  const [selectedVariantId, setSelectedVariantId] = useState(null);
+  const [attrValues, setAttrValues] = useState({});
+
+  // Old system state
   const [choice, setChoice] = useState(null);
   const [value, setValue] = useState(
     productDetailsData?.choice_options?.map((i) => {
@@ -128,13 +117,20 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
       };
     })
   );
+
   useEffect(() => {
     if (isUnitWeightSelected) {
-      setValue((prev) =>
-        prev.map((item) => ({ ...item, value: "" }))
-      );
+      if (newSystem) {
+        setSelectedVariantId(null);
+        setAttrValues({});
+      } else {
+        setValue((prev) =>
+          prev.map((item) => ({ ...item, value: "" }))
+        );
+        setSelectedVariantId(null);
+      }
     }
-  }, [isUnitWeightSelected]);
+  }, [isUnitWeightSelected, newSystem]);
 
   const handleClick = (values, index, choice) => {
     setValue((prev) => {
@@ -145,8 +141,10 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
     setChoice(choice);
   };
   useEffect(() => {
-    handleChoice(value);
-  }, [value]);
+    if (!newSystem) {
+      handleChoice(value);
+    }
+  }, [value, newSystem]);
   const handleChoice = (value) => {
     let finalVariation = "";
     value.forEach((item) => {
@@ -170,12 +168,71 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
       handleChoices(matched, choice);
     }
   };
+
+  const handleAttrClick = (attrId, optionValue) => {
+    setAttrValues((prev) => ({ ...prev, [attrId]: optionValue }));
+  };
+
+  const handleVariantClick = (variant) => {
+    if (isUnitWeightSelected && setIsUnitWeightSelected) {
+      setIsUnitWeightSelected(false);
+    }
+    setSelectedVariantId(variant.id);
+    if (handleChoices) {
+      handleChoices(variant, { name: variant.variant_name });
+    }
+  };
+
   return (
     <CustomStackFullWidth spacing={1.4}>
-      {productDetailsData?.choice_options?.map((choice, choiceIndex) => (
+      {/* NEW SYSTEM: Product Attributes (descriptive) */}
+      {newSystem && productDetailsData?.product_attributes?.map((attr) => (
+        <CustomStackFullWidth key={attr.id}>
+          <Typography fontWeight="600" paddingBottom="3px">
+            {attr.attribute_name}
+          </Typography>
+          <CustomStackFullWidth direction="row" spacing={2}>
+            {attr.attribute_values?.map((item, index) => (
+              <CustomSizeBox
+                key={index}
+                onClick={() => handleAttrClick(attr.id, item)}
+                size={item}
+                productsize={attrValues[attr.id]}
+              >
+                <Typography fontSize={{ xs: "12px", sm: "14px" }}>
+                  {getAttrTranslatedOption(attr, item, index)}
+                </Typography>
+              </CustomSizeBox>
+            ))}
+          </CustomStackFullWidth>
+        </CustomStackFullWidth>
+      ))}
+
+      {/* NEW SYSTEM: Product Variants (real) */}
+      {newSystem && productDetailsData?.product_variants?.map((variant) => (
+        <CustomStackFullWidth key={variant.id}>
+          <Typography fontWeight="600" paddingBottom="3px">
+            {variant.variant_name}
+          </Typography>
+          <CustomStackFullWidth direction="row" spacing={2}>
+            <CustomSizeBox
+              onClick={() => handleVariantClick(variant)}
+              size={variant.variant_name}
+              productsize={selectedVariantId === variant.id ? variant.variant_name : ""}
+            >
+              <Typography fontSize={{ xs: "12px", sm: "14px" }}>
+                {variant.variant_name} - {variant.price} {t("DZD")}
+              </Typography>
+            </CustomSizeBox>
+          </CustomStackFullWidth>
+        </CustomStackFullWidth>
+      ))}
+
+      {/* OLD SYSTEM: choice_options fallback */}
+      {!newSystem && productDetailsData?.choice_options?.map((choice, choiceIndex) => (
         <CustomStackFullWidth key={choiceIndex}>
           <Typography fontWeight="600" paddingBottom="3px">
-            {getChoiceTitle(productDetailsData, choice)}
+            {choice?.title ?? choice?.name ?? ''}
           </Typography>
           <CustomStackFullWidth direction="row" spacing={2}>
             {choice?.options?.map((item, index) => (
@@ -193,7 +250,7 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
           </CustomStackFullWidth>
         </CustomStackFullWidth>
       ))}
-      {productDetailsData?.selectedOption?.length > 0 &&
+      {!newSystem && productDetailsData?.selectedOption?.length > 0 &&
       productDetailsData?.selectedOption?.[0]?.stock == 0 ? (
         <Typography color="red">
           *{t("This variation is out of stock")}
