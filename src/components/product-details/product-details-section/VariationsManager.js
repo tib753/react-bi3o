@@ -130,11 +130,12 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
   );
   useEffect(() => {
     if (isUnitWeightSelected) {
-      setValue(
-        productDetailsData?.choice_options?.map((i) => ({
-          type: i?.title,
-          value: "",
-        }))
+      setValue((prev) =>
+        prev.map((item, i) => {
+          const c = productDetailsData?.choice_options?.[i];
+          if (c && isWeightChoice(c)) return { ...item, value: "" };
+          return item;
+        })
       );
     }
   }, [isUnitWeightSelected]);
