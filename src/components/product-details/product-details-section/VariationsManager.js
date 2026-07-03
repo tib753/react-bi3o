@@ -150,8 +150,19 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
       setIsUnitWeightSelected(false);
     }
     setValue((prev) => {
-      prev[index].value = values;
-      return [...prev];
+      const newVal = prev.map((item, i) => ({ ...item }));
+      if (isUnitWeightSelected && isWeightChoice(choice)) {
+        newVal.forEach((_, i) => {
+          if (newVal[i].value === "" && i !== index) {
+            const opt = productDetailsData?.choice_options?.[i];
+            if (opt && !isWeightChoice(opt) && opt.options?.length > 0) {
+              newVal[i].value = opt.options[0];
+            }
+          }
+        });
+      }
+      newVal[index].value = values;
+      return newVal;
     });
     setChoice(choice);
   };
