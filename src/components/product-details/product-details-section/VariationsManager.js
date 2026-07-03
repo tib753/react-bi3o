@@ -142,7 +142,7 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
 
   const isWeightChoice = (choice) => {
     const text = choice?.name || choice?.title || '';
-    return /وزن|weight|kg|كغ|غ|g\b/i.test(text);
+    return /وزن|weight|kg|كغ/i.test(text);
   };
 
   const handleClick = (values, index, choice) => {
