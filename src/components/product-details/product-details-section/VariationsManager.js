@@ -137,9 +137,6 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
   }, [isUnitWeightSelected]);
 
   const handleClick = (values, index, choice) => {
-    if (isUnitWeightSelected && setIsUnitWeightSelected) {
-      setIsUnitWeightSelected(false);
-    }
     setValue((prev) => {
       const newVal = prev.map((item, i) => ({ ...item }));
       newVal[index].value = values;
@@ -151,19 +148,26 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
     handleChoice(value);
   }, [value]);
   const handleChoice = (value) => {
-    if (isUnitWeightSelected) return;
     let finalVariation = "";
     value.forEach((item) => {
       if (item.value) finalVariation += item.value;
     });
-    let option = productDetailsData?.variations?.filter(
+    const matched = productDetailsData?.variations?.find(
       (item) =>
         item.type.replaceAll("-", "").replaceAll(" ", "") ===
         finalVariation.replaceAll("-", "").replaceAll(" ", "")
     );
 
-    if (choice && option?.length > 0) {
-      handleChoices(option[0], choice);
+    if (isUnitWeightSelected) {
+      if (matched && (matched.price > 0 || matched.weight > 0)) {
+        setIsUnitWeightSelected(false);
+        if (choice) handleChoices(matched, choice);
+      }
+      return;
+    }
+
+    if (matched && choice) {
+      handleChoices(matched, choice);
     }
   };
   return (
