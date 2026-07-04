@@ -96,13 +96,8 @@ const ProductInformation = ({
 
 	const computeInitialUnitWeightPrice = (product) => {
 		const uw = Number(product?.unit_weight_kg);
-		if (!(uw > 0) || !product?.variations?.length) return null;
-		let maxP = product.variations[0];
-		product.variations.forEach(v => { if (v.price > maxP.price) maxP = v; });
-		const gMatch = maxP.type?.match(/(\d+)/);
-		const grams = gMatch ? parseInt(gMatch[1]) : 0;
-		if (!(grams > 0)) return null;
-		return Math.round((maxP.price / grams) * (uw * 1000));
+		if (!(uw > 0)) return null;
+		return Math.round(product?.price ?? 0);
 	};
 
 	useEffect(() => {
@@ -178,20 +173,15 @@ const ProductInformation = ({
 	const [isUnitWeightSelected, setIsUnitWeightSelected] = useState(false);
 
 	const computeUnitWeightPrice = (product) => {
-		const data = product || state?.modalData?.[0];
+		const data = product || productDetailsData;
 		const uw = Number(data?.unit_weight_kg);
-		if (!(uw > 0) || !data?.variations?.length) return null;
-		let maxP = data.variations[0];
-		data.variations.forEach(v => { if (v.price > maxP.price) maxP = v; });
-		const gMatch = maxP.type?.match(/(\d+)/);
-		const grams = gMatch ? parseInt(gMatch[1]) : 0;
-		if (!(grams > 0)) return null;
-		return Math.round((maxP.price / grams) * (uw * 1000));
+		if (!(uw > 0)) return null;
+		return Math.round(data?.price ?? 0);
 	};
 
 	const handleUnitWeightClick = () => {
 		setIsUnitWeightSelected(true);
-		const unitPrice = computeUnitWeightPrice();
+		const unitPrice = computeUnitWeightPrice(productDetailsData);
 		if (unitPrice) {
 			dispatch({
 				type: ACTION.setModalData,
@@ -586,7 +576,7 @@ const ProductInformation = ({
 									md: "0px",
 								}}
 							>
-                  {state.modalData[0]?.variations?.length > 0 && (
+                  {(state.modalData[0]?.variations?.length > 0 || state.modalData[0]?.product_attributes?.length > 0 || state.modalData[0]?.product_variants?.length > 0) && (
                     <VariationsManager
                       productDetailsData={state.modalData[0]}
                       handleChoices={handleChoices}

@@ -1,75 +1,31 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
 import { Typography, useTheme } from "@mui/material";
 import { t } from "i18next";
 import i18n from "i18next";
-import { Stack } from "@mui/system";
-import { CustomColorBox, CustomSizeBox } from "../ProductDetails.style";
-import CheckIcon from "@mui/icons-material/Check";
-import { ACTION, initialState, reducer } from "./states";
+import { CustomSizeBox } from "../ProductDetails.style";
 
-const getSelectedIndex = (options, selectedOptions) => {
-  if (!selectedOptions) return -1;
-  let index = -1;
-  options?.forEach((option, indexNumber) => {
-    if (selectedOptions?.type?.split("-")?.includes(option.trim())) {
-      index = indexNumber;
-    }
-  });
-  return index;
-};
-
-const getTranslatedName = (productData, defaultName, type = "title") => {
+const getTranslatedName = (productData, defaultName) => {
   const currentLanguage = i18n.language || "ar";
   if (!defaultName || !productData?.translations?.length) return defaultName;
-  
-  const defaultNameLower = defaultName.toString().toLowerCase().trim();
-  
-  const translationByValue = productData.translations.find(
-    (t) => t.locale === currentLanguage && 
-           t.value && 
-           t.value.toString().toLowerCase().trim() === defaultNameLower
+  const lower = defaultName.toString().toLowerCase().trim();
+  const byValue = productData.translations.find(
+    (tr) => tr.locale === currentLanguage && tr.value?.toString().toLowerCase().trim() === lower
   );
-  if (translationByValue) return translationByValue.value;
-  
-  const translationByKey = productData.translations.find(
-    (t) => t.locale === currentLanguage && 
-           t.key && 
-           t.key.toString().toLowerCase().trim() === defaultNameLower
+  if (byValue) return byValue.value;
+  const byKey = productData.translations.find(
+    (tr) => tr.locale === currentLanguage && tr.key?.toString().toLowerCase().trim() === lower
   );
-  if (translationByKey) return translationByKey.value;
-  
-  const matchingBaseTranslation = productData.translations.find(
-    (t) => (t.locale === "ar" || t.locale === "en") && 
-           t.value && 
-           t.value.toString().toLowerCase().trim() === defaultNameLower
+  if (byKey) return byKey.value;
+  const anyLocale = productData.translations.find(
+    (tr) => tr.value?.toString().toLowerCase().trim() === lower
   );
-  
-  if (matchingBaseTranslation) {
-    const currentLangTranslation = productData.translations.find(
-      (t) => t.locale === currentLanguage && 
-             t.key === matchingBaseTranslation.key
+  if (anyLocale) {
+    const currentLang = productData.translations.find(
+      (tr) => tr.locale === currentLanguage && tr.key === anyLocale.key
     );
-    if (currentLangTranslation) return currentLangTranslation.value;
+    if (currentLang) return currentLang.value;
   }
-  
-  const translationContaining = productData.translations.find(
-    (t) => t.locale === currentLanguage && 
-           t.value && 
-           t.value.toString().toLowerCase().includes(defaultNameLower)
-  );
-  if (translationContaining) return translationContaining.value;
-  
-  const anyLocaleMatch = productData.translations.find(
-    (t) => t.value && t.value.toString().toLowerCase().trim() === defaultNameLower
-  );
-  if (anyLocaleMatch) {
-    const currentLangTranslation = productData.translations.find(
-      (t) => t.locale === currentLanguage && t.key === anyLocaleMatch.key
-    );
-    if (currentLangTranslation) return currentLangTranslation.value;
-  }
-  
   return defaultName;
 };
 
@@ -84,70 +40,105 @@ const getTranslatedOption = (choice, optionValue, index) => {
   return optionValue;
 };
 
-const getAttrTranslatedOption = (attr, optionValue, index) => {
+const groupDescriptiveAttributes = (attrs) => {
+  if (!attrs?.length) return [];
   const currentLanguage = i18n.language || "ar";
-  if (attr?.translations?.length > 0) {
-    const translation = attr.translations.find(
-      (t) => t.locale === currentLanguage && t.key === `option_${index}`
-    );
-    if (translation?.value) return translation.value;
-  }
-  return optionValue;
+  const map = {};
+  attrs.forEach((attr) => {
+    const name = attr.attribute_name;
+    if (!map[name]) map[name] = { translations: attr.translations, values: [] };
+    const vals = Array.isArray(attr.attribute_values)
+      ? attr.attribute_values.flatMap((v) =>
+          String(v).split(",").map((s) => s.trim()).filter(Boolean)
+        )
+      : String(attr.attribute_values || "").split(",").map((s) => s.trim()).filter(Boolean);
+    const translatedVals = vals.map((v, idx) => {
+      if (attr.translations?.length > 0) {
+        const tr = attr.translations.find(
+          (t) => t.locale === currentLanguage && t.key === `option_${idx}`
+        );
+        if (tr?.value) return tr.value;
+      }
+      return v;
+    });
+    map[name].values.push(...translatedVals);
+  });
+  return Object.entries(map).map(([name, data], idx) => ({
+    groupId: idx,
+    attribute_name: name,
+    attribute_values: [...new Set(data.values)],
+  }));
 };
 
-const isNewSystem = (data) => {
-  return data?.product_attributes?.length > 0 || data?.product_variants?.length > 0;
+const groupPriceVariants = (variants) => {
+  if (!variants?.length) return [];
+  const map = {};
+  variants.forEach((v) => {
+    const name = v.variant_name;
+    if (!map[name]) map[name] = [];
+    map[name].push(v);
+  });
+  return Object.entries(map).map(([name, items], idx) => ({
+    groupId: idx,
+    variant_name: name,
+    items,
+  }));
 };
 
-const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSelected, setIsUnitWeightSelected }) => {
+const VariationsManager = ({
+  productDetailsData,
+  handleChoices,
+  isUnitWeightSelected,
+  setIsUnitWeightSelected,
+}) => {
   const theme = useTheme();
-  const borderColor = theme.palette.primary.main;
-  const newSystem = isNewSystem(productDetailsData);
   const [selectedVariantId, setSelectedVariantId] = useState(null);
   const [attrValues, setAttrValues] = useState({});
 
-  // Old system state
   const [choice, setChoice] = useState(null);
   const [value, setValue] = useState(
     productDetailsData?.choice_options?.map((i) => {
-      const idx = getSelectedIndex(i?.options, productDetailsData?.selectedOption?.[0]);
+      const idx = (() => {
+        if (!productDetailsData?.selectedOption?.[0]) return -1;
+        return i?.options?.findIndex((opt) =>
+          productDetailsData.selectedOption[0]?.type?.split("-")?.includes(opt.trim())
+        ) ?? -1;
+      })();
       return {
         type: i?.title,
         value: idx >= 0 ? i?.options[idx] : "",
       };
-    })
+    }) ?? []
   );
+
+  const attrGroups = groupDescriptiveAttributes(productDetailsData?.product_attributes);
+  const priceGroups = groupPriceVariants(productDetailsData?.product_variants);
 
   useEffect(() => {
     if (isUnitWeightSelected) {
-      if (newSystem) {
-        setSelectedVariantId(null);
-        setAttrValues({});
-      } else {
-        setValue((prev) =>
-          prev.map((item) => ({ ...item, value: "" }))
-        );
-        setSelectedVariantId(null);
-      }
+      setSelectedVariantId(null);
+      setAttrValues({});
+      setValue((prev) => prev?.map((item) => ({ ...item, value: "" })) || []);
     }
-  }, [isUnitWeightSelected, newSystem]);
+  }, [isUnitWeightSelected]);
 
-  const handleClick = (values, index, choice) => {
+  const handleClick = (values, index, ch) => {
     setValue((prev) => {
       const newVal = prev.map((item, i) => ({ ...item }));
       newVal[index].value = values;
       return newVal;
     });
-    setChoice(choice);
+    setChoice(ch);
+    setSelectedVariantId(null);
   };
+
   useEffect(() => {
-    if (!newSystem) {
-      handleChoice(value);
-    }
-  }, [value, newSystem]);
-  const handleChoice = (value) => {
+    handleChoice(value);
+  }, [value]);
+
+  const handleChoice = (val) => {
     let finalVariation = "";
-    value.forEach((item) => {
+    val?.forEach((item) => {
       if (item.value) finalVariation += item.value;
     });
     const matched = productDetailsData?.variations?.find(
@@ -155,7 +146,6 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
         item.type.replaceAll("-", "").replaceAll(" ", "") ===
         finalVariation.replaceAll("-", "").replaceAll(" ", "")
     );
-
     if (isUnitWeightSelected) {
       if (matched && (matched.price > 0 || matched.weight > 0)) {
         setIsUnitWeightSelected(false);
@@ -163,14 +153,13 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
       }
       return;
     }
-
     if (matched && choice) {
       handleChoices(matched, choice);
     }
   };
 
-  const handleAttrClick = (attrId, optionValue) => {
-    setAttrValues((prev) => ({ ...prev, [attrId]: optionValue }));
+  const handleAttrClick = (groupId, optionValue) => {
+    setAttrValues((prev) => ({ ...prev, [groupId]: optionValue }));
   };
 
   const handleVariantClick = (variant) => {
@@ -178,29 +167,32 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
       setIsUnitWeightSelected(false);
     }
     setSelectedVariantId(variant.id);
+    setValue((prev) => prev?.map((item) => ({ ...item, value: "" })) || []);
     if (handleChoices) {
       handleChoices(variant, { name: variant.variant_name });
     }
   };
 
+  const hasChoiceOptions = productDetailsData?.choice_options?.length > 0;
+  const hasVariations = productDetailsData?.variations?.length > 0;
+
   return (
     <CustomStackFullWidth spacing={1.4}>
-      {/* NEW SYSTEM: Product Attributes (descriptive) */}
-      {newSystem && productDetailsData?.product_attributes?.map((attr) => (
-        <CustomStackFullWidth key={attr.id}>
+      {attrGroups.map((group) => (
+        <CustomStackFullWidth key={`attr-${group.groupId}`}>
           <Typography fontWeight="600" paddingBottom="3px">
-            {attr.attribute_name}
+            {getTranslatedName(productDetailsData, group.attribute_name)}
           </Typography>
-          <CustomStackFullWidth direction="row" spacing={2}>
-            {attr.attribute_values?.map((item, index) => (
+          <CustomStackFullWidth direction="row" spacing={2} flexWrap="wrap">
+            {group.attribute_values?.map((item, index) => (
               <CustomSizeBox
                 key={index}
-                onClick={() => handleAttrClick(attr.id, item)}
+                onClick={() => handleAttrClick(group.groupId, item)}
                 size={item}
-                productsize={attrValues[attr.id]}
+                productsize={attrValues[group.groupId]}
               >
                 <Typography fontSize={{ xs: "12px", sm: "14px" }}>
-                  {getAttrTranslatedOption(attr, item, index)}
+                  {item}
                 </Typography>
               </CustomSizeBox>
             ))}
@@ -208,56 +200,69 @@ const VariationsManager = ({ productDetailsData, handleChoices, isUnitWeightSele
         </CustomStackFullWidth>
       ))}
 
-      {/* NEW SYSTEM: Product Variants (real) */}
-      {newSystem && productDetailsData?.product_variants?.map((variant) => (
-        <CustomStackFullWidth key={variant.id}>
+      {priceGroups.map((group) => (
+        <CustomStackFullWidth key={`price-${group.groupId}`}>
           <Typography fontWeight="600" paddingBottom="3px">
-            {variant.variant_name}
+            {getTranslatedName(productDetailsData, group.variant_name)}
           </Typography>
-          <CustomStackFullWidth direction="row" spacing={2}>
-            <CustomSizeBox
-              onClick={() => handleVariantClick(variant)}
-              size={variant.variant_name}
-              productsize={selectedVariantId === variant.id ? variant.variant_name : ""}
-            >
-              <Typography fontSize={{ xs: "12px", sm: "14px" }}>
-                {variant.variant_name} - {variant.price} {t("DZD")}
+          <CustomStackFullWidth direction="row" spacing={2} flexWrap="wrap">
+            {group.items.map((variant) => (
+              <CustomSizeBox
+                key={variant.id}
+                onClick={() => handleVariantClick(variant)}
+                size={variant.weight_kg ? String(variant.weight_kg) : variant.variant_name}
+                productsize={
+                  selectedVariantId === variant.id
+                    ? variant.weight_kg ? String(variant.weight_kg) : variant.variant_name
+                    : ""
+                }
+              >
+                <Typography fontSize={{ xs: "12px", sm: "14px" }}>
+                  {variant.weight_kg ? `${variant.weight_kg} ${t("kg")}` : variant.variant_name}
+                </Typography>
+              </CustomSizeBox>
+            ))}
+          </CustomStackFullWidth>
+        </CustomStackFullWidth>
+      ))}
+
+      {hasChoiceOptions &&
+        productDetailsData?.choice_options?.map((ch, choiceIndex) => {
+          const attrName = ch?.name || ch?.attribute_name || "";
+          const choiceTitle = ch?.title || "";
+          return (
+          <CustomStackFullWidth key={`old-${choiceIndex}`}>
+            <Typography fontWeight="600" paddingBottom="3px">
+              {getTranslatedName(productDetailsData, attrName) || attrName}
+            </Typography>
+            {choiceTitle && (
+              <Typography variant="subtitle2" color="text.secondary" paddingBottom="3px">
+                {getTranslatedName(productDetailsData, choiceTitle) || choiceTitle}
               </Typography>
-            </CustomSizeBox>
-          </CustomStackFullWidth>
-        </CustomStackFullWidth>
-      ))}
+            )}
+            <CustomStackFullWidth direction="row" spacing={2} flexWrap="wrap">
+              {ch?.options?.map((item, index) => (
+                <CustomSizeBox
+                  key={index}
+                  onClick={() => handleClick(item, choiceIndex, ch)}
+                  size={item}
+                  productsize={value[choiceIndex]?.value}
+                >
+                  <Typography fontSize={{ xs: "12px", sm: "14px" }}>
+                    {getTranslatedOption(ch, item, index)}
+                  </Typography>
+                </CustomSizeBox>
+              ))}
+            </CustomStackFullWidth>
+            </CustomStackFullWidth>
+          );
+        })}
 
-      {/* OLD SYSTEM: choice_options fallback */}
-      {!newSystem && productDetailsData?.choice_options?.map((choice, choiceIndex) => (
-        <CustomStackFullWidth key={choiceIndex}>
-          <Typography fontWeight="600" paddingBottom="3px">
-            {choice?.title ?? choice?.name ?? ''}
-          </Typography>
-          <CustomStackFullWidth direction="row" spacing={2}>
-            {choice?.options?.map((item, index) => (
-              <CustomSizeBox
-                key={index}
-                onClick={() => handleClick(item, choiceIndex, choice)}
-                size={item}
-                productsize={value[choiceIndex]?.value}
-              >
-                <Typography fontSize={{ xs: "12px", sm: "14px" }}>
-                  {getTranslatedOption(choice, item, index)}
-                </Typography>
-              </CustomSizeBox>
-            ))}
-          </CustomStackFullWidth>
-        </CustomStackFullWidth>
-      ))}
-      {!newSystem && productDetailsData?.selectedOption?.length > 0 &&
-      productDetailsData?.selectedOption?.[0]?.stock == 0 ? (
-        <Typography color="red">
-          *{t("This variation is out of stock")}
-        </Typography>
-      ) : (
-        <Typography></Typography>
-      )}
+      {hasVariations &&
+        productDetailsData?.selectedOption?.length > 0 &&
+        productDetailsData?.selectedOption?.[0]?.stock == 0 && (
+          <Typography color="red">*{t("This variation is out of stock")}</Typography>
+        )}
     </CustomStackFullWidth>
   );
 };
