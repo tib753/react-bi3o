@@ -7,25 +7,41 @@ import { CustomSizeBox } from "../ProductDetails.style";
 
 const getTranslatedName = (productData, defaultName) => {
   const currentLanguage = i18n.language || "ar";
-  if (!defaultName || !productData?.translations?.length) return defaultName;
+  if (!defaultName) return defaultName;
   const lower = defaultName.toString().toLowerCase().trim();
-  const byValue = productData.translations.find(
-    (tr) => tr.locale === currentLanguage && tr.value?.toString().toLowerCase().trim() === lower
+
+  // Look in product_attributes own translations first
+  const attr = productData?.product_attributes?.find(
+    (a) => a.attribute_name?.toString().toLowerCase().trim() === lower
   );
-  if (byValue) return byValue.value;
-  const byKey = productData.translations.find(
-    (tr) => tr.locale === currentLanguage && tr.key?.toString().toLowerCase().trim() === lower
-  );
-  if (byKey) return byKey.value;
-  const anyLocale = productData.translations.find(
-    (tr) => tr.value?.toString().toLowerCase().trim() === lower
-  );
-  if (anyLocale) {
-    const currentLang = productData.translations.find(
-      (tr) => tr.locale === currentLanguage && tr.key === anyLocale.key
+  if (attr?.translations?.length > 0) {
+    const fromAttr = attr.translations.find(
+      (t) => t.locale === currentLanguage && t.key === lower
     );
-    if (currentLang) return currentLang.value;
+    if (fromAttr) return fromAttr.value;
   }
+
+  // Fallback to productData.translations
+  if (productData?.translations?.length) {
+    const byValue = productData.translations.find(
+      (tr) => tr.locale === currentLanguage && tr.value?.toString().toLowerCase().trim() === lower
+    );
+    if (byValue) return byValue.value;
+    const byKey = productData.translations.find(
+      (tr) => tr.locale === currentLanguage && tr.key?.toString().toLowerCase().trim() === lower
+    );
+    if (byKey) return byKey.value;
+    const anyLocale = productData.translations.find(
+      (tr) => tr.value?.toString().toLowerCase().trim() === lower
+    );
+    if (anyLocale) {
+      const currentLang = productData.translations.find(
+        (tr) => tr.locale === currentLanguage && tr.key === anyLocale.key
+      );
+      if (currentLang) return currentLang.value;
+    }
+  }
+
   return defaultName;
 };
 
