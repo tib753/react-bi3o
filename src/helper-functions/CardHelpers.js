@@ -36,7 +36,7 @@ export const getAmountWithSign = (amount, needDecimal = true) => {
   const formattedAmount = formatLargeNumber(Number(amount));
 
   // Return amount with currency symbol
-  return direction === "left" ? `${symbol}${formattedAmount}` : `${formattedAmount}${symbol}`;
+  return direction === "left" ? `${symbol} ${formattedAmount}` : `${formattedAmount} ${symbol}`;
 };
 
 
