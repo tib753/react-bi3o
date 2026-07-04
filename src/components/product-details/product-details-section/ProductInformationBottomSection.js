@@ -179,6 +179,7 @@ const ProductInformationBottomSection = ({
   );
 
   const actionsHandler = () => (
+    <>
     <BottomStack direction="row" width="100%" gap={2.5}>
       {productDetailsData?.stock > 0 &&
       isVariationAvailable(productDetailsData) ? (
@@ -247,11 +248,12 @@ const ProductInformationBottomSection = ({
         </>
       )}
     </BottomStack>
-    {!areDescriptiveAttrsSelected && productDetailsData?.product_attributes?.length > 0 && (
-      <Typography color={theme.palette.error.main} fontSize="13px" textAlign="center">
-        {t("Please select all options before adding to cart")}
-      </Typography>
-    )}
+      {!areDescriptiveAttrsSelected && productDetailsData?.product_attributes?.length > 0 && (
+        <Typography color={theme.palette.error.main} fontSize="13px" textAlign="center">
+          {t("Please select all options before adding to cart")}
+        </Typography>
+      )}
+    </>
   );
   const handleUnavailability = () => (
     <Stack spacing={2}>
