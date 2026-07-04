@@ -44,7 +44,7 @@ import {
 import PricePreviewWithStock from "./PricePreviewWithStock";
 import { ACTION, initialState, reducer } from "./states";
 
-export const getItemObject = (productData) => {
+export const getItemObject = (productData, descriptiveAttrs = {}) => {
 	return {
 		guest_id: getGuestId(),
 		model: productData?.available_date_starts ? "ItemCampaign" : "Item",
@@ -54,6 +54,7 @@ export const getItemObject = (productData) => {
 		price: productData?.totalPrice,
 		quantity: productData?.quantity,
 		variation: productData?.selectedOption,
+		descriptive_attrs: descriptiveAttrs,
 	};
 };
 const ProductInformation = ({
@@ -84,7 +85,7 @@ const ProductInformation = ({
 
 	const handleClose = (value) => {
 		if (value === "add-item") {
-			const itemObject = getItemObject(state?.modalData[0]);
+			const itemObject = getItemObject(state?.modalData[0], descriptiveAttrValues);
 			mutate(itemObject, {
 				onSuccess: handleSuccess,
 				onError: onErrorResponse,
@@ -174,6 +175,7 @@ const ProductInformation = ({
 	const [areDescriptiveAttrsSelected, setAreDescriptiveAttrsSelected] = useState(
 		!productDetailsData?.product_attributes?.length
 	);
+	const [descriptiveAttrValues, setDescriptiveAttrValues] = useState({});
 
 	const computeUnitWeightPrice = (product) => {
 		const data = product || productDetailsData;
@@ -244,7 +246,7 @@ const ProductInformation = ({
 		}
 	};
 	const handleAddToCartOnDispatch = () => {
-		const itemObject = getItemObject(state?.modalData[0]);
+		const itemObject = getItemObject(state?.modalData[0], descriptiveAttrValues);
 		mutate(itemObject, {
 			onSuccess: handleSuccess,
 			onError: onErrorResponse,
@@ -586,6 +588,7 @@ const ProductInformation = ({
                       isUnitWeightSelected={isUnitWeightSelected}
                       setIsUnitWeightSelected={setIsUnitWeightSelected}
                       onAttrsSelectedChange={setAreDescriptiveAttrsSelected}
+                      onAttrSelect={(name, value) => setDescriptiveAttrValues(prev => ({...prev, [name]: value}))}
                     />
                   )}
 								{/*<SizeVariation productDetailsData={productDetailsData} />*/}

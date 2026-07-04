@@ -111,6 +111,7 @@ const VariationsManager = ({
   isUnitWeightSelected,
   setIsUnitWeightSelected,
   onAttrsSelectedChange,
+  onAttrSelect,
 }) => {
   const theme = useTheme();
   const [selectedVariantId, setSelectedVariantId] = useState(null);
@@ -184,8 +185,9 @@ const VariationsManager = ({
     }
   };
 
-  const handleAttrClick = (groupId, optionValue) => {
+  const handleAttrClick = (groupId, optionValue, attrName) => {
     setAttrValues((prev) => ({ ...prev, [groupId]: optionValue }));
+    onAttrSelect?.(attrName, optionValue);
   };
 
   const handleVariantClick = (variant) => {
@@ -213,7 +215,7 @@ const VariationsManager = ({
             {group.attribute_values?.map((item, index) => (
               <CustomSizeBox
                 key={index}
-                onClick={() => handleAttrClick(group.groupId, item)}
+                onClick={() => handleAttrClick(group.groupId, item, group.attribute_name)}
                 size={item}
                 productsize={attrValues[group.groupId]}
               >
