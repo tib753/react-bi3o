@@ -1692,5 +1692,9 @@ export const arabic = {
 	"Failed": "فشل",
 	"Item added to favorites": "تمت إضافة العنصر إلى المفضلة",
 	"Item removed from favorites": "تمت إزالة العنصر من المفضلة",
-"Please select all options before adding to cart": "يرجى اختيار جميع الخيارات قبل الإضافة إلى السلة"
+"Please select all options before adding to cart": "يرجى اختيار جميع الخيارات قبل الإضافة إلى السلة",
+"kg": "كغ",
+"g": "غ",
+"L": "ل",
+"mL": "مل"
 };

@@ -1978,5 +1978,9 @@ export const french = {
 	"Failed": "Échoué",
 	"Item added to favorites": "Article ajouté aux favoris",
 	"Item removed from favorites": "Article retiré des favoris",
-"Please select all options before adding to cart": "Veuillez sélectionner toutes les options avant d'ajouter au panier"
+"Please select all options before adding to cart": "Veuillez sélectionner toutes les options avant d'ajouter au panier",
+"kg": "kg",
+"g": "g",
+"L": "L",
+"mL": "mL"
 };

@@ -460,7 +460,7 @@ const ProductInformation = ({
 					/>
 					{state?.modalData[0]?.unit_type && (
 						<Typography fontSize="13px" fontWeight="400" color="text.secondary">
-							/{state?.modalData[0]?.unit_type}
+							/{t(state?.modalData[0]?.unit_type)}
 						</Typography>
 					)}
 				</Stack>

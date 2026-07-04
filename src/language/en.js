@@ -1744,5 +1744,9 @@ Day: "Day",
 	"Failed": "Failed",
 	"Item added to favorites": "Item added to favorites",
 	"Item removed from favorites": "Item removed from favorites",
-"Please select all options before adding to cart": "Please select all options before adding to cart"
+"Please select all options before adding to cart": "Please select all options before adding to cart",
+"kg": "kg",
+"g": "g",
+"L": "L",
+"mL": "mL"
 };
