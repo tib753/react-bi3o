@@ -1743,5 +1743,6 @@ Day: "Day",
 	"Your payment has been cancel, and your order ": "Your payment has been cancel, and your order ",
 	"Failed": "Failed",
 	"Item added to favorites": "Item added to favorites",
-	"Item removed from favorites": "Item removed from favorites"
+	"Item removed from favorites": "Item removed from favorites",
+"Please select all options before adding to cart": "Please select all options before adding to cart"
 };

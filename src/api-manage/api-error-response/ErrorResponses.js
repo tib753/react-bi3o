@@ -2,6 +2,10 @@ import toast from "react-hot-toast";
 import { t } from "i18next";
 import Router from "next/router";
 
+const errorTranslations = {
+  descriptive_attrs: "Please select all options before adding to cart",
+};
+
 export const handleTokenExpire = (item, status) => {
   if (status === 401) {
     if (window.localStorage.getItem("token")) {
@@ -10,7 +14,8 @@ export const handleTokenExpire = (item, status) => {
       Router.push("/home", undefined, { shallow: true });
     }
   } else {
-    toast.error(item?.message, {
+    const key = errorTranslations[item?.code];
+    toast.error(key ? t(key) : item?.message, {
       id: "error",
     });
   }

@@ -1691,5 +1691,6 @@ export const arabic = {
 	"Your payment has been cancel, and your order ": "تم إلغاء الدفع، وطلبك ",
 	"Failed": "فشل",
 	"Item added to favorites": "تمت إضافة العنصر إلى المفضلة",
-	"Item removed from favorites": "تمت إزالة العنصر من المفضلة"
+	"Item removed from favorites": "تمت إزالة العنصر من المفضلة",
+"Please select all options before adding to cart": "يرجى اختيار جميع الخيارات قبل الإضافة إلى السلة"
 };

@@ -1977,5 +1977,6 @@ export const french = {
 	"Your payment has been cancel, and your order ": "Votre paiement a été annulé, et votre commande ",
 	"Failed": "Échoué",
 	"Item added to favorites": "Article ajouté aux favoris",
-	"Item removed from favorites": "Article retiré des favoris"
+	"Item removed from favorites": "Article retiré des favoris",
+"Please select all options before adding to cart": "Veuillez sélectionner toutes les options avant d'ajouter au panier"
 };
