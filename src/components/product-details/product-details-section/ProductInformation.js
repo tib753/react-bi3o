@@ -171,6 +171,9 @@ const ProductInformation = ({
 	};
 
 	const [isUnitWeightSelected, setIsUnitWeightSelected] = useState(false);
+	const [areDescriptiveAttrsSelected, setAreDescriptiveAttrsSelected] = useState(
+		!productDetailsData?.product_attributes?.length
+	);
 
 	const computeUnitWeightPrice = (product) => {
 		const data = product || productDetailsData;
@@ -582,6 +585,7 @@ const ProductInformation = ({
                       handleChoices={handleChoices}
                       isUnitWeightSelected={isUnitWeightSelected}
                       setIsUnitWeightSelected={setIsUnitWeightSelected}
+                      onAttrsSelectedChange={setAreDescriptiveAttrsSelected}
                     />
                   )}
 								{/*<SizeVariation productDetailsData={productDetailsData} />*/}
@@ -622,6 +626,7 @@ const ProductInformation = ({
 						isLoading={isLoading}
 						addToCartMutate={mutate}
 						updateIsLoading={updateIsLoading}
+						areDescriptiveAttrsSelected={areDescriptiveAttrsSelected}
 					/>
 					{!isSmall && (
 						<CustomStackFullWidth sx={{ mt: ".5rem" }}>

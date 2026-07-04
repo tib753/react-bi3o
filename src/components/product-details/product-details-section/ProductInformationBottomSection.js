@@ -48,6 +48,7 @@ const ProductInformationBottomSection = ({
   t,
   addToCartMutate,
   updateIsLoading,
+  areDescriptiveAttrsSelected,
 }) => {
   const theme = useTheme();
   const { cartList } = useSelector((state) => state.cart);
@@ -195,6 +196,7 @@ const ProductInformationBottomSection = ({
               backgroundColor: alpha(theme.palette.customColor.buyButton, 0.6),
             },
           }}
+          disabled={!areDescriptiveAttrsSelected}
         >
           {productDetailsData?.isCampaignItem ? t("Order Now") : t("Buy Now")}
         </PrimaryButton>
@@ -224,7 +226,7 @@ const ProductInformationBottomSection = ({
               <PrimaryButton
                 onClick={() => handleVariationAvailability("add")}
                 sx={{ width: 200, fontSize: { xs: "12px", md: "14px" } }}
-                disabled={productDetailsData?.stock === 0}
+                disabled={productDetailsData?.stock === 0 || !areDescriptiveAttrsSelected}
               >
                 {isLoading ? <Loading /> : t("Add to Cart")}
               </PrimaryButton>
@@ -245,6 +247,11 @@ const ProductInformationBottomSection = ({
         </>
       )}
     </BottomStack>
+    {!areDescriptiveAttrsSelected && productDetailsData?.product_attributes?.length > 0 && (
+      <Typography color={theme.palette.error.main} fontSize="13px" textAlign="center">
+        {t("Please select all options before adding to cart")}
+      </Typography>
+    )}
   );
   const handleUnavailability = () => (
     <Stack spacing={2}>

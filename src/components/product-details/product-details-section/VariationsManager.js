@@ -110,6 +110,7 @@ const VariationsManager = ({
   handleChoices,
   isUnitWeightSelected,
   setIsUnitWeightSelected,
+  onAttrsSelectedChange,
 }) => {
   const theme = useTheme();
   const [selectedVariantId, setSelectedVariantId] = useState(null);
@@ -133,6 +134,11 @@ const VariationsManager = ({
 
   const attrGroups = groupDescriptiveAttributes(productDetailsData?.product_attributes);
   const priceGroups = groupPriceVariants(productDetailsData?.product_variants);
+
+  useEffect(() => {
+    const allSelected = attrGroups.length === 0 || Object.keys(attrValues).length === attrGroups.length;
+    onAttrsSelectedChange?.(allSelected);
+  }, [attrValues, attrGroups, onAttrsSelectedChange]);
 
   useEffect(() => {
     if (isUnitWeightSelected) {
