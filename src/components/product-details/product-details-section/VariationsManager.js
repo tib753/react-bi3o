@@ -11,7 +11,10 @@ const getTranslatedName = (productData, defaultName) => {
   const lower = defaultName.toString().toLowerCase().trim();
 
   // DEBUG: log what we're looking for
-  console.log('[getTranslatedName]', { defaultName, lower, currentLanguage, translations: productData?.translations, product_attributes: productData?.product_attributes });
+    if (defaultName === 'لون') {
+      productData?.translations?.forEach((tr, i) => console.log(`[TR] ${i}: locale=${tr.locale} key=${tr.key} value=${tr.value}`));
+      console.log('[currentLanguage]', i18n.language);
+    }
 
   // Look in product_attributes own translations first
   const attr = productData?.product_attributes?.find(
