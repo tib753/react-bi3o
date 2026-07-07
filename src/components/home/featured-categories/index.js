@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, Suspense } from "react";
-import dynamic from "next/dynamic";
+import React, { useEffect, useRef } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import {
@@ -19,11 +19,7 @@ import ShopCategoryCard from "../../cards/ShopCategoryCard";
 import { HomeComponentsWrapper } from "../HomePageComponents";
 import FeaturedItemCard from "./card";
 import { moduleWiseNext, moduleWisePrev } from "./sliderSettings";
-
-// Lazy load Slider component
-const Slider = dynamic(() => import("react-slick"), {
-  ssr: false,
-});
+import { getLanguage } from "../../../helper-functions/getLanguage";
 
 export const ButtonLeft = styled(CustomButtonPrimary)(
   ({ theme, language_direction }) => ({
@@ -51,11 +47,24 @@ const FeaturedCategories = () => {
   const { featuredCategories } = useSelector((state) => state.storedData);
   const slider = useRef(null);
   const { data, isFetched ,refetch,isLoading} = useGetFeaturedCategories();
+  const isRtl = getLanguage() === "rtl";
   /** react-slick RTL mode reverses slide order / initial index; slick stays LTR like EN & FR */
   const sliderContainerSx = {
-    direction: "ltr",
+    direction: isRtl ? "rtl" : "ltr",
     width: "100%",
   };
+
+  // react-slick can mount with a wrong initial track offset (not starting from the
+  // first slide) when slidesToShow is fractional and the data loads asynchronously.
+  // Snap back to the first slide once data is ready so it always starts from the left.
+  useEffect(() => {
+    if (isFetched && data?.data?.length && slider.current) {
+      const frame = requestAnimationFrame(() => {
+        slider.current?.slickGoTo(0, true);
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [isFetched, data]);
 
   const moduleWiseCard = () => {
     switch (getCurrentModuleType()) {
@@ -66,7 +75,7 @@ const FeaturedCategories = () => {
               ...sliderContainerSx,
             }}
           >
-            <Slider {...settings} ref={slider}>
+            <Slider {...settings} rtl={isRtl} ref={slider}>
               {data?.data.map((item, index) => {
                 return (
                   <FeaturedItemCard
@@ -88,7 +97,7 @@ const FeaturedCategories = () => {
               ...sliderContainerSx,
             }}
           >
-            <Slider {...settings} ref={slider}>
+            <Slider {...settings} rtl={isRtl} ref={slider}>
               {data?.data.map((item, index) => {
                 return (
                   <PharmacyCategoryCard
@@ -110,7 +119,7 @@ const FeaturedCategories = () => {
               ...sliderContainerSx,
             }}
           >
-            <Slider {...shopCategorySliderSettings} ref={slider}>
+            <Slider {...shopCategorySliderSettings} rtl={isRtl} ref={slider}>
               {data?.data.map((item, index) => {
                 return (
                   <ShopCategoryCard
@@ -130,7 +139,7 @@ const FeaturedCategories = () => {
               ...sliderContainerSx,
             }}
           >
-            <Slider {...foodCategorySliderSettings} ref={slider}>
+            <Slider {...foodCategorySliderSettings} rtl={isRtl} ref={slider}>
               {data?.data.map((item, index) => {
                 return (
                   <FoodCategoryCard
@@ -154,21 +163,8 @@ const FeaturedCategories = () => {
     switch (getCurrentModuleType()) {
       case ModuleTypes.GROCERY:
         return (
-          <CustomBoxFullWidth
-              // sx={{
-              //   "& .slick-slider": {
-              //     paddingTop: {
-              //       xs: "22px",
-              //       md: "30px",
-              //     },
-              //     paddingBottom: {
-              //       xs: "4px",
-              //       md: "30px",
-              //     },
-              //   },
-              // }}
-          >
-            <Slider {...settings} ref={slider}>
+          <CustomBoxFullWidth sx={{ ...sliderContainerSx }}>
+            <Slider {...settings} rtl={isRtl} ref={slider}>
               {[...Array(10)]?.map((item, index) => {
                 return <FeaturedItemCard key={index} onlyshimmer />;
               })}
@@ -178,27 +174,33 @@ const FeaturedCategories = () => {
 
       case ModuleTypes.PHARMACY:
         return (
-          <Slider {...settings} ref={slider}>
-            {[...Array(10)]?.map((_, index) => {
-              return <PharmacyCategoryCard key={index} onlyshimmer />;
-            })}
-          </Slider>
+          <CustomBoxFullWidth sx={{ ...sliderContainerSx }}>
+            <Slider {...settings} rtl={isRtl} ref={slider}>
+              {[...Array(10)]?.map((_, index) => {
+                return <PharmacyCategoryCard key={index} onlyshimmer />;
+              })}
+            </Slider>
+          </CustomBoxFullWidth>
         );
       case ModuleTypes.ECOMMERCE:
         return (
-          <Slider {...shopCategorySliderSettings} ref={slider}>
-            {[...Array(6)].reverse()?.map((_, index) => {
-              return <ShopCategoryCard key={index} onlyshimmer />;
-            })}
-          </Slider>
+          <CustomBoxFullWidth sx={{ ...sliderContainerSx }}>
+            <Slider {...shopCategorySliderSettings} rtl={isRtl} ref={slider}>
+              {[...Array(6)].reverse()?.map((_, index) => {
+                return <ShopCategoryCard key={index} onlyshimmer />;
+              })}
+            </Slider>
+          </CustomBoxFullWidth>
         );
       case ModuleTypes.FOOD:
         return (
-          <Slider {...foodCategorySliderSettings} ref={slider}>
-            {[...Array(8)].reverse()?.map((item, index) => {
-              return <FoodCategoryCard key={index} onlyshimmer />;
-            })}
-          </Slider>
+          <CustomBoxFullWidth sx={{ ...sliderContainerSx }}>
+            <Slider {...foodCategorySliderSettings} rtl={isRtl} ref={slider}>
+              {[...Array(8)].reverse()?.map((item, index) => {
+                return <FoodCategoryCard key={index} onlyshimmer />;
+              })}
+            </Slider>
+          </CustomBoxFullWidth>
         );
     }
   };
@@ -506,7 +508,7 @@ const FeaturedCategories = () => {
       {isLoading ? (
         <HomeComponentsWrapper>
           <SliderCustom
-            float="left"
+            float={isRtl ? "right" : "left"}
             sx={{
               "& .slick-slider": {
                 "& .slick-slide": {
@@ -529,7 +531,7 @@ const FeaturedCategories = () => {
           <HomeComponentsWrapper>
             {data?.data && data?.data.length > 0 && (
               <SliderCustom
-                float="left"
+                float={isRtl ? "right" : "left"}
                 sx={{
                   "& .slick-slider": {
                     "& .slick-slide": {
