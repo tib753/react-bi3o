@@ -14,7 +14,7 @@ const getData = async (pageParams) => {
 
 export default function useGetMoreFromStores(pageParams, handleSuccess) {
   return useQuery("stores-categories-item", () => getData(pageParams), {
-    enabled: false,
+    enabled: Boolean(pageParams?.productId),
     onSuccess: handleSuccess,
     onError: onErrorResponse,
   });

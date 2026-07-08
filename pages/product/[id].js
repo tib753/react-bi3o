@@ -8,8 +8,9 @@ import CustomContainer from "../../src/components/container";
 import useScrollToTop from "api-manage/hooks/custom-hooks/useScrollToTop";
 import { ensureZoneId, ensureModuleId } from "../../src/utils/CustomFunctions";
 import {NoSsr} from "@mui/material";
+import Router from "next/router";
 
-const Index = ({ configData, productDetailsData, landingPageData, storeZoneId, moduleId }) => {
+const Index = ({ configData, productDetailsData, landingPageData, storeZoneId, moduleId, productType }) => {
   const { cartList, campaignItem } = useSelector((state) => state.cart);
   const [productDetails, setProductDetails] = useState([]);
   ensureZoneId(storeZoneId);
@@ -41,9 +42,10 @@ const Index = ({ configData, productDetailsData, landingPageData, storeZoneId, m
       } else {
         setProductDetails([productDetailsData]);
       }
-    } else {
-      //productDetailsData only be null/error if this page is for campaign
+    } else if (productType) {
       setProductDetails([{ ...campaignItem, isCampaignItem: true }]);
+    } else if (hasErrors) {
+      Router.replace("/404");
     }
   };
   return (
@@ -132,6 +134,7 @@ export const getServerSideProps = async (context) => {
       landingPageData: landingPageData,
       storeZoneId: productDetailsData?.zone_id || null,
       moduleId: moduleId || null,
+      productType: productType || null,
     },
   };
 };
