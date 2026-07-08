@@ -18,10 +18,22 @@ MainApi.interceptors.request.use(function (config) {
 
   if (typeof window !== "undefined") {
     zoneid = localStorage.getItem("zoneid");
+    if (zoneid) {
+      try {
+        const parsed = JSON.parse(zoneid);
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          localStorage.removeItem("zoneid");
+          zoneid = undefined;
+        }
+      } catch (e) {
+        localStorage.removeItem("zoneid");
+        zoneid = undefined;
+      }
+    }
     token = localStorage.getItem("token");
-    language = JSON.parse(localStorage.getItem("language-setting"));
-    currentLocation = JSON.parse(localStorage.getItem("currentLatLng"));
-    moduleid = JSON.parse(localStorage.getItem("module"))?.id;
+    try { language = JSON.parse(localStorage.getItem("language-setting")); } catch (e) { language = undefined; }
+    try { currentLocation = JSON.parse(localStorage.getItem("currentLatLng")); } catch (e) { currentLocation = undefined; }
+    try { moduleid = JSON.parse(localStorage.getItem("module"))?.id; } catch (e) { moduleid = undefined; }
   }
 
   // X-localization: prioritize i18n.language, then localStorage, then default 'ar' (Arabic)

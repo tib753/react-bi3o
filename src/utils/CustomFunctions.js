@@ -209,8 +209,11 @@ export const getCouponDiscount = (couponDiscount, storeData, cartList) => {
     if (purchasedAmount >= couponDiscount.min_purchase) {
       switch (couponDiscount.coupon_type) {
         case "zone_wise":
-          let zoneId = JSON.parse(localStorage.getItem("zoneid"));
+          let zoneId = [];
+          try { zoneId = JSON.parse(localStorage.getItem("zoneid")) || []; } catch (e) { zoneId = []; }
+          if (!Array.isArray(zoneId)) zoneId = [];
           if (
+            zoneId.length > 0 &&
             Number.parseInt(zoneId[0]) ===
             Number.parseInt(couponDiscount.zoneId[0])
           ) {
