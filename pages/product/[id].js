@@ -21,7 +21,8 @@ const Index = ({ configData, productDetailsData, landingPageData, storeZoneId })
   }, [productDetailsData, cartList]);
 
   const handleProductDetails = () => {
-    if (productDetailsData) {
+    const hasErrors = productDetailsData?.errors;
+    if (productDetailsData && !hasErrors) {
       if (cartList?.length > 0) {
         const isExist = cartList?.find(
           (item) => item?.id === productDetailsData?.id
@@ -40,7 +41,7 @@ const Index = ({ configData, productDetailsData, landingPageData, storeZoneId })
         setProductDetails([productDetailsData]);
       }
     } else {
-      //productDetailsData only be null if this page is for campaign
+      //productDetailsData only be null/error if this page is for campaign
       setProductDetails([{ ...campaignItem, isCampaignItem: true }]);
     }
   };
