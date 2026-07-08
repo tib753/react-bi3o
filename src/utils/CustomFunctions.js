@@ -1204,6 +1204,16 @@ export function maskSensitiveInfo(input) {
   }
 }
 // utils/debounce.js
+export function ensureZoneId(storeZoneId) {
+  if (
+    typeof window !== "undefined" &&
+    storeZoneId &&
+    !localStorage.getItem("zoneid")
+  ) {
+    localStorage.setItem("zoneid", JSON.stringify([storeZoneId]));
+  }
+}
+
 export function debounce(func, delay = 500) {
   let timer;
   return (...args) => {
