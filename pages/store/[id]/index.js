@@ -9,10 +9,11 @@ import { config_api, store_details_api } from "api-manage/ApiRoutes";
 import SEO from "../../../src/components/seo";
 import { NoSsr } from "@mui/material";
 import useScrollToTop from "api-manage/hooks/custom-hooks/useScrollToTop";
-import { ensureZoneId } from "../../../src/utils/CustomFunctions";
+import { ensureZoneId, ensureModuleId } from "../../../src/utils/CustomFunctions";
 
-const StorePage = ({ configData, storeDetails, distance, storeZoneId }) => {
+const StorePage = ({ configData, storeDetails, distance, storeZoneId, moduleId }) => {
   ensureZoneId(storeZoneId);
+  ensureModuleId(moduleId);
   const dispatch = useDispatch();
   useScrollToTop();
 
@@ -126,6 +127,7 @@ export const getServerSideProps = async (context) => {
         storeDetails,
         distance: distance || null,
         storeZoneId: storeDetails?.zone_id || null,
+        moduleId: moduleId || null,
       },
     };
   } catch (error) {

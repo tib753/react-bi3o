@@ -6,13 +6,14 @@ import { useSelector } from "react-redux";
 import SEO from "../../src/components/seo";
 import CustomContainer from "../../src/components/container";
 import useScrollToTop from "api-manage/hooks/custom-hooks/useScrollToTop";
-import { ensureZoneId } from "../../src/utils/CustomFunctions";
+import { ensureZoneId, ensureModuleId } from "../../src/utils/CustomFunctions";
 import {NoSsr} from "@mui/material";
 
-const Index = ({ configData, productDetailsData, landingPageData, storeZoneId }) => {
+const Index = ({ configData, productDetailsData, landingPageData, storeZoneId, moduleId }) => {
   const { cartList, campaignItem } = useSelector((state) => state.cart);
   const [productDetails, setProductDetails] = useState([]);
   ensureZoneId(storeZoneId);
+  ensureModuleId(moduleId);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -130,6 +131,7 @@ export const getServerSideProps = async (context) => {
       productDetailsData: !productType ? productDetailsData : null,
       landingPageData: landingPageData,
       storeZoneId: productDetailsData?.zone_id || null,
+      moduleId: moduleId || null,
     },
   };
 };

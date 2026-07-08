@@ -1214,6 +1214,16 @@ export function ensureZoneId(storeZoneId) {
   }
 }
 
+export function ensureModuleId(moduleId) {
+  if (
+    typeof window !== "undefined" &&
+    moduleId &&
+    !localStorage.getItem("module")
+  ) {
+    localStorage.setItem("module", JSON.stringify({ id: moduleId }));
+  }
+}
+
 export function debounce(func, delay = 500) {
   let timer;
   return (...args) => {
