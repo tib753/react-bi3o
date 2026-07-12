@@ -10,22 +10,37 @@ import { OrderFoodSubtitle } from "../checkout/CheckOut.style";
 const VariationContent = ({ cartItem }) => {
   const { t } = useTranslation();
   const handleProduct = () => {
-    if (cartItem?.selectedOption?.length > 0) {
-      return (
-        <Stack>
-          {cartItem?.choice_options?.map((item, index) => {
-            return (
-              <Stack key={index}>
-                <Typography color="customColor.textGray" fontSize="12px">
-                  {item?.title} :{" "}
-                  {cartItem?.selectedOption?.[0]?.type.split("-")?.[index]}
-                </Typography>
-              </Stack>
-            );
-          })}
-        </Stack>
-      );
-    }
+    return (
+      <Stack>
+        {cartItem?.descriptive_attrs && Object.keys(cartItem.descriptive_attrs).length > 0 &&
+          Object.entries(cartItem.descriptive_attrs).map(([key, value]) => (
+            <Typography key={key} color="customColor.textGray" fontSize="12px">
+              {key} : {value}
+            </Typography>
+          ))
+        }
+        {cartItem?.choice_options?.length > 0 && cartItem?.selectedOption?.[0]?.type &&
+          cartItem?.choice_options?.map((item, index) => (
+            <Stack key={index}>
+              <Typography color="customColor.textGray" fontSize="12px">
+                {item?.title} :{" "}
+                {cartItem?.selectedOption?.[0]?.type.split("-")?.[index]}
+              </Typography>
+            </Stack>
+          ))
+        }
+        {(!cartItem?.choice_options?.length || !cartItem?.selectedOption?.[0]?.type) &&
+          cartItem?.selectedOption?.[0] && (
+            <Typography color="customColor.textGray" fontSize="12px">
+              {cartItem?.selectedOption?.[0]?.type}
+              {cartItem?.selectedOption?.[0]?.weight_kg
+                ? ` (${cartItem.selectedOption[0].weight_kg} ${t("kg")})`
+                : ""}
+            </Typography>
+          )
+        }
+      </Stack>
+    );
   };
   const handleFood = () => {
     return (

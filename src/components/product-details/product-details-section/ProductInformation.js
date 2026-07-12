@@ -227,13 +227,14 @@ const ProductInformation = ({
 		if (res) {
 			let product = {};
 			res?.forEach((item) => {
-				product = {
-					...item?.item,
-					cartItemId: item?.id,
-					quantity: item?.quantity,
-					totalPrice: item?.price,
-					selectedOption: item?.variation,
-				};
+            product = {
+                    ...item?.item,
+                    cartItemId: item?.id,
+                    quantity: item?.quantity,
+                    totalPrice: item?.price,
+                    selectedOption: item?.variation,
+                    descriptive_attrs: item?.descriptive_attrs,
+                };
 			});
 			dispatchRedux(
 				setCart({

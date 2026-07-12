@@ -68,6 +68,7 @@ const CartContent = (props) => {
             selectedAddons: item?.item?.addons,
             itemBasePrice: item?.item?.price,
             selectedOption: item?.variation,
+            descriptive_attrs: item?.descriptive_attrs,
           };
 
           dispatch(setIncrementToCartItem(product)); // Dispatch the single product
@@ -88,6 +89,7 @@ const CartContent = (props) => {
             selectedAddons: item?.item?.addons,
             itemBasePrice: item?.item?.price,
             selectedOption: item?.variation,
+            descriptive_attrs: item?.descriptive_attrs,
           };
           dispatch(setDecrementToCartItem(product));
         }
