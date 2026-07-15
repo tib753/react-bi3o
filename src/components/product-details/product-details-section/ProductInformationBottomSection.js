@@ -49,6 +49,7 @@ const ProductInformationBottomSection = ({
   addToCartMutate,
   updateIsLoading,
   areDescriptiveAttrsSelected,
+  descriptiveAttrValues,
 }) => {
   const theme = useTheme();
   const { cartList } = useSelector((state) => state.cart);
@@ -86,7 +87,7 @@ const ProductInformationBottomSection = ({
       dispatchRedux(setCampaignItemList(productDetailsData));
       router.push("/checkout?page=campaign", undefined, { shallow: true });
     } else {
-      dispatchRedux(setBuyNowItemList(productDetailsData));
+      dispatchRedux(setBuyNowItemList({ ...productDetailsData, descriptive_attrs: descriptiveAttrValues }));
 
       // const isExist = isInCart(productDetailsData?.id);
       // if (isExist) {

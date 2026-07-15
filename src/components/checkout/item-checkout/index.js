@@ -363,6 +363,7 @@ const ItemCheckout = (props) => {
             : cart?.selectedOption?.length > 0
             ? cart?.selectedOption
             : [],
+        descriptive_attrs: cart?.descriptive_attrs ?? {},
       };
     });
   };

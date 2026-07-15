@@ -631,6 +631,7 @@ const ProductInformation = ({
 						addToCartMutate={mutate}
 						updateIsLoading={updateIsLoading}
 						areDescriptiveAttrsSelected={areDescriptiveAttrsSelected}
+						descriptiveAttrValues={descriptiveAttrValues}
 					/>
 					{!isSmall && (
 						<CustomStackFullWidth sx={{ mt: ".5rem" }}>
