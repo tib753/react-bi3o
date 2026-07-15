@@ -405,7 +405,7 @@ const ProductCard = (props) => {
 
   const addToCart = (e) => {
     if (item?.module_type === "ecommerce") {
-      if (item?.variations?.length > 0 || item?.has_variant) {
+      if (item?.variations?.length > 0 || item?.has_variant || item?.product_attributes?.length > 0) {
         router.push({
           pathname: "/product/[id]",
           query: {
@@ -428,7 +428,7 @@ const ProductCard = (props) => {
           e.stopPropagation();
           addToCartHandler();
         }
-      } else if (item?.variations?.length > 0 || item?.has_variant) {
+      } else if (item?.variations?.length > 0 || item?.has_variant || item?.product_attributes?.length > 0) {
         dispatch({ type: ACTION.setOpenModal, payload: true });
       } else {
         e.stopPropagation();

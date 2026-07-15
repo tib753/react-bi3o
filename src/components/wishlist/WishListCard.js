@@ -153,7 +153,7 @@ const WishListCard = ({ item }) => {
   };
   const addToCart = (e) => {
     if (item?.module_type === "ecommerce") {
-      if (item?.variations.length > 0) {
+      if (item?.variations.length > 0 || item?.product_attributes?.length > 0) {
         router.push(
           {
             pathname: "/product/[id]",
@@ -170,7 +170,7 @@ const WishListCard = ({ item }) => {
         addToCartHandler();
       }
     } else {
-      if (item?.food_variations.length > 0 || item?.variations.length > 0) {
+      if (item?.food_variations.length > 0 || item?.variations.length > 0 || item?.product_attributes?.length > 0) {
         setOpenItemModal(true);
       } else {
         e.stopPropagation();
