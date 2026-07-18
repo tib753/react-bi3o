@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Button, Skeleton, Stack } from "@mui/material";
+import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import Slider from "react-slick";
 import { getLanguage } from "helper-functions/getLanguage";
 import {
@@ -159,7 +159,7 @@ const TopRatedVehicles = () => {
 						</RTL>
 					</CustomStackFullWidth>
 				</HomeComponentsWrapper>
-			) : filteredVehicles?.length > 0 ? (
+			) : (
 				<HomeComponentsWrapper
 					onMouseEnter={() => setIsHover(true)}
 					onMouseLeave={() => setIsHover(false)}
@@ -221,6 +221,7 @@ const TopRatedVehicles = () => {
 							))}
 						</Stack>
 
+						{filteredVehicles?.length > 0 ? (
 						<CustomBoxFullWidth
 							sx={{
 								".slick-track ": {
@@ -250,9 +251,14 @@ const TopRatedVehicles = () => {
 								</div>
 							</RTL>
 						</CustomBoxFullWidth>
+						) : (
+							<Box sx={{ py: 4, textAlign: "center", width: "100%" }}>
+								<Typography color="text.secondary">{t("No vehicles found")}</Typography>
+							</Box>
+						)}
 					</CustomStackFullWidth>
 				</HomeComponentsWrapper>
-			) : null}
+			)}
 		</>
 	);
 };
