@@ -46,7 +46,7 @@ const MainLayout = ({ children, configData }) => {
 			}
 		}
 	}
-	const { landingPageData } = useSelector((state) => state.configData);
+	const landingPageData = useSelector((state) => state.configData.landingPageData);
 	const { data: landing, refetch: landingRefetch } = useGetLandingPage();
 	useEffect(() => {
 		if (!landingPageData) {

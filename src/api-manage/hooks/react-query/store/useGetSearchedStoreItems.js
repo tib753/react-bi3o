@@ -44,7 +44,7 @@ export default function useGetSearchedStoreItems(
     retry: 3,
     enabled: false,
     onError: onSingleErrorResponse,
-    cacheTime: "0",
+    cacheTime: 0,
   });
   // return useQuery("searched-store-items", () => getData(pageParams), {
   //   enabled: false,

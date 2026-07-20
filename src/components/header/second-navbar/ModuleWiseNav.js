@@ -27,7 +27,7 @@ const ModuleWiseNav = (props) => {
 		setModalFor,
 	} = props;
 
-	const { modules } = useSelector((state) => state.configData);
+	const modules = useSelector((state) => state.configData.modules);
 	const [openDrawer, setOpenDrawer] = useState(false);
 	const { data, refetch } = useGetModule();
 	const { profileInfo } = useSelector((state) => state.profileInfo);

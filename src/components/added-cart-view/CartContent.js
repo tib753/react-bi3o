@@ -46,7 +46,7 @@ import Body2 from "components/typographies/Body2";
 
 const CartContent = (props) => {
   const { cartItem, imageBaseUrl } = props;
-  const { configData } = useSelector((state) => state.configData);
+  const configData = useSelector((state) => state.configData.configData);
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useDispatch();

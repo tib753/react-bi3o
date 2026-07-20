@@ -50,7 +50,7 @@ const StoreList = ({ storeType, type, setType, data,sortby,setSortby,searchKey,s
   const { selectedModule } = useSelector((state) => state.utilsData);
   const matchesXs = useMediaQuery("(max-width:470px)");
   const theme = useTheme();
-  const { configData } = useSelector((state) => state.configData);
+  const configData = useSelector((state) => state.configData.configData);
   const store_image_url = `${configData?.base_urls?.store_image_url}`;
   const [anchorEl, setAnchorEl] = useState(null)
  

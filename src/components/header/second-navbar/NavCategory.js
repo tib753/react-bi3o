@@ -13,7 +13,7 @@ const NavCategory = ({ openModal, setModal, setRestaurantModal }) => {
   const { t } = useTranslation();
   const router = useRouter();
   const searchKey = "";
-  const { configData } = useSelector((state) => state.configData);
+  const configData = useSelector((state) => state.configData.configData);
   const catImageUrl = `${configData?.base_urls?.category_image_url}`;
 
   const { selectedModule } = useSelector((state) => state.utilsData);

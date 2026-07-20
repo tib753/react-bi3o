@@ -20,7 +20,7 @@ const CardView = (props) => {
   const theme = useTheme();
   const { sideDrawerOpen, setSideDrawerOpen, cartList, refetch, isLoading } =
     props;
-  const { configData } = useSelector((state) => state.configData);
+  const configData = useSelector((state) => state.configData.configData);
   const imageBaseUrl = configData?.base_urls?.item_image_url;
   const router = useRouter();
   const closeHandler = () => {

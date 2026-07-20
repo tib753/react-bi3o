@@ -208,7 +208,8 @@ const SecondNavBar = ({ configData }) => {
   const { cartList } = useSelector((state) => state.cart);
   const { selectedModule } = useSelector((state) => state.utilsData);
   const { offlineInfoStep } = useSelector((state) => state.offlinePayment);
-  const { countryCode, language } = useSelector((state) => state.configData);
+  const countryCode = useSelector((state) => state.configData.countryCode);
+  const language = useSelector((state) => state.configData.language);
   const isSmall = useMediaQuery("(max-width:1180px)");
   const { profileInfo } = useSelector((state) => state.profileInfo);
   const [openPopover, setOpenPopover] = useState(false);
@@ -219,8 +220,10 @@ const SecondNavBar = ({ configData }) => {
   const anchorRef = useRef(null);
   const [modalFor, setModalFor] = useState("sign-in");
   const { openForgotPasswordModal } = useSelector((state) => state.utilsData);
+  const [storedLocation, setStoredLocation] = useState(() =>
+    typeof window !== "undefined" ? localStorage.getItem("location") : undefined
+  );
   let token = undefined;
-  let location = undefined;
   let zoneId = undefined;
   let guestId = undefined;
   const currentModuleType = getCurrentModuleType();
@@ -326,7 +329,7 @@ const SecondNavBar = ({ configData }) => {
     } else {
       dispatch(setCartList(setItemIntoCart()));
     }
-  }, [data, moduleType, bookingLists,location]);
+  }, [data, moduleType, bookingLists]);
 
   useEffect(() => {
     if (offlineInfoStep !== 0) {
@@ -340,11 +343,11 @@ const SecondNavBar = ({ configData }) => {
     SetModuleType(selectedModule?.module_type);
   }, [selectedModule]);
 
-  if (typeof window !== "undefined") {
-    location = localStorage.getItem("location");
-    token = localStorage.getItem("token");
-    try { zoneId = JSON.parse(localStorage.getItem("zoneid")); } catch (e) { zoneId = null; }
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try { zoneId = JSON.parse(localStorage.getItem("zoneid")); } catch (e) { zoneId = null; }
+    }
+  }, []);
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -373,7 +376,7 @@ const SecondNavBar = ({ configData }) => {
       configData={configData}
       token={token}
       setToggled={setToggled}
-      location={location}
+      location={storedLocation}
       setOpenSignIn={setOpenSignIn}
       setModalFor={setModalFor}
     />
@@ -396,7 +399,7 @@ const SecondNavBar = ({ configData }) => {
             objectFit="contain"
           />
         )}
-        {!isSmall && location && (
+        {!isSmall && storedLocation && (
           <NavLinks t={t} zoneid="zoneid" moduleType={moduleType} />
         )}
       </Stack>
@@ -408,7 +411,7 @@ const SecondNavBar = ({ configData }) => {
           justifyContent="flex-end"
           spacing={2.5}
         >
-          {!token && moduleType !== "parcel" && location && (
+          {!token && moduleType !== "parcel" && storedLocation && (
             <IconButton onClick={handleTrackOrder} id="track-order-button">
               <Tooltip
                 title={moduleType !== "rental" ? t("Track order") : t("Track Trip")}
@@ -471,7 +474,7 @@ const SecondNavBar = ({ configData }) => {
           {moduleType !== "parcel" &&
             moduleType !== "rental" &&
             // !isLoading &&
-            (location || cartList?.length !== 0) &&
+            (storedLocation || cartList?.length !== 0) &&
             zoneId && <Cart isLoading={isLoading}/>}
 
           {moduleType === "rental" && <Taxi isLoading={isLoading}/>}
@@ -512,7 +515,7 @@ const SecondNavBar = ({ configData }) => {
             </IconButton>
           ) : (
             <Stack flexDirection="row">
-              {!location && (
+              {!storedLocation && (
                 <Stack
                   direction="row"
                   spacing={2}

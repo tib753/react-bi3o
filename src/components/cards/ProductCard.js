@@ -216,7 +216,7 @@ const ProductCard = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [openModal, setOpenModal] = useState(false);
   const [openLocationAlert, setOpenLocationAlert] = useState(false);
-  const { configData } = useSelector((state) => state.configData);
+  const configData = useSelector((state) => state.configData.configData);
   const imageBaseUrl = configData?.base_urls?.item_image_url;
   const router = useRouter();
   const theme = useTheme();

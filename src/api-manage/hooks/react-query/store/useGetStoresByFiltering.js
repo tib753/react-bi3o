@@ -27,7 +27,7 @@ export default function useGetStoresByFiltering(pageParams) {
       getPreviousPageParam: (firstPage, allPages) => firstPage.prevCursor,
       enabled: false,
       onError: onErrorResponse,
-      cacheTime: "0",
+      cacheTime: 0,
     }
   );
 }
@@ -37,7 +37,7 @@ export function useGetStoresWithoutInfiniteScroll(pageParams) {
   return useQuery([offset, limit, type], () => getData(pageParams), {
     enabled: false,
     onError: onErrorResponse,
-    cacheTime: "0",
+    cacheTime: 0,
   });
 }
 
@@ -54,7 +54,7 @@ export function useGetStoresWithoutInfiniteScroll(pageParams) {
 //             getPreviousPageParam: (firstPage, allPages) => firstPage.prevCursor,
 //             enabled: false,
 //             onError: onErrorResponse,
-//             cacheTime: "0",
+//             cacheTime: 0,
 //         }
 //     );
 // }

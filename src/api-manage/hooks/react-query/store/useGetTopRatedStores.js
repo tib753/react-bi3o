@@ -24,7 +24,7 @@ export default function useGetTopRatedStores(pageParams) {
       getPreviousPageParam: (firstPage, allPages) => firstPage.prevCursor,
       enabled: false,
       onError: onErrorResponse,
-      cacheTime: "0",
+      cacheTime: 0,
     }
   );
 }

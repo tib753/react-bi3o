@@ -35,7 +35,7 @@ export default function useGetCategoriesForStore(pageParams) {
       getPreviousPageParam: (firstPage, allPages) => firstPage.prevCursor,
       enabled: false,
       onError: onErrorResponse,
-      cacheTime: "0",
+      cacheTime: 0,
     }
   );
 }

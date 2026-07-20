@@ -85,7 +85,7 @@ export default function useGetRentalSearch(pageParams,handleAPiCallOnSuccess) {
       retry: 1,
       enabled: pageParams?.api_endpoint==="/api/v1/rental/vehicle/get-provider-vehicles" ? pageParams?.provider_id ? true : false : true,
       onError: onSingleErrorResponse,
-      cacheTime: "0",
+      cacheTime: 0,
       onSuccess:handleAPiCallOnSuccess
     }
   );

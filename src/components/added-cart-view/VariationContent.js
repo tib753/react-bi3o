@@ -8,7 +8,7 @@ import VisibleVariations from "./FoodVariations";
 import { OrderFoodSubtitle } from "../checkout/CheckOut.style";
 
 const VariationContent = ({ cartItem }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const handleProduct = () => {
     return (
       <Stack>
@@ -20,14 +20,19 @@ const VariationContent = ({ cartItem }) => {
           ))
         }
         {cartItem?.choice_options?.length > 0 && cartItem?.selectedOption?.[0]?.type &&
-          cartItem?.choice_options?.map((item, index) => (
-            <Stack key={index}>
-              <Typography color="customColor.textGray" fontSize="12px">
-                {item?.title} :{" "}
-                {cartItem?.selectedOption?.[0]?.type.split("-")?.[index]}
-              </Typography>
-            </Stack>
-          ))
+          cartItem?.choice_options?.map((item, index) => {
+            const locale = i18n.language;
+            const translatedTitle = item?.translations?.find(t => t.key === 'title' && t.locale === locale)?.value || item?.title;
+            const selectedValue = cartItem?.selectedOption?.[0]?.type.split("-")?.[index];
+            const translatedValue = item?.translations?.find(t => t.key === `option_${index}` && t.locale === locale)?.value || selectedValue;
+            return (
+              <Stack key={index}>
+                <Typography color="customColor.textGray" fontSize="12px">
+                  {translatedTitle} : {translatedValue}
+                </Typography>
+              </Stack>
+            );
+          })
         }
         {(!cartItem?.choice_options?.length || !cartItem?.selectedOption?.[0]?.type) &&
           cartItem?.selectedOption?.[0] && (

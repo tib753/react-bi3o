@@ -38,20 +38,15 @@
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.1",
     "base-64": "^1.0.0",
-    "caniuse-lite": "^1.0.30001503",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.7",
     "emoji-picker-react": "^4.4.11",
-    "eslint": "8.29.0",
-    "eslint-config-next": "13.0.6",
     "firebase": "^9.15.0",
     "formik": "^2.2.9",
-    "google-map-react": "^2.2.0",
     "i18next": "^22.0.8",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
     "lru-cache": "^10.0.0",
-    "moment": "^2.29.4",
     "next": "^16.2.2",
     "nprogress": "^0.2.0",
     "prop-types": "^15.8.1",
@@ -64,7 +59,6 @@
     "react-geolocated": "^4.0.3",
     "react-hot-toast": "^2.4.0",
     "react-i18next": "^12.1.1",
-    "react-image-magnifiers": "^1.4.0",
     "react-image-magnify": "^2.7.4",
     "react-intersection-observer": "^9.8.1",
     "react-lottie": "^1.2.10",
@@ -81,11 +75,11 @@
     "slick-carousel": "^1.8.1",
     "stylis": "^4.3.6",
     "stylis-plugin-rtl": "^2.1.1",
-    "yarn": "^1.22.22",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.2.6",
+    "caniuse-lite": "^1.0.30001503",
     "prettier": "2.8.0"
   }
 }

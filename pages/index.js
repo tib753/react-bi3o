@@ -6,31 +6,24 @@ import { useDispatch } from "react-redux";
 import { setConfigData, setLandingPageData } from "redux/slices/configData";
 import Router from "next/router";
 import SEO from "../src/components/seo";
-import useGetLandingPage from "../src/api-manage/hooks/react-query/useGetLandingPage";
-import { useGetConfigData } from "../src/api-manage/hooks/useGetConfigData";
 
 const Root = (props) => {
 	const { configData,landingPageData } = props;
-	const { data, refetch } = useGetLandingPage();
 	const dispatch = useDispatch();
-	const { data: dataConfig, refetch: configRefetch } = useGetConfigData();
 	useEffect(() => {
-		configRefetch();
-		refetch();
-	}, []);
-	useEffect(() => {
-		dispatch(setLandingPageData(data));
-		if (dataConfig) {
-			if (dataConfig.length === 0) {
+		if (configData) {
+			if (configData.length === 0) {
 				Router.push("/404");
-			} else if (dataConfig?.maintenance_mode) {
+			} else if (configData?.maintenance_mode) {
 				Router.push("/maintainance");
 			} else {
-				dispatch(setConfigData(dataConfig));
+				dispatch(setConfigData(configData));
 			}
-		} else {
 		}
-	}, [dataConfig, data]);
+		if (landingPageData) {
+			dispatch(setLandingPageData(landingPageData));
+		}
+	}, []);
 
 	return (
 		<>
@@ -43,11 +36,11 @@ const Root = (props) => {
 				title={landingPageData?.meta_title||configData?.business_name}
 				description={landingPageData?.meta_description||configData?.meta_description}
 			/>
-			{data && (
-				<LandingLayout configData={dataConfig} landingPageData={data}>
+			{landingPageData && (
+				<LandingLayout configData={configData} landingPageData={landingPageData}>
 					<LandingPage
-						configData={dataConfig}
-						landingPageData={data}
+						configData={configData}
+						landingPageData={landingPageData}
 					/>
 				</LandingLayout>
 			)}
