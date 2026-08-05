@@ -508,7 +508,7 @@ function recursive(start, end, close, list, schedule_order_slot_duration, day) {
   const checkedEnd = dayjs(end, "HH:mm").subtract(1, "minutes");
   const date =
     getDayNumber(today) === day
-      ? dayjs(currentDate).format("yyyy-MM-DD")
+      ? dayjs(currentDate).format("YYYY-MM-DD")
       : nextday;
   if (
     end.isBefore(close) ||
