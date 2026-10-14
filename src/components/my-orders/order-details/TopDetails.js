@@ -488,7 +488,7 @@ const TopDetails = (props) => {
                         variant="contained"
                         onClick={() => setParcelReceiveModal(true)}
                       >
-                        {"Parcel Received"}
+                        {t("Parcel Received")}
                       </Button>
                     </Stack>
                   ) : (

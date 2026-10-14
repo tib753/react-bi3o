@@ -2,6 +2,7 @@ import MainApi from "../../MainApi";
 import {data_limit, most_reviewed_items_api, popular_items} from "../../ApiRoutes";
 import {useQuery} from "react-query";
 import {onErrorResponse} from "../../api-error-response/ErrorResponses";
+import { getModuleId } from "helper-functions/getModuleId";
 
 const getData = async (pageParams) => {
     const {offset, type} = pageParams
@@ -10,7 +11,7 @@ const getData = async (pageParams) => {
 }
 
 export default function useGetMostReviewed(pageParams) {
-    return useQuery(['best-reviewed-items'],()=> getData(pageParams),{
+    return useQuery(['best-reviewed-items',getModuleId()],()=> getData(pageParams),{
         enabled:false,
         onError:onErrorResponse,
     })

@@ -224,8 +224,22 @@ const SecondNavBar = ({ configData }) => {
     typeof window !== "undefined" ? localStorage.getItem("location") : undefined
   );
   let token = undefined;
-  let zoneId = undefined;
   let guestId = undefined;
+  const getStoredZoneId = () => {
+    if (typeof window === "undefined") return undefined;
+    try {
+      const raw = localStorage.getItem("zoneid");
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.length > 0 ? parsed : null;
+      }
+      return parsed ?? null;
+    } catch (e) {
+      return null;
+    }
+  };
+  const zoneId = getStoredZoneId();
   const currentModuleType = getCurrentModuleType();
 
   let totalWishList = undefined;
@@ -342,12 +356,6 @@ const SecondNavBar = ({ configData }) => {
   useEffect(() => {
     SetModuleType(selectedModule?.module_type);
   }, [selectedModule]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      try { zoneId = JSON.parse(localStorage.getItem("zoneid")); } catch (e) { zoneId = null; }
-    }
-  }, []);
 
   const handleOpenPopover = () => {
     setOpenPopover(true);

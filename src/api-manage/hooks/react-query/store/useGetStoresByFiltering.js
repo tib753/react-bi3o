@@ -2,6 +2,7 @@ import MainApi from "../../../MainApi";
 import { filtered_stores_api } from "../../../ApiRoutes";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { onErrorResponse } from "../../../api-error-response/ErrorResponses";
+import { getModuleId } from "helper-functions/getModuleId";
 
 const getData = async (pageParams) => {
   const { offset, limit, type, pageParam, filteredData } = pageParams;
@@ -17,7 +18,7 @@ export default function useGetStoresByFiltering(pageParams) {
   const { offset, limit, type, filteredData } = pageParams;
 
   return useInfiniteQuery(
-    [type, pageParams?.currentTab, filteredData, offset],
+    [type, pageParams?.currentTab, filteredData, offset, getModuleId()],
     ({ pageParam = 1 }) => getData({ ...pageParams, pageParam }),
     {
       getNextPageParam: (lastPage, allPages) => {
@@ -34,7 +35,7 @@ export default function useGetStoresByFiltering(pageParams) {
 
 export function useGetStoresWithoutInfiniteScroll(pageParams) {
   const { offset, limit, type } = pageParams;
-  return useQuery([offset, limit, type], () => getData(pageParams), {
+  return useQuery([offset, limit, type, getModuleId()], () => getData(pageParams), {
     enabled: false,
     onError: onErrorResponse,
     cacheTime: 0,

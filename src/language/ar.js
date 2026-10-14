@@ -1696,5 +1696,22 @@ export const arabic = {
 "kg": "كغ",
 "g": "غ",
 "L": "ل",
-"mL": "مل"
+"mL": "مل",
+"Save Addresses": "حفظ العناوين",
+"Sender": "المرسل",
+"Parcel": "طرد",
+"Please select cancellation reason": "يرجى اختيار سبب الإلغاء",
+"Comments": "تعليقات",
+"Type here your cancel reason...": "اكتب هنا سبب الإلغاء...",
+"Continue Delivery": "مواصلة التوصيل",
+"Return Fare": "أجرة العودة",
+"Parcel Delivery Charge + Return Fare": "رسوم توصيل الطرد + أجرة العودة",
+"If you cancel, your parcel will be back to you when rider will be available. You will have to pay a return fee to your delivery man.": "إذا قمت بالإلغاء، سيعود الطرد إليك عندما يتوفر الساعي. سيتعين عليك دفع رسوم الإرجاع لمندوب التوصيل.",
+"Parcel Received": "تم استلام الطرد",
+"Parcel Returned OTP": "رمز استلام الطرد المرتجع",
+"Have you received your parcel?": "هل استلمت الطرد؟",
+"Please confirm only if the parcel has arrived and everything is in order": "يرجى التأكيد فقط إذا وصل الطرد وكل شيء سليم",
+"Payment Note": "ملاحظة الدفع",
+"Nom": "الإسم",
+"Prenom": "اللقب"
 };

@@ -201,7 +201,7 @@ const OfflineForm = ({
               fontWeight="700"
               textAlign="center"
             >
-              {`Amount: ${getAmountWithSign(
+              {`${t("Amount")}: ${getAmountWithSign(
                 usePartialPayment
                   ? total_order_amount - profileInfo?.wallet_balance
                   : total_order_amount
@@ -216,26 +216,32 @@ const OfflineForm = ({
                   <Grid item xs={12} md={6} key={index}>
                     <TextField
                       fullWidth
-                      label={item?.customer_input
-                        .replaceAll("_", " ")
-                        .toLowerCase()
-                        .split(" ")
-                        .map(
-                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                        )
-                        .join(" ")}
+                      label={t(
+                        item?.customer_input
+                          .replaceAll("_", " ")
+                          .toLowerCase()
+                          .split(" ")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1)
+                          )
+                          .join(" ")
+                      )}
                       id={item.customer_input}
                       name={item.customer_input}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      placeholder={item.customer_placeholder
-                        .replaceAll("_", " ")
-                        .toLowerCase()
-                        .split(" ")
-                        .map(
-                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                        )
-                        .join(" ")}
+                      placeholder={t(
+                        item.customer_placeholder
+                          .replaceAll("_", " ")
+                          .toLowerCase()
+                          .split(" ")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1)
+                          )
+                          .join(" ")
+                      )}
                       value={formik.values[item.customer_input]}
                       error={
                         formik.touched[item.customer_input] &&
@@ -254,7 +260,7 @@ const OfflineForm = ({
                   multiline
                   fullWidth
                   id="customer_note"
-                  label="Payment Note"
+                  label={t("Payment Note")}
                   name="customer_note"
                   value={formik.values["customer_note"]}
                   onChange={formik.handleChange}

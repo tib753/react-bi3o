@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { categories_api } from "../../../ApiRoutes";
 import MainApi from "../../../MainApi";
 import { onErrorResponse } from "../../../api-error-response/ErrorResponses";
-import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { getModuleId } from "helper-functions/getModuleId";
 
 const getData = async (searchKey) => {
   if (searchKey && searchKey !== "") {
@@ -34,7 +34,7 @@ const getFeaturedData = async () => {
   return await MainApi.get(`${categories_api}`);
 };
 export const useGetFeaturedCategories = (handleSuccess) => {
-  return useQuery(["featured-categories-lists",getCurrentModuleType()], () => getFeaturedData(), {
+  return useQuery(["featured-categories-lists",getModuleId()], () => getFeaturedData(), {
      enabled: true,
     cacheTime: 1000 * 60,        // 1 minute
     staleTime: 1000 * 30,        // 30 seconds

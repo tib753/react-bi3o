@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import MainApi from "../../../MainApi";
 import { onSingleErrorResponse } from "../../../api-error-response/ErrorResponses";
 import {recommended_provider} from "api-manage/ApiRoutes";
-import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { getModuleId } from "helper-functions/getModuleId";
 
 export const getData = async () => {
   const { data } = await MainApi.get(
@@ -12,7 +12,7 @@ export const getData = async () => {
 };
 
 export const useGetRecommendStores = (pageParams) => {
-  return useQuery(["recommend-stores",getCurrentModuleType()], () => getData(pageParams), {
+  return useQuery(["recommend-stores",getModuleId()], () => getData(pageParams), {
     cacheTime: 5 * 60 * 1000, // 5 minutes in milliseconds
     onError: onSingleErrorResponse,
   });

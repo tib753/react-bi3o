@@ -146,7 +146,7 @@ const CancelOrder = ({
              <TextField
              sx={{marginTop:".5rem"}}
                id="outlined-multiline-static"
-               label="Type here your cancel reason..."
+                label={t("Type here your cancel reason...")}
                multiline
                fullWidth
                rows={4}

@@ -1982,5 +1982,22 @@ export const french = {
 "kg": "kg",
 "g": "g",
 "L": "L",
-"mL": "mL"
+"mL": "mL",
+"Save Addresses": "Enregistrer les adresses",
+"Sender": "Expéditeur",
+"Parcel": "Colis",
+"Please select cancellation reason": "Veuillez sélectionner le motif d'annulation",
+"Comments": "Commentaires",
+"Type here your cancel reason...": "Écrivez ici le motif d'annulation...",
+"Continue Delivery": "Continuer la livraison",
+"Return Fare": "Frais de retour",
+"Parcel Delivery Charge + Return Fare": "Frais de livraison du colis + frais de retour",
+"If you cancel, your parcel will be back to you when rider will be available. You will have to pay a return fee to your delivery man.": "Si vous annulez, votre colis vous sera retourné dès qu'un livreur sera disponible. Vous devrez payer des frais de retour à votre livreur.",
+"Parcel Received": "Colis reçu",
+"Parcel Returned OTP": "OTP de retour du colis",
+"Have you received your parcel?": "Avez-vous reçu votre colis ?",
+"Please confirm only if the parcel has arrived and everything is in order": "Veuillez confirmer uniquement si le colis est arrivé et que tout est en ordre",
+"Payment Note": "Note de paiement",
+"Nom": "Nom",
+"Prenom": "Prénom"
 };
