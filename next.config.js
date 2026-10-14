@@ -54,10 +54,15 @@ const nextConfig = {
   },
 
   async rewrites() {
+    // Local dev fallback when NEXT_PUBLIC_BASE_URL is unset: proxy same-origin
+    // /api/v1 calls to the backend. On Vercel this LAN address is unreachable,
+    // so set API_PROXY_TARGET (or NEXT_PUBLIC_BASE_URL) in the dashboard.
+    const proxyTarget =
+      process.env.API_PROXY_TARGET || "http://192.168.1.2";
     return [
       {
         source: '/api/v1/:path*',
-        destination: 'http://192.168.1.2/api/v1/:path*',
+        destination: `${proxyTarget}/api/v1/:path*`,
       },
     ];
   },
