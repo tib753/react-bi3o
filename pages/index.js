@@ -52,37 +52,28 @@ export const getServerSideProps = async (context) => {
 	const { req, res } = context;
 	const language = req.cookies.languageSetting || req.cookies["language-setting"] || "ar";
 
-	console.time("Config API Call");
-	const configRes = await fetch(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/config`,
-		{
+	console.time("Config + Landing Page API Calls");
+	const baseHeaders = {
+		"X-software-id": 33571750,
+		"X-server": "server",
+		"X-localization": language,
+		origin: process.env.NEXT_CLIENT_HOST_URL,
+	};
+	const [configRes, landingPageRes] = await Promise.all([
+		fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/config`, {
 			method: "GET",
-			headers: {
-				"X-software-id": 33571750,
-				"X-server": "server",
-				"X-localization": language,
-				origin: process.env.NEXT_CLIENT_HOST_URL,
-			},
-		}
-	);
-	const config = await configRes.json();
-	console.timeEnd("Config API Call");
-
-	console.time("Landing Page API Call");
-	const landingPageRes = await fetch(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/react-landing-page`,
-		{
+			headers: baseHeaders,
+		}),
+		fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/react-landing-page`, {
 			method: "GET",
-			headers: {
-				"X-software-id": 33571750,
-				"X-server": "server",
-				"X-localization": language,
-				origin: process.env.NEXT_CLIENT_HOST_URL,
-			},
-		}
-	);
-	const landingPageData = await landingPageRes.json();
-	console.timeEnd("Landing Page API Call");
+			headers: baseHeaders,
+		}),
+	]);
+	const [config, landingPageData] = await Promise.all([
+		configRes.json(),
+		landingPageRes.json(),
+	]);
+	console.timeEnd("Config + Landing Page API Calls");
 
 	// Set cache control headers for 1 hour (3600 seconds)
 	res.setHeader(

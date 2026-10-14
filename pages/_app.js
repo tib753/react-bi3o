@@ -11,7 +11,6 @@ import { rubik } from "../src/utils/fonts";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RTL } from "components/rtl";
 import dynamic from "next/dynamic";
-import { getServerSideProps } from "./index";
 import { SettingsConsumer, SettingsProvider } from "contexts/settings-context";
 import "../src/language/i18n";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -38,6 +37,8 @@ const queryClient = new QueryClient({
 		queries: {
 			cacheTime: 1000 * 60 * 5, // 5 minutes
 			staleTime: 1000 * 60 * 2, // 2 minutes
+			refetchOnWindowFocus: false,
+			retry: 1,
 		},
 	},
 });
@@ -137,4 +138,3 @@ function MyApp(props) {
 }
 
 export default MyApp;
-export { getServerSideProps };
