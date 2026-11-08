@@ -1142,11 +1142,11 @@ export const getHomePageBannerImageUrl = (storage, imageType, bannerData) => {
   }
 };
 export const removeSpecialCharacters = (inputString) => {
-  // Define the pattern for special characters
-  const pattern = /[^a-zA-Z0-9\s]/g;
-
-  // Use the replace method to remove special characters
-  return inputString?.replace(pattern, "");
+  // Keep Unicode letters/digits/whitespace (Arabic included); drop punctuation/symbols
+  // that would break the search URL. The previous pattern [^a-zA-Z0-9\s] stripped Arabic
+  // entirely, so Arabic product searches returned empty suggestions (or a 403).
+  if (!inputString) return inputString;
+  return String(inputString).replace(/[^\p{L}\p{N}\s]/gu, "");
 };
 export const getDigitalMethodFromZone = (storeId, zoneData) => {
   if (zoneData?.zone_data?.length > 0) {

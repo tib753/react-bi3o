@@ -26,6 +26,25 @@ const ManageSearch = ({
   const [d_type, setD_type] = useState(null);
   const [isEmpty, setIsEmpty] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [currentLatLng, setCurrentLatLng] = useState(null);
+
+  // Debounce the search term (~300ms) so we don't fire a request per keystroke.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(removeSpecialCharacters(searchValue));
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchValue]);
+
+  // Read location from localStorage on the client (SSR-safe).
+  useEffect(() => {
+    try {
+      setCurrentLatLng(JSON.parse(localStorage.getItem("currentLatLng")));
+    } catch (e) {
+      setCurrentLatLng(null);
+    }
+  }, []);
   useEffect(() => {
     if (searchQuery === undefined) {
       setSearchValue("");
@@ -87,27 +106,17 @@ const ManageSearch = ({
 
   //KEYPRESS WISE SEARCH
 
+  const cleanedName = removeSpecialCharacters(debouncedSearch);
+  const enabled =
+    !!zoneid &&
+    !!currentLatLng?.lat &&
+    !!currentLatLng?.lng &&
+    cleanedName.trim().length > 0;
+
   const {
     data: itemOrStoreSuggestionData,
-    refetch: refetchItemOrStoreSuggestion,
-    isRefetching: isRefetchingItemOrStoreSuggestion,
-  } = useGetItemOrStore(removeSpecialCharacters(searchValue));
-
-  let searchTimeout;
-
-  const getSearchSuggestions = async () => {
-    if (searchTimeout) {
-      clearTimeout(searchTimeout); // Clear the previous timeout
-    }
-
-    searchTimeout = setTimeout(async () => {
-      await refetchItemOrStoreSuggestion(); // Execute the function after 500ms
-    }, 500);
-  };
-
-  useEffect(() => {
-    getSearchSuggestions();
-  }, [searchValue]);
+    isFetching: isFetchingItemOrStoreSuggestion,
+  } = useGetItemOrStore(cleanedName, enabled);
 
   useEffect(() => {
     if (itemOrStoreSuggestionData) {
@@ -221,7 +230,7 @@ const ManageSearch = ({
               handleKeyPress={handleKeyPress}
               itemOrStoreSuggestionData={itemOrStoreSuggestionData}
               isRefetchingItemOrStoreSuggestion={
-                isRefetchingItemOrStoreSuggestion
+                isFetchingItemOrStoreSuggestion
               }
             />
           )}
